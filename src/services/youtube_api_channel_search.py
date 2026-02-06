@@ -18,6 +18,7 @@ youtube = build('youtube', 'v3', developerKey=youtube_api_key)
 # Create the collections that I may need
 # Collections: search, channels, captions, videos, videocategories, comments, etc.
 search = youtube.search()
+channels = youtube.channels()
 
 # function to get teh rfc 3339 time a certaim amount of months ago
 def get_time_months_ago_rfc3339(months_ago: int) -> str:
@@ -41,20 +42,22 @@ time_6_months_ago = get_time_months_ago_rfc3339(6)
 ai_search = search.list(
     part='snippet',
     maxResults=25,
-    order='viewCount',
     publishedAfter=time_6_months_ago,
     regionCode='US',
     type='video',
+    topicId = '/m/098wr',
+    relevanceLanguage = 'en',
     q='AI',
 ) 
 
 # will get a lot of videos, add them to a list, then find the most prevelant channels from there
 # execute the request
+vids = []
 try:
     # get the first response and extract the videos and nextPageToken
     search_response = ai_search.execute()
     nextPageToken = search_response.get('nextPageToken')
-    vids = search_response.get('items', [])
+    vids.extend(search_response.get('items', []))
 
     LIMIT = 20
     curr_page = 1
@@ -67,11 +70,12 @@ try:
             ai_search = search.list(
                 part='snippet',
                 maxResults=25,
-                order='viewCount',
                 pageToken= nextPageToken,
                 publishedAfter=time_6_months_ago,
                 regionCode='US',
                 type='video',
+                topicId = '/m/098wr',
+                relevanceLanguage = 'en',
                 q='AI',
             )
         else:
@@ -85,24 +89,41 @@ try:
 except HttpError as e:
     print(f'Error response status code : {e.status_code}, reason : {e.error_details}')
 
-# then for the vids find the most popular channels
-channel_freq_dist = {}
+# Remove duplicate channels (get unique channels)
+# from there will find the prolific channels
+channel = []
 for vid in vids:
     channelId = vid['snippet']['channelId']
-    if channelId in channel_freq_dist:
-        channel_freq_dist[channelId] += 1
-    else:
-        channel_freq_dist[channelId] = 1
+    if channelId not in channel:
+        channel.append(channelId)
 
-# sort the values
-sort_channel_freq_dist = sorted(channel_freq_dist.items(), key=lambda item: item[1], reverse=True)
+# get detailed information on the channels found
+# choose the channels with most video count and view count
+prolific_channels = {}
+for channel_id in channel:
+    channel_search = channels.list(
+            part='statistics, topicDetails',
+            id=channel_id
+    )
+    
+    # execute the request
+    try:
+        channel_response = channel_search.execute()
+        channel_items = channel_response.get('items', [])
+        
+        if int(channel_items[0]['statistics']['videoCount']) > 100:
+            # then add to the dictionary
+            prolific_channels[channel_id] = channel_items[0]['statistics']['videoCount']
+    except HttpError as e:
+        print(f'Error response status code : {e.status_code}, reason : {e.error_details}')
 
 # put the top 20 channels into json dict
-top_20_channel_dist = list(dict(sort_channel_freq_dist[:20]))
+prolific_channels = [*prolific_channels]
+prolific_channels = prolific_channels[:20]
 filename = 'data/channels.json'
 try:
     with open(filename, 'w') as json_file:
-        json.dump(tuple, json_file, indent=4)
+        json.dump(prolific_channels, json_file, indent=4)
 except IOError as e:
     print(f"Error with writing to json file: {e}")
 
