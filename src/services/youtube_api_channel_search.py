@@ -45,7 +45,7 @@ ai_search = search.list(
     publishedAfter=time_6_months_ago,
     regionCode='US',
     type='video',
-    topicId = '/m/098wr',
+    videoCategoryId = '28',
     relevanceLanguage = 'en',
     q='AI',
 ) 
@@ -74,7 +74,7 @@ try:
                 publishedAfter=time_6_months_ago,
                 regionCode='US',
                 type='video',
-                topicId = '/m/098wr',
+                videoCategoryId = '28',
                 relevanceLanguage = 'en',
                 q='AI',
             )

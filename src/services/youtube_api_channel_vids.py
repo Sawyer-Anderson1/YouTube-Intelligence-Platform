@@ -18,6 +18,7 @@ youtube = build('youtube', 'v3', developerKey=youtube_api_key)
 # Create the collection(s) I need:
 channels = youtube.channels()
 playlist_items = youtube.playlistItems()
+videos = youtube.videos()
 
 # function to get the rfc 3339 time a certaim amount of months ago
 def get_time_months_ago_rfc3339(months_ago: int) -> str:
@@ -56,9 +57,17 @@ def check_vids(upload_items):
             title = vid['snippet']['title']
             description = vid['snippet']['description']
 
-            if any(term in title for term in terms) or any(term in description for term in terms):
+            # also check for view count > 5k, if captions are enabled/allowed for video, and the region restrictions allow US
+            video_list = videos.list(
+                part='statistics, contentDetails',
+                id=vid['contentDetails']['videoId']
+            )
+            video = video_list.execute()
+            video_item = video.get('items', [])
+
+            if (any(term in title for term in terms) or any(term in description for term in terms)) and int(video_item[0]['statistics']['viewCount']) > 5000 and video_item[0]['contentDetails']['caption'] == 'true' and ('US' in video_item[0]['contentDetails']['regionRestriction'].get('allowed', [])):
                 # then add video id to list
-                vids_filtered.append(vid['contentDetails']['videoId'])
+                vids_filtered.append(video_item[0]['id'])
     return vids_filtered, False
 
 # read in the list of important channels on the topic of AI
