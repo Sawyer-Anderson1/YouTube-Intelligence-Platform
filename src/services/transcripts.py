@@ -20,6 +20,10 @@ ytt_api = YouTubeTranscriptApi(
     )
 )
 
+# function to clean the transcripts
+def clean_transcript():
+    pass
+
 # read in the list of important channels and their videos on the topic of AI
 vid_data = {}
 try:
@@ -35,23 +39,23 @@ for channel_id, vids_list in vid_data.items():
     for vidx, vid_id in enumerate(vids_list):
         # Execute request for vid_captions
         try:
+            # create the json file for the transcript
+            filename = f"data/transcripts/{channel_id}_transcript_{vidx + 1}.json"
+
+            # get the transcript
             fetched_transcript = ytt_api.fetch(vid_id)
 
-            full_transcript_text = ""
-            for snippet in fetched_transcript:
-                full_transcript_text += " " + snippet.text
-            vids_list[vidx] = full_transcript_text
+            cleaned_transcript = []
+            if vidx == 0:
+                for snippet in fetched_transcript:   
+                        print(snippet)
+                break
+
+            try:
+                with open(filename, 'w') as json_file:
+                    json.dump(cleaned_transcript, json_file, indent=4)
+            except IOError as e:
+                print(f"Error with writing to json file: {e}")
+
         except Exception as e:
             # we set the transcript to blank to be easily parsed out
-            vids_list[vidx] = ""
-        vids_list[vidx]
-        cleaned_transcript = vids_list[vidx].replace(">>", "").replace("\n", " ").replace("\\'", "'").replace("\'", "").replace("\t", " ")
-        vids_list[vidx] = cleaned_transcript.lower()
-    vid_data[channel_id] = vids_list
-
-filename = "data/vids_transcripts.json"
-try:
-    with open(filename, 'w') as json_file:
-        json.dump(vid_data, json_file, indent=4)
-except IOError as e:
-    print(f"Error with writing to json file: {e}")
