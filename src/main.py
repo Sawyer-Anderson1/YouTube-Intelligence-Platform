@@ -25,7 +25,7 @@ def scheduled_job_sequence():
 
         #...
     except Exception as e:
-        print(f"Scripts failed to run: {e}")
+        print(f"Transcript retrieval scripts failed to run: {e}")
 
 # create the scheduler to run in an interval of a week
 @asynccontextmanager
@@ -33,7 +33,7 @@ async def weeklylifespan(app: FastAPI):
     scheduler = BackgroundScheduler()
 
     # have the scripts that take the data from the YouTube API to run once every week
-    scheduler.add_job(secheduled_job_sequence, "interval", weeks=1)
+    scheduler.add_job(scheduled_job_sequence, "interval", weeks=1)
     scheduler.start()
 
     yield
@@ -42,4 +42,5 @@ async def weeklylifespan(app: FastAPI):
 app = FastAPI(lifespan=weeklylifespan)
 
 @app.get("/")
-
+def placeholder():
+    pass
