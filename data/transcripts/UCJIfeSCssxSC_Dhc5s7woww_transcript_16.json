@@ -1,0 +1,4437 @@
+[
+    {
+        "text": "If we could take at this point a bit of",
+        "start": 2.879,
+        "duration": 4.721
+    },
+    {
+        "text": "a tangent and talk about education and",
+        "start": 4.64,
+        "duration": 5.12
+    },
+    {
+        "text": "learning If you're somebody listening",
+        "start": 7.6,
+        "duration": 5.039
+    },
+    {
+        "text": "to this who's a smart person interested",
+        "start": 9.76,
+        "duration": 5.6
+    },
+    {
+        "text": "in programming interested in AI, so I",
+        "start": 12.639,
+        "duration": 4.801
+    },
+    {
+        "text": "presume building something from scratch",
+        "start": 15.36,
+        "duration": 4.32
+    },
+    {
+        "text": "is a good beginning So can you just",
+        "start": 17.44,
+        "duration": 3.919
+    },
+    {
+        "text": "take me through like what you would",
+        "start": 19.68,
+        "duration": 3.12
+    },
+    {
+        "text": "recommend people do",
+        "start": 21.359,
+        "duration": 3.041
+    },
+    {
+        "text": "i So I would personally start like you",
+        "start": 22.8,
+        "duration": 4.0
+    },
+    {
+        "text": "said uh implementing a simple model from",
+        "start": 24.4,
+        "duration": 3.76
+    },
+    {
+        "text": "scratch that you can run on your",
+        "start": 26.8,
+        "duration": 3.44
+    },
+    {
+        "text": "computer The goal is not if you build a",
+        "start": 28.16,
+        "duration": 3.6
+    },
+    {
+        "text": "model from scratch to have like",
+        "start": 30.24,
+        "duration": 3.28
+    },
+    {
+        "text": "something you use every day for your",
+        "start": 31.76,
+        "duration": 3.92
+    },
+    {
+        "text": "personal projects Like it's not going",
+        "start": 33.52,
+        "duration": 4.16
+    },
+    {
+        "text": "to be your personal assistant replacing",
+        "start": 35.68,
+        "duration": 4.16
+    },
+    {
+        "text": "an existing overweight model or CHPD.",
+        "start": 37.68,
+        "duration": 4.719
+    },
+    {
+        "text": "It's to see what exactly goes into the",
+        "start": 39.84,
+        "duration": 4.96
+    },
+    {
+        "text": "LLM, what exactly comes out of the LLM,",
+        "start": 42.399,
+        "duration": 4.16
+    },
+    {
+        "text": "how the restraining works in that sense",
+        "start": 44.8,
+        "duration": 5.12
+    },
+    {
+        "text": "on your own computer preferably Um, and",
+        "start": 46.559,
+        "duration": 5.601
+    },
+    {
+        "text": "then you learn about the pre-training,",
+        "start": 49.92,
+        "duration": 3.76
+    },
+    {
+        "text": "the supervised fine-tuning, the",
+        "start": 52.16,
+        "duration": 3.44
+    },
+    {
+        "text": "attention mechanism You get a solid",
+        "start": 53.68,
+        "duration": 4.16
+    },
+    {
+        "text": "understanding of how things work But at",
+        "start": 55.6,
+        "duration": 3.92
+    },
+    {
+        "text": "some point you will reach a limit",
+        "start": 57.84,
+        "duration": 3.28
+    },
+    {
+        "text": "because small models can only do so",
+        "start": 59.52,
+        "duration": 3.6
+    },
+    {
+        "text": "much And the problem with learning",
+        "start": 61.12,
+        "duration": 4.88
+    },
+    {
+        "text": "about LLMs at scale is I would say it's",
+        "start": 63.12,
+        "duration": 5.28
+    },
+    {
+        "text": "exponentially more complex to make a",
+        "start": 66.0,
+        "duration": 4.56
+    },
+    {
+        "text": "larger model because it's not that the",
+        "start": 68.4,
+        "duration": 3.68
+    },
+    {
+        "text": "model just becomes larger You have to",
+        "start": 70.56,
+        "duration": 3.44
+    },
+    {
+        "text": "now think about sharing your parameters",
+        "start": 72.08,
+        "duration": 4.0
+    },
+    {
+        "text": "across multiple GPUs. You even for the",
+        "start": 74.0,
+        "duration": 3.68
+    },
+    {
+        "text": "KV cache there are multiple ways you can",
+        "start": 76.08,
+        "duration": 3.76
+    },
+    {
+        "text": "implement it One is just to understand",
+        "start": 77.68,
+        "duration": 4.64
+    },
+    {
+        "text": "how it works just to grow the cache",
+        "start": 79.84,
+        "duration": 4.48
+    },
+    {
+        "text": "let's it's like a cache you grow step by",
+        "start": 82.32,
+        "duration": 4.32
+    },
+    {
+        "text": "step by let's say containing lists um",
+        "start": 84.32,
+        "duration": 3.839
+    },
+    {
+        "text": "growing it but then that wouldn't be",
+        "start": 86.64,
+        "duration": 3.92
+    },
+    {
+        "text": "optimal in GPUs you wouldn't do that you",
+        "start": 88.159,
+        "duration": 4.081
+    },
+    {
+        "text": "would reallocate a tensor and then",
+        "start": 90.56,
+        "duration": 3.919
+    },
+    {
+        "text": "fill it in but that adds again another",
+        "start": 92.24,
+        "duration": 4.239
+    },
+    {
+        "text": "20 30 line lines of code and for each",
+        "start": 94.479,
+        "duration": 4.081
+    },
+    {
+        "text": "thing you add so much code and I think",
+        "start": 96.479,
+        "duration": 4.161
+    },
+    {
+        "text": "the trick with a book is basically to",
+        "start": 98.56,
+        "duration": 4.16
+    },
+    {
+        "text": "understand how the LLM works it's not",
+        "start": 100.64,
+        "duration": 3.92
+    },
+    {
+        "text": "going to be your production level LLM",
+        "start": 102.72,
+        "duration": 3.439
+    },
+    {
+        "text": "but once you have that you can",
+        "start": 104.56,
+        "duration": 2.96
+    },
+    {
+        "text": "understand the production level LM",
+        "start": 106.159,
+        "duration": 3.28
+    },
+    {
+        "text": "i so you're trying to always build an LLM",
+        "start": 107.52,
+        "duration": 3.68
+    },
+    {
+        "text": "that's going to fit on one GPU",
+        "start": 109.439,
+        "duration": 4.0
+    },
+    {
+        "text": "i yes the most of them I have they I have",
+        "start": 111.2,
+        "duration": 4.8
+    },
+    {
+        "text": "some bonus materials on some models I",
+        "start": 113.439,
+        "duration": 4.401
+    },
+    {
+        "text": "think one of or two of them they may",
+        "start": 116.0,
+        "duration": 4.159
+    },
+    {
+        "text": "require multiple GPUs but the goal is to",
+        "start": 117.84,
+        "duration": 4.319
+    },
+    {
+        "text": "have it on one GPU and the beautiful",
+        "start": 120.159,
+        "duration": 4.881
+    },
+    {
+        "text": "thing is also you can selfverify it's",
+        "start": 122.159,
+        "duration": 5.201
+    },
+    {
+        "text": "almost like RLVR when you code these",
+        "start": 125.04,
+        "duration": 4.88
+    },
+    {
+        "text": "from scratch you can take uh an existing",
+        "start": 127.36,
+        "duration": 4.56
+    },
+    {
+        "text": "model from the hugging face transformer",
+        "start": 129.92,
+        "duration": 3.76
+    },
+    {
+        "text": "library um so the hugging face",
+        "start": 131.92,
+        "duration": 3.76
+    },
+    {
+        "text": "transformer library is great but if you",
+        "start": 133.68,
+        "duration": 3.68
+    },
+    {
+        "text": "want to learn about LMS I think that's",
+        "start": 135.68,
+        "duration": 3.52
+    },
+    {
+        "text": "not the best place to start because the",
+        "start": 137.36,
+        "duration": 3.599
+    },
+    {
+        "text": "code is so complex because it has to",
+        "start": 139.2,
+        "duration": 3.84
+    },
+    {
+        "text": "full it has to fit so many use cases",
+        "start": 140.959,
+        "duration": 3.601
+    },
+    {
+        "text": "also some people use it in production it",
+        "start": 143.04,
+        "duration": 2.559
+    },
+    {
+        "text": "has to be",
+        "start": 144.56,
+        "duration": 2.56
+    },
+    {
+        "text": "sophisticated and it's really",
+        "start": 145.599,
+        "duration": 3.201
+    },
+    {
+        "text": "intertwined and really hard It's not",
+        "start": 147.12,
+        "duration": 3.44
+    },
+    {
+        "text": "linear to ready It was started as a",
+        "start": 148.8,
+        "duration": 4.64
+    },
+    {
+        "text": "fine-tuning library and then it grew to",
+        "start": 150.56,
+        "duration": 4.72
+    },
+    {
+        "text": "be like the standard representation of",
+        "start": 153.44,
+        "duration": 4.64
+    },
+    {
+        "text": "every model architecture and the way",
+        "start": 155.28,
+        "duration": 4.56
+    },
+    {
+        "text": "this loaded So hugging face is like the",
+        "start": 158.08,
+        "duration": 3.519
+    },
+    {
+        "text": "default place to get a model and",
+        "start": 159.84,
+        "duration": 3.36
+    },
+    {
+        "text": "transformers is the software that",
+        "start": 161.599,
+        "duration": 3.841
+    },
+    {
+        "text": "enables it So people can easily load a",
+        "start": 163.2,
+        "duration": 4.319
+    },
+    {
+        "text": "model and do something basic with it",
+        "start": 165.44,
+        "duration": 3.76
+    },
+    {
+        "text": "i And all frontier labs that have open",
+        "start": 167.519,
+        "duration": 3.281
+    },
+    {
+        "text": "weight models have a hugging phase",
+        "start": 169.2,
+        "duration": 3.36
+    },
+    {
+        "text": "transformers version of it like from",
+        "start": 170.8,
+        "duration": 3.84
+    },
+    {
+        "text": "deepseek to GPTOSs. So it's like the",
+        "start": 172.56,
+        "duration": 4.959
+    },
+    {
+        "text": "canonical weight that you can load",
+        "start": 174.64,
+        "duration": 4.72
+    },
+    {
+        "text": "there But again also even transformers",
+        "start": 177.519,
+        "duration": 3.521
+    },
+    {
+        "text": "the library is not used in production",
+        "start": 179.36,
+        "duration": 5.12
+    },
+    {
+        "text": "People use then slang or elm and it",
+        "start": 181.04,
+        "duration": 4.96
+    },
+    {
+        "text": "adds another layer of complexity",
+        "start": 184.48,
+        "duration": 3.119
+    },
+    {
+        "text": "i We should say that the transformers",
+        "start": 186.0,
+        "duration": 3.84
+    },
+    {
+        "text": "library has like 400 models",
+        "start": 187.599,
+        "duration": 4.321
+    },
+    {
+        "text": "i So it's a one library that tries to",
+        "start": 189.84,
+        "duration": 5.2
+    },
+    {
+        "text": "implement a lot of LLMs and so you have",
+        "start": 191.92,
+        "duration": 5.2
+    },
+    {
+        "text": "a huge code based Basically it's like",
+        "start": 195.04,
+        "duration": 5.52
+    },
+    {
+        "text": "huge It's like it's I don't know maybe",
+        "start": 197.12,
+        "duration": 5.199
+    },
+    {
+        "text": "millions hundreds of thousands of lines",
+        "start": 200.56,
+        "duration": 4.0
+    },
+    {
+        "text": "of code and find it's like understanding",
+        "start": 202.319,
+        "duration": 3.681
+    },
+    {
+        "text": "the part that you want to understand is",
+        "start": 204.56,
+        "duration": 2.959
+    },
+    {
+        "text": "finding the needle in the haststack. But",
+        "start": 206.0,
+        "duration": 3.44
+    },
+    {
+        "text": "what's beautiful about it is you have a",
+        "start": 207.519,
+        "duration": 3.601
+    },
+    {
+        "text": "working implementation and so you can",
+        "start": 209.44,
+        "duration": 3.84
+    },
+    {
+        "text": "work backwards from it What I would",
+        "start": 211.12,
+        "duration": 4.24
+    },
+    {
+        "text": "recommend doing or what I also do is if",
+        "start": 213.28,
+        "duration": 3.679
+    },
+    {
+        "text": "I want to understand for example how",
+        "start": 215.36,
+        "duration": 4.48
+    },
+    {
+        "text": "almost 3 is implemented I would look at",
+        "start": 216.959,
+        "duration": 5.28
+    },
+    {
+        "text": "the weights in the model hub the confirm",
+        "start": 219.84,
+        "duration": 4.319
+    },
+    {
+        "text": "file and then you can see oh they used",
+        "start": 222.239,
+        "duration": 4.161
+    },
+    {
+        "text": "so many layers they use let's say group",
+        "start": 224.159,
+        "duration": 3.841
+    },
+    {
+        "text": "query attention or mufti head attention",
+        "start": 226.4,
+        "duration": 3.199
+    },
+    {
+        "text": "in that case then you see all the",
+        "start": 228.0,
+        "duration": 3.36
+    },
+    {
+        "text": "components in like a human readable I",
+        "start": 229.599,
+        "duration": 3.841
+    },
+    {
+        "text": "don't know 100 lines of confirm file and",
+        "start": 231.36,
+        "duration": 3.68
+    },
+    {
+        "text": "then you start let's say with your GPD2",
+        "start": 233.44,
+        "duration": 3.84
+    },
+    {
+        "text": "model and add these things you know and",
+        "start": 235.04,
+        "duration": 4.399
+    },
+    {
+        "text": "the cool thing here is you can then load",
+        "start": 237.28,
+        "duration": 4.4
+    },
+    {
+        "text": "the restrained weights and see if they",
+        "start": 239.439,
+        "duration": 4.72
+    },
+    {
+        "text": "work in your model and you want to match",
+        "start": 241.68,
+        "duration": 4.08
+    },
+    {
+        "text": "the same output that you get with a",
+        "start": 244.159,
+        "duration": 3.121
+    },
+    {
+        "text": "transformer model and then you can use",
+        "start": 245.76,
+        "duration": 3.6
+    },
+    {
+        "text": "that as a basically as a verifiable",
+        "start": 247.28,
+        "duration": 4.239
+    },
+    {
+        "text": "reward to make your architecture correct",
+        "start": 249.36,
+        "duration": 4.56
+    },
+    {
+        "text": "and then it's kind of sometimes it takes",
+        "start": 251.519,
+        "duration": 4.96
+    },
+    {
+        "text": "me a day to with almost three the",
+        "start": 253.92,
+        "duration": 4.96
+    },
+    {
+        "text": "challenge was the rope for the position",
+        "start": 256.479,
+        "duration": 4.88
+    },
+    {
+        "text": "embeddings they had a yarn extension and",
+        "start": 258.88,
+        "duration": 5.28
+    },
+    {
+        "text": "there was some custom uh scaling there",
+        "start": 261.359,
+        "duration": 4.961
+    },
+    {
+        "text": "and I couldn't quite match the these",
+        "start": 264.16,
+        "duration": 4.24
+    },
+    {
+        "text": "things and in this struggle you kind of",
+        "start": 266.32,
+        "duration": 3.68
+    },
+    {
+        "text": "understand things but the cool thing is",
+        "start": 268.4,
+        "duration": 3.28
+    },
+    {
+        "text": "at the end you know you have it correct",
+        "start": 270.0,
+        "duration": 3.759
+    },
+    {
+        "text": "because you can unit test it You can",
+        "start": 271.68,
+        "duration": 3.68
+    },
+    {
+        "text": "check against the reference",
+        "start": 273.759,
+        "duration": 3.281
+    },
+    {
+        "text": "implementation And I think that's maybe",
+        "start": 275.36,
+        "duration": 3.2
+    },
+    {
+        "text": "one of the best ways to learn really",
+        "start": 277.04,
+        "duration": 4.24
+    },
+    {
+        "text": "like to basically reverse engineer",
+        "start": 278.56,
+        "duration": 3.6
+    },
+    {
+        "text": "something Yeah,",
+        "start": 281.28,
+        "duration": 2.32
+    },
+    {
+        "text": "i I think that that is something that",
+        "start": 282.16,
+        "duration": 3.039
+    },
+    {
+        "text": "everybody that's interested in getting",
+        "start": 283.6,
+        "duration": 3.44
+    },
+    {
+        "text": "to AI today should do And I think",
+        "start": 285.199,
+        "duration": 3.921
+    },
+    {
+        "text": "that's why I liked your book is like I",
+        "start": 287.04,
+        "duration": 4.56
+    },
+    {
+        "text": "came to language models from this RL and",
+        "start": 289.12,
+        "duration": 4.48
+    },
+    {
+        "text": "robotics field Like I've never had",
+        "start": 291.6,
+        "duration": 3.76
+    },
+    {
+        "text": "taken the time to just like learn all",
+        "start": 293.6,
+        "duration": 4.64
+    },
+    {
+        "text": "the fundamentals And this transformer",
+        "start": 295.36,
+        "duration": 5.2
+    },
+    {
+        "text": "architecture I describe as being like so",
+        "start": 298.24,
+        "duration": 4.16
+    },
+    {
+        "text": "fundamental as like deep learning was a",
+        "start": 300.56,
+        "duration": 3.28
+    },
+    {
+        "text": "thing that I had to learn in the past",
+        "start": 302.4,
+        "duration": 4.4
+    },
+    {
+        "text": "and people need to do this I think that",
+        "start": 303.84,
+        "duration": 5.199
+    },
+    {
+        "text": "where a lot of people kind of get",
+        "start": 306.8,
+        "duration": 4.959
+    },
+    {
+        "text": "overwhelmed is how do I apply this to",
+        "start": 309.039,
+        "duration": 5.361
+    },
+    {
+        "text": "have impact or find like a career path",
+        "start": 311.759,
+        "duration": 4.801
+    },
+    {
+        "text": "because like AI and language models make",
+        "start": 314.4,
+        "duration": 5.04
+    },
+    {
+        "text": "this fundamental stuff so accessible and",
+        "start": 316.56,
+        "duration": 4.4
+    },
+    {
+        "text": "people with motivation will learn it and",
+        "start": 319.44,
+        "duration": 3.199
+    },
+    {
+        "text": "then it's like how do I get the cycles",
+        "start": 320.96,
+        "duration": 4.799
+    },
+    {
+        "text": "on goal to contribute to research and I",
+        "start": 322.639,
+        "duration": 4.241
+    },
+    {
+        "text": "think that I'm actually fairly",
+        "start": 325.759,
+        "duration": 2.88
+    },
+    {
+        "text": "optimistic in this because the field",
+        "start": 326.88,
+        "duration": 4.24
+    },
+    {
+        "text": "moves so fast that a lot of times the",
+        "start": 328.639,
+        "duration": 4.481
+    },
+    {
+        "text": "best people like don't fully solve a",
+        "start": 331.12,
+        "duration": 3.76
+    },
+    {
+        "text": "problem because there's a bigger lower",
+        "start": 333.12,
+        "duration": 3.68
+    },
+    {
+        "text": "hat like a bigger problem to solve",
+        "start": 334.88,
+        "duration": 3.28
+    },
+    {
+        "text": "that's very low hanging fruit so they",
+        "start": 336.8,
+        "duration": 4.72
+    },
+    {
+        "text": "move on and I think that a lot of what I",
+        "start": 338.16,
+        "duration": 4.879
+    },
+    {
+        "text": "was trying to do in this RHF book is",
+        "start": 341.52,
+        "duration": 3.04
+    },
+    {
+        "text": "like take post-trading techniques and",
+        "start": 343.039,
+        "duration": 3.921
+    },
+    {
+        "text": "just describe how people think about",
+        "start": 344.56,
+        "duration": 4.16
+    },
+    {
+        "text": "them influencing the model and what",
+        "start": 346.96,
+        "duration": 4.48
+    },
+    {
+        "text": "people are doing and then it's",
+        "start": 348.72,
+        "duration": 5.28
+    },
+    {
+        "text": "remarkable how many things I just think",
+        "start": 351.44,
+        "duration": 4.479
+    },
+    {
+        "text": "are just like people stop studying them",
+        "start": 354.0,
+        "duration": 4.16
+    },
+    {
+        "text": "or don't so I think people trying to get",
+        "start": 355.919,
+        "duration": 5.441
+    },
+    {
+        "text": "narrow after doing the fundamentals is",
+        "start": 358.16,
+        "duration": 6.159
+    },
+    {
+        "text": "good and then reading the relevant",
+        "start": 361.36,
+        "duration": 4.48
+    },
+    {
+        "text": "papers and being engaged in the",
+        "start": 364.319,
+        "duration": 3.761
+    },
+    {
+        "text": "ecosystem It's like you actually the",
+        "start": 365.84,
+        "duration": 4.799
+    },
+    {
+        "text": "proximity that random people have online",
+        "start": 368.08,
+        "duration": 5.119
+    },
+    {
+        "text": "from the leading researchers like no one",
+        "start": 370.639,
+        "duration": 5.361
+    },
+    {
+        "text": "knows who all the anonymous account on X",
+        "start": 373.199,
+        "duration": 4.481
+    },
+    {
+        "text": "and ML is very popular for whatever",
+        "start": 376.0,
+        "duration": 3.12
+    },
+    {
+        "text": "reason and no one knows who all these",
+        "start": 377.68,
+        "duration": 2.88
+    },
+    {
+        "text": "people are like it could just be random",
+        "start": 379.12,
+        "duration": 3.12
+    },
+    {
+        "text": "people that study the stuff deeply",
+        "start": 380.56,
+        "duration": 3.199
+    },
+    {
+        "text": "especially with the AI tools to just be",
+        "start": 382.24,
+        "duration": 3.04
+    },
+    {
+        "text": "like keep I don't understand this keep",
+        "start": 383.759,
+        "duration": 3.601
+    },
+    {
+        "text": "digging into it I think is a very useful",
+        "start": 385.28,
+        "duration": 4.32
+    },
+    {
+        "text": "thing but there's a lot of research",
+        "start": 387.36,
+        "duration": 4.88
+    },
+    {
+        "text": "areas that just like are maybe three",
+        "start": 389.6,
+        "duration": 4.64
+    },
+    {
+        "text": "papers that you need to read and then",
+        "start": 392.24,
+        "duration": 3.6
+    },
+    {
+        "text": "one of the authors will probably email",
+        "start": 394.24,
+        "duration": 3.84
+    },
+    {
+        "text": "pay you back But you have to put in a",
+        "start": 395.84,
+        "duration": 4.56
+    },
+    {
+        "text": "lot of effort into these emails to",
+        "start": 398.08,
+        "duration": 3.839
+    },
+    {
+        "text": "understand the field Like I think it",
+        "start": 400.4,
+        "duration": 4.16
+    },
+    {
+        "text": "would be for a newcomer easily weeks of",
+        "start": 401.919,
+        "duration": 4.481
+    },
+    {
+        "text": "work to feel like they can truly grasp",
+        "start": 404.56,
+        "duration": 4.4
+    },
+    {
+        "text": "like what is a very narrow area But I",
+        "start": 406.4,
+        "duration": 4.4
+    },
+    {
+        "text": "think going narrow after you have the",
+        "start": 408.96,
+        "duration": 3.679
+    },
+    {
+        "text": "fundamentals be very useful to people",
+        "start": 410.8,
+        "duration": 2.8
+    },
+    {
+        "text": "because",
+        "start": 412.639,
+        "duration": 3.12
+    },
+    {
+        "text": "i it's like I became very interested in",
+        "start": 413.6,
+        "duration": 3.76
+    },
+    {
+        "text": "like character training which is like",
+        "start": 415.759,
+        "duration": 4.801
+    },
+    {
+        "text": "how you make the model funny or",
+        "start": 417.36,
+        "duration": 5.2
+    },
+    {
+        "text": "sarcastic or serious and like what do",
+        "start": 420.56,
+        "duration": 3.68
+    },
+    {
+        "text": "you do to the data to do this And it's",
+        "start": 422.56,
+        "duration": 4.56
+    },
+    {
+        "text": "like a student at Oxford reached out to",
+        "start": 424.24,
+        "duration": 3.92
+    },
+    {
+        "text": "me He's like \"Hey, I'm interested in",
+        "start": 427.12,
+        "duration": 2.479
+    },
+    {
+        "text": "this And I advised him and I was like",
+        "start": 428.16,
+        "duration": 3.68
+    },
+    {
+        "text": "\"That paper now exists And it's like",
+        "start": 429.599,
+        "duration": 3.921
+    },
+    {
+        "text": "I don't know there's like two or three",
+        "start": 431.84,
+        "duration": 3.28
+    },
+    {
+        "text": "people in the world that were very",
+        "start": 433.52,
+        "duration": 3.28
+    },
+    {
+        "text": "interested in this He's a PhD student",
+        "start": 435.12,
+        "duration": 4.16
+    },
+    {
+        "text": "which gives you an advantage But like",
+        "start": 436.8,
+        "duration": 4.16
+    },
+    {
+        "text": "for me that was a topic I was waiting",
+        "start": 439.28,
+        "duration": 2.8
+    },
+    {
+        "text": "for someone to be like \"Hey, I have",
+        "start": 440.96,
+        "duration": 3.2
+    },
+    {
+        "text": "time to spend cycles on this And I'm",
+        "start": 442.08,
+        "duration": 3.679
+    },
+    {
+        "text": "sure there's a lot more very narrow",
+        "start": 444.16,
+        "duration": 3.12
+    },
+    {
+        "text": "things where you're just like \"Oh, it",
+        "start": 445.759,
+        "duration": 2.88
+    },
+    {
+        "text": "doesn't make sense that there was no",
+        "start": 447.28,
+        "duration": 2.8
+    },
+    {
+        "text": "answer to this And I think that it's",
+        "start": 448.639,
+        "duration": 3.68
+    },
+    {
+        "text": "just like there's so much information",
+        "start": 450.08,
+        "duration": 4.0
+    },
+    {
+        "text": "coming that people are like I can't",
+        "start": 452.319,
+        "duration": 3.6
+    },
+    {
+        "text": "grab onto any of these But if you just",
+        "start": 454.08,
+        "duration": 3.44
+    },
+    {
+        "text": "actually stick in an area I think",
+        "start": 455.919,
+        "duration": 3.12
+    },
+    {
+        "text": "there's a lot of interesting things to",
+        "start": 457.52,
+        "duration": 4.0
+    },
+    {
+        "text": "learn Yeah, I think you can't try to do",
+        "start": 459.039,
+        "duration": 3.841
+    },
+    {
+        "text": "it all because it would be very",
+        "start": 461.52,
+        "duration": 2.88
+    },
+    {
+        "text": "overwhelming and you would burn out if",
+        "start": 462.88,
+        "duration": 3.039
+    },
+    {
+        "text": "you try to keep up with everything For",
+        "start": 464.4,
+        "duration": 2.88
+    },
+    {
+        "text": "me for example I haven't kept up with",
+        "start": 465.919,
+        "duration": 3.041
+    },
+    {
+        "text": "computer vision a long time just focus",
+        "start": 467.28,
+        "duration": 3.6
+    },
+    {
+        "text": "on LMS. But coming back to your book",
+        "start": 468.96,
+        "duration": 3.359
+    },
+    {
+        "text": "for example I think this is also a",
+        "start": 470.88,
+        "duration": 3.2
+    },
+    {
+        "text": "really great book and a really good bang",
+        "start": 472.319,
+        "duration": 3.361
+    },
+    {
+        "text": "for the buck because you want to learn",
+        "start": 474.08,
+        "duration": 3.679
+    },
+    {
+        "text": "about RLHF. I wouldn't go out there and",
+        "start": 475.68,
+        "duration": 4.639
+    },
+    {
+        "text": "read RL HF papers because I would be you",
+        "start": 477.759,
+        "duration": 3.601
+    },
+    {
+        "text": "would be spending",
+        "start": 480.319,
+        "duration": 3.041
+    },
+    {
+        "text": "i contradict there I just edited the book",
+        "start": 481.36,
+        "duration": 4.0
+    },
+    {
+        "text": "and I was like there's a chapter where I",
+        "start": 483.36,
+        "duration": 4.399
+    },
+    {
+        "text": "had to be like X papers say one thing",
+        "start": 485.36,
+        "duration": 4.559
+    },
+    {
+        "text": "and X papers say another thing and we'll",
+        "start": 487.759,
+        "duration": 4.72
+    },
+    {
+        "text": "see what comes out to be true",
+        "start": 489.919,
+        "duration": 3.84
+    },
+    {
+        "text": "i What are some of the just to go through",
+        "start": 492.479,
+        "duration": 2.56
+    },
+    {
+        "text": "some of the table of contents some of",
+        "start": 493.759,
+        "duration": 2.56
+    },
+    {
+        "text": "the ideas we might have missed in the",
+        "start": 495.039,
+        "duration": 3.041
+    },
+    {
+        "text": "bigger picture of the post training So",
+        "start": 496.319,
+        "duration": 3.361
+    },
+    {
+        "text": "first of all you do the problem setup",
+        "start": 498.08,
+        "duration": 3.36
+    },
+    {
+        "text": "training overview what are preferences",
+        "start": 499.68,
+        "duration": 4.16
+    },
+    {
+        "text": "preferences data in the optimization",
+        "start": 501.44,
+        "duration": 5.039
+    },
+    {
+        "text": "tools reward modeling regularization",
+        "start": 503.84,
+        "duration": 4.88
+    },
+    {
+        "text": "instruction tuning rejection sampling",
+        "start": 506.479,
+        "duration": 4.4
+    },
+    {
+        "text": "reinforcement learning I policy",
+        "start": 508.72,
+        "duration": 5.28
+    },
+    {
+        "text": "gradients direct alignment algorithms",
+        "start": 510.879,
+        "duration": 5.761
+    },
+    {
+        "text": "then constitutional AI and AI feedback",
+        "start": 514.0,
+        "duration": 4.88
+    },
+    {
+        "text": "reasoning and inference time scaling",
+        "start": 516.64,
+        "duration": 4.16
+    },
+    {
+        "text": "tool use and function calling synthetic",
+        "start": 518.88,
+        "duration": 4.48
+    },
+    {
+        "text": "data and distillation evaluation and",
+        "start": 520.8,
+        "duration": 4.64
+    },
+    {
+        "text": "then open question section over",
+        "start": 523.36,
+        "duration": 4.96
+    },
+    {
+        "text": "optimization style and information and",
+        "start": 525.44,
+        "duration": 5.04
+    },
+    {
+        "text": "then product UX character and post",
+        "start": 528.32,
+        "duration": 4.72
+    },
+    {
+        "text": "training So what are some ideas worth",
+        "start": 530.48,
+        "duration": 4.0
+    },
+    {
+        "text": "mentioning that connect both the",
+        "start": 533.04,
+        "duration": 3.04
+    },
+    {
+        "text": "educational component and the research",
+        "start": 534.48,
+        "duration": 3.2
+    },
+    {
+        "text": "component You mentioned the character",
+        "start": 536.08,
+        "duration": 2.96
+    },
+    {
+        "text": "training which is pretty interesting",
+        "start": 537.68,
+        "duration": 2.4
+    },
+    {
+        "text": "i Character training is interesting",
+        "start": 539.04,
+        "duration": 2.479
+    },
+    {
+        "text": "because there's so little out of it but",
+        "start": 540.08,
+        "duration": 3.439
+    },
+    {
+        "text": "we talked about how people engage with",
+        "start": 541.519,
+        "duration": 4.561
+    },
+    {
+        "text": "these models and like like we feel good",
+        "start": 543.519,
+        "duration": 4.32
+    },
+    {
+        "text": "using them because they're positive but",
+        "start": 546.08,
+        "duration": 3.36
+    },
+    {
+        "text": "that can go too far or it could be too",
+        "start": 547.839,
+        "duration": 4.161
+    },
+    {
+        "text": "positive and it's like essentially it's",
+        "start": 549.44,
+        "duration": 5.44
+    },
+    {
+        "text": "how do you change your data and or",
+        "start": 552.0,
+        "duration": 5.12
+    },
+    {
+        "text": "decision to make it exactly what you",
+        "start": 554.88,
+        "duration": 4.079
+    },
+    {
+        "text": "want and like OpenAI has this thing",
+        "start": 557.12,
+        "duration": 3.68
+    },
+    {
+        "text": "called a model spec which is essentially",
+        "start": 558.959,
+        "duration": 4.401
+    },
+    {
+        "text": "their internal guideline for what they",
+        "start": 560.8,
+        "duration": 4.32
+    },
+    {
+        "text": "want the model to do and they publish",
+        "start": 563.36,
+        "duration": 3.76
+    },
+    {
+        "text": "this to developers so essentially you",
+        "start": 565.12,
+        "duration": 4.88
+    },
+    {
+        "text": "can know what is a failure of OpenAI's",
+        "start": 567.12,
+        "duration": 4.399
+    },
+    {
+        "text": "training which is like they have the",
+        "start": 570.0,
+        "duration": 3.279
+    },
+    {
+        "text": "intentions and they haven't met it yet",
+        "start": 571.519,
+        "duration": 3.44
+    },
+    {
+        "text": "versus what is something that they like",
+        "start": 573.279,
+        "duration": 3.201
+    },
+    {
+        "text": "actually wanted to do and that you don't",
+        "start": 574.959,
+        "duration": 3.361
+    },
+    {
+        "text": "like and that transparency is very nice",
+        "start": 576.48,
+        "duration": 4.32
+    },
+    {
+        "text": "But all the methods for curating these",
+        "start": 578.32,
+        "duration": 4.32
+    },
+    {
+        "text": "documents and how easy it is to follow",
+        "start": 580.8,
+        "duration": 3.92
+    },
+    {
+        "text": "them is not very wellnown. I think the",
+        "start": 582.64,
+        "duration": 3.52
+    },
+    {
+        "text": "way the book is designed is that the",
+        "start": 584.72,
+        "duration": 3.04
+    },
+    {
+        "text": "reinforce learning chapter is obviously",
+        "start": 586.16,
+        "duration": 3.119
+    },
+    {
+        "text": "what people want because everybody hears",
+        "start": 587.76,
+        "duration": 3.36
+    },
+    {
+        "text": "about it with RLVR and it's the same",
+        "start": 589.279,
+        "duration": 4.401
+    },
+    {
+        "text": "algorithms and the same math but it's",
+        "start": 591.12,
+        "duration": 4.32
+    },
+    {
+        "text": "just like you can use it in in very",
+        "start": 593.68,
+        "duration": 3.44
+    },
+    {
+        "text": "different documents So I think the core",
+        "start": 595.44,
+        "duration": 3.68
+    },
+    {
+        "text": "of prep",
+        "start": 597.12,
+        "duration": 4.48
+    },
+    {
+        "text": "is like how messy preferences are is",
+        "start": 599.12,
+        "duration": 4.88
+    },
+    {
+        "text": "essentially rehash of a paper I wrote",
+        "start": 601.6,
+        "duration": 4.56
+    },
+    {
+        "text": "years ago This is essentially the",
+        "start": 604.0,
+        "duration": 4.16
+    },
+    {
+        "text": "chapter that's tell you why RHF is",
+        "start": 606.16,
+        "duration": 5.679
+    },
+    {
+        "text": "never ever fully solvable because like",
+        "start": 608.16,
+        "duration": 8.16
+    },
+    {
+        "text": "the way that even RL is set up is that",
+        "start": 611.839,
+        "duration": 7.68
+    },
+    {
+        "text": "um it assumes that preferences can be",
+        "start": 616.32,
+        "duration": 6.32
+    },
+    {
+        "text": "quantified and that multiple preferences",
+        "start": 619.519,
+        "duration": 5.361
+    },
+    {
+        "text": "can be reduced to single values And I",
+        "start": 622.64,
+        "duration": 4.08
+    },
+    {
+        "text": "think it relates in the economics",
+        "start": 624.88,
+        "duration": 4.0
+    },
+    {
+        "text": "literature to the conman Morganston",
+        "start": 626.72,
+        "duration": 4.0
+    },
+    {
+        "text": "utility theorem And like that is the",
+        "start": 628.88,
+        "duration": 4.48
+    },
+    {
+        "text": "chapter where all of that philosophical",
+        "start": 630.72,
+        "duration": 4.88
+    },
+    {
+        "text": "economic and like psychological context",
+        "start": 633.36,
+        "duration": 4.08
+    },
+    {
+        "text": "it tells you what gets compressed into",
+        "start": 635.6,
+        "duration": 4.08
+    },
+    {
+        "text": "doing RHF. So it's like you have all of",
+        "start": 637.44,
+        "duration": 4.0
+    },
+    {
+        "text": "this and then at later in the book it's",
+        "start": 639.68,
+        "duration": 3.44
+    },
+    {
+        "text": "like you use this RL math to make the",
+        "start": 641.44,
+        "duration": 3.2
+    },
+    {
+        "text": "number go up And I think that that's",
+        "start": 643.12,
+        "duration": 2.959
+    },
+    {
+        "text": "why I think it would be very rewarding",
+        "start": 644.64,
+        "duration": 3.199
+    },
+    {
+        "text": "for people to do research on is because",
+        "start": 646.079,
+        "duration": 4.32
+    },
+    {
+        "text": "it's like quantifying preferences is",
+        "start": 647.839,
+        "duration": 5.44
+    },
+    {
+        "text": "something that is just like humans have",
+        "start": 650.399,
+        "duration": 4.56
+    },
+    {
+        "text": "designed the problem in order to make",
+        "start": 653.279,
+        "duration": 3.281
+    },
+    {
+        "text": "preferences studyable. But there's kind",
+        "start": 654.959,
+        "duration": 4.0
+    },
+    {
+        "text": "of fundamental debates on like an",
+        "start": 656.56,
+        "duration": 4.64
+    },
+    {
+        "text": "example is in a language model response",
+        "start": 658.959,
+        "duration": 3.521
+    },
+    {
+        "text": "you have different things you care about",
+        "start": 661.2,
+        "duration": 3.52
+    },
+    {
+        "text": "whether it's accuracy or style and when",
+        "start": 662.48,
+        "duration": 3.76
+    },
+    {
+        "text": "you're collecting the data they all get",
+        "start": 664.72,
+        "duration": 3.359
+    },
+    {
+        "text": "compressed into like a I like this more",
+        "start": 666.24,
+        "duration": 4.24
+    },
+    {
+        "text": "than another and it's like like that is",
+        "start": 668.079,
+        "duration": 4.401
+    },
+    {
+        "text": "happening and there's a lot of philosophy",
+        "start": 670.48,
+        "duration": 3.599
+    },
+    {
+        "text": "there's a lot of research in other areas",
+        "start": 672.48,
+        "duration": 3.599
+    },
+    {
+        "text": "of the world that go into like how",
+        "start": 674.079,
+        "duration": 4.0
+    },
+    {
+        "text": "should you actually do this I think",
+        "start": 676.079,
+        "duration": 4.961
+    },
+    {
+        "text": "social choice theory is the sub field of",
+        "start": 678.079,
+        "duration": 4.801
+    },
+    {
+        "text": "economics around how you should",
+        "start": 681.04,
+        "duration": 3.84
+    },
+    {
+        "text": "aggregate preferences laughter and",
+        "start": 682.88,
+        "duration": 4.639
+    },
+    {
+        "text": "there's Like I was I went to a workshop",
+        "start": 684.88,
+        "duration": 4.079
+    },
+    {
+        "text": "that published a white paper I'm like",
+        "start": 687.519,
+        "duration": 2.88
+    },
+    {
+        "text": "how can you think about using social",
+        "start": 688.959,
+        "duration": 4.32
+    },
+    {
+        "text": "choice theory for ROHF? So I mostly",
+        "start": 690.399,
+        "duration": 4.241
+    },
+    {
+        "text": "would want people that get excited about",
+        "start": 693.279,
+        "duration": 3.441
+    },
+    {
+        "text": "the math to come and have things where",
+        "start": 694.64,
+        "duration": 3.759
+    },
+    {
+        "text": "they could stumble into and learn this",
+        "start": 696.72,
+        "duration": 3.84
+    },
+    {
+        "text": "kind of broader context I think there's",
+        "start": 698.399,
+        "duration": 3.841
+    },
+    {
+        "text": "a fun thing I just keep a list of all",
+        "start": 700.56,
+        "duration": 3.6
+    },
+    {
+        "text": "the teach reports I like of reasoning",
+        "start": 702.24,
+        "duration": 4.719
+    },
+    {
+        "text": "models So in the in chapter 14, which",
+        "start": 704.16,
+        "duration": 4.799
+    },
+    {
+        "text": "is kind of like a short summary of RLVR,",
+        "start": 706.959,
+        "duration": 3.601
+    },
+    {
+        "text": "there's just like a gigantic table where",
+        "start": 708.959,
+        "duration": 3.521
+    },
+    {
+        "text": "I just like list every single reasoning",
+        "start": 710.56,
+        "duration": 4.0
+    },
+    {
+        "text": "model that I like So there's just like",
+        "start": 712.48,
+        "duration": 3.76
+    },
+    {
+        "text": "I think in education a lot of it needs",
+        "start": 714.56,
+        "duration": 4.08
+    },
+    {
+        "text": "to be like at this point it's like what",
+        "start": 716.24,
+        "duration": 4.159
+    },
+    {
+        "text": "I like because the language models are",
+        "start": 718.64,
+        "duration": 4.56
+    },
+    {
+        "text": "so good at the math where it's like",
+        "start": 720.399,
+        "duration": 4.241
+    },
+    {
+        "text": "famous paper direct preference",
+        "start": 723.2,
+        "duration": 2.8
+    },
+    {
+        "text": "optimization which is like a much",
+        "start": 724.64,
+        "duration": 2.96
+    },
+    {
+        "text": "simpler way of pro solving the problem",
+        "start": 726.0,
+        "duration": 4.079
+    },
+    {
+        "text": "than RL um the derivations in the",
+        "start": 727.6,
+        "duration": 4.72
+    },
+    {
+        "text": "appendix skip steps of math and it's",
+        "start": 730.079,
+        "duration": 3.921
+    },
+    {
+        "text": "like I tried for this book like I redid",
+        "start": 732.32,
+        "duration": 3.199
+    },
+    {
+        "text": "the derivations and I'm like what the",
+        "start": 734.0,
+        "duration": 4.16
+    },
+    {
+        "text": "heck is this log trick that they use to",
+        "start": 735.519,
+        "duration": 4.241
+    },
+    {
+        "text": "change the math but doing it with",
+        "start": 738.16,
+        "duration": 2.799
+    },
+    {
+        "text": "language models they're like this is the",
+        "start": 739.76,
+        "duration": 3.6
+    },
+    {
+        "text": "log trick and I'm like I I don't know if",
+        "start": 740.959,
+        "duration": 5.041
+    },
+    {
+        "text": "I like this that the math is so",
+        "start": 743.36,
+        "duration": 4.479
+    },
+    {
+        "text": "commoditized. I think like some of the",
+        "start": 746.0,
+        "duration": 4.0
+    },
+    {
+        "text": "struggle and reading this appendix and",
+        "start": 747.839,
+        "duration": 5.041
+    },
+    {
+        "text": "following the math I think is good for",
+        "start": 750.0,
+        "duration": 4.72
+    },
+    {
+        "text": "learning and I",
+        "start": 752.88,
+        "duration": 3.36
+    },
+    {
+        "text": "i Yeah. So we're actually returning to",
+        "start": 754.72,
+        "duration": 3.04
+    },
+    {
+        "text": "this often just on the topic of",
+        "start": 756.24,
+        "duration": 4.399
+    },
+    {
+        "text": "education You both have brought up the",
+        "start": 757.76,
+        "duration": 4.4
+    },
+    {
+        "text": "word struggle",
+        "start": 760.639,
+        "duration": 4.481
+    },
+    {
+        "text": "i quite a bit So there is value if you're",
+        "start": 762.16,
+        "duration": 5.919
+    },
+    {
+        "text": "not struggling as part of this process",
+        "start": 765.12,
+        "duration": 5.519
+    },
+    {
+        "text": "You're not fully following the the",
+        "start": 768.079,
+        "duration": 5.041
+    },
+    {
+        "text": "proper process for learning I suppose",
+        "start": 770.639,
+        "duration": 3.921
+    },
+    {
+        "text": "some of the providers are starting to",
+        "start": 773.12,
+        "duration": 3.279
+    },
+    {
+        "text": "work on models for education which are",
+        "start": 774.56,
+        "duration": 3.839
+    },
+    {
+        "text": "designed to not give actually I haven't",
+        "start": 776.399,
+        "duration": 3.841
+    },
+    {
+        "text": "used them but I would guess they're",
+        "start": 778.399,
+        "duration": 3.521
+    },
+    {
+        "text": "designed to not give all the information",
+        "start": 780.24,
+        "duration": 2.64
+    },
+    {
+        "text": "at once",
+        "start": 781.92,
+        "duration": 2.719
+    },
+    {
+        "text": "i and make people work to do this So I",
+        "start": 782.88,
+        "duration": 3.04
+    },
+    {
+        "text": "think you could train models to do this",
+        "start": 784.639,
+        "duration": 3.041
+    },
+    {
+        "text": "and it would be a wonderful contribution",
+        "start": 785.92,
+        "duration": 3.68
+    },
+    {
+        "text": "where like all of this stuff in the book",
+        "start": 787.68,
+        "duration": 3.36
+    },
+    {
+        "text": "you have to reevaluate every decision",
+        "start": 789.6,
+        "duration": 3.52
+    },
+    {
+        "text": "for it which is such a great example I",
+        "start": 791.04,
+        "duration": 3.599
+    },
+    {
+        "text": "think there's there's a chance you work",
+        "start": 793.12,
+        "duration": 3.44
+    },
+    {
+        "text": "on it at AI too which I which I was like",
+        "start": 794.639,
+        "duration": 2.88
+    },
+    {
+        "text": "oh I think this be",
+        "start": 796.56,
+        "duration": 2.399
+    },
+    {
+        "text": "i it makes sense I do something like",
+        "start": 797.519,
+        "duration": 3.281
+    },
+    {
+        "text": "that uh did that the other day for",
+        "start": 798.959,
+        "duration": 3.921
+    },
+    {
+        "text": "video games for example I sometimes for",
+        "start": 800.8,
+        "duration": 3.68
+    },
+    {
+        "text": "my past time play video games like I",
+        "start": 802.88,
+        "duration": 4.24
+    },
+    {
+        "text": "like uh video games with puzzles so you",
+        "start": 804.48,
+        "duration": 4.159
+    },
+    {
+        "text": "know like Zelda and Metroid and there's",
+        "start": 807.12,
+        "duration": 4.32
+    },
+    {
+        "text": "this new game where I got stuck and I",
+        "start": 808.639,
+        "duration": 4.64
+    },
+    {
+        "text": "already got stuck and was okay I you",
+        "start": 811.44,
+        "duration": 4.0
+    },
+    {
+        "text": "know I don't want to struggle like two",
+        "start": 813.279,
+        "duration": 4.0
+    },
+    {
+        "text": "two days and so I used an LLM but then",
+        "start": 815.44,
+        "duration": 4.24
+    },
+    {
+        "text": "you say hey please don't add any",
+        "start": 817.279,
+        "duration": 4.0
+    },
+    {
+        "text": "spoilers just you know I'm here and",
+        "start": 819.68,
+        "duration": 3.279
+    },
+    {
+        "text": "there what do I have to do next and the",
+        "start": 821.279,
+        "duration": 3.201
+    },
+    {
+        "text": "same thing you can do I guess for math",
+        "start": 822.959,
+        "duration": 3.12
+    },
+    {
+        "text": "where you say okay I'm here at this",
+        "start": 824.48,
+        "duration": 3.359
+    },
+    {
+        "text": "point I'm getting stuck don't give me",
+        "start": 826.079,
+        "duration": 3.841
+    },
+    {
+        "text": "the full solution But what is something",
+        "start": 827.839,
+        "duration": 4.401
+    },
+    {
+        "text": "I could try you know like where you kind",
+        "start": 829.92,
+        "duration": 4.159
+    },
+    {
+        "text": "of carefully probe it but the problem",
+        "start": 832.24,
+        "duration": 3.839
+    },
+    {
+        "text": "here is I think it requires discipline",
+        "start": 834.079,
+        "duration": 4.721
+    },
+    {
+        "text": "and a lot of people do math for like I",
+        "start": 836.079,
+        "duration": 3.921
+    },
+    {
+        "text": "mean there are a lot of people who enjoy",
+        "start": 838.8,
+        "duration": 3.12
+    },
+    {
+        "text": "math but there also a lot of people who",
+        "start": 840.0,
+        "duration": 3.199
+    },
+    {
+        "text": "need to do it for their homework and",
+        "start": 841.92,
+        "duration": 3.52
+    },
+    {
+        "text": "then it's like the shortcut and yeah we",
+        "start": 843.199,
+        "duration": 4.481
+    },
+    {
+        "text": "can develop an educational LLM but the",
+        "start": 845.44,
+        "duration": 3.759
+    },
+    {
+        "text": "other LLM is still there and there's",
+        "start": 847.68,
+        "duration": 3.2
+    },
+    {
+        "text": "still a temptation to use the other LLM.",
+        "start": 849.199,
+        "duration": 3.361
+    },
+    {
+        "text": "I think a lot of people especially in",
+        "start": 850.88,
+        "duration": 3.44
+    },
+    {
+        "text": "college they they understand the stuff",
+        "start": 852.56,
+        "duration": 3.04
+    },
+    {
+        "text": "they're passionate about They're",
+        "start": 854.32,
+        "duration": 2.959
+    },
+    {
+        "text": "self-aware about it and they understand",
+        "start": 855.6,
+        "duration": 3.039
+    },
+    {
+        "text": "it shouldn't be easy",
+        "start": 857.279,
+        "duration": 3.281
+    },
+    {
+        "text": "i Like I think we just have to develop a",
+        "start": 858.639,
+        "duration": 3.041
+    },
+    {
+        "text": "good taste",
+        "start": 860.56,
+        "duration": 1.44
+    },
+    {
+        "text": "i Mhm.",
+        "start": 861.68,
+        "duration": 2.399
+    },
+    {
+        "text": "i We talk about research taste like",
+        "start": 862.0,
+        "duration": 4.88
+    },
+    {
+        "text": "school taste about stuff that you should",
+        "start": 864.079,
+        "duration": 4.32
+    },
+    {
+        "text": "be struggling on",
+        "start": 866.88,
+        "duration": 3.199
+    },
+    {
+        "text": "i and and stuff you shouldn't be",
+        "start": 868.399,
+        "duration": 3.201
+    },
+    {
+        "text": "struggling on which is tricky to know",
+        "start": 870.079,
+        "duration": 4.641
+    },
+    {
+        "text": "cut sometimes you don't have good um",
+        "start": 871.6,
+        "duration": 5.76
+    },
+    {
+        "text": "long-term vision about what would be",
+        "start": 874.72,
+        "duration": 5.359
+    },
+    {
+        "text": "actually useful to you in your career",
+        "start": 877.36,
+        "duration": 4.56
+    },
+    {
+        "text": "But you have to you have to develop that",
+        "start": 880.079,
+        "duration": 2.481
+    },
+    {
+        "text": "taste Yeah.",
+        "start": 881.92,
+        "duration": 2.96
+    },
+    {
+        "text": "i I was talking to maybe my fianc\u00e9 or",
+        "start": 882.56,
+        "duration": 4.48
+    },
+    {
+        "text": "friends about this and it's like there's",
+        "start": 884.88,
+        "duration": 4.399
+    },
+    {
+        "text": "this brief 10-year window where all of",
+        "start": 887.04,
+        "duration": 4.4
+    },
+    {
+        "text": "the homework and all the exams could be",
+        "start": 889.279,
+        "duration": 3.92
+    },
+    {
+        "text": "digital but before that everybody had",
+        "start": 891.44,
+        "duration": 3.199
+    },
+    {
+        "text": "to do all the exams in Blue Book cut",
+        "start": 893.199,
+        "duration": 3.2
+    },
+    {
+        "text": "there was no other way And now after",
+        "start": 894.639,
+        "duration": 3.281
+    },
+    {
+        "text": "AI, everybody's going to need to be in",
+        "start": 896.399,
+        "duration": 3.201
+    },
+    {
+        "text": "Blue Books and oral exams cut everybody",
+        "start": 897.92,
+        "duration": 3.12
+    },
+    {
+        "text": "could cheat so easily It's like this",
+        "start": 899.6,
+        "duration": 3.655
+    },
+    {
+        "text": "brief generation that had a different",
+        "start": 901.04,
+        "duration": 4.08
+    },
+    {
+        "text": "laughter education system that like",
+        "start": 903.255,
+        "duration": 4.105
+    },
+    {
+        "text": "everything could be digital and but you",
+        "start": 905.12,
+        "duration": 3.76
+    },
+    {
+        "text": "still couldn't cheat And now I was just",
+        "start": 907.36,
+        "duration": 2.96
+    },
+    {
+        "text": "going to go back laughter which is",
+        "start": 908.88,
+        "duration": 2.56
+    },
+    {
+        "text": "pretty funny",
+        "start": 910.32,
+        "duration": 3.199
+    },
+    {
+        "text": "i You mentioned character training Just",
+        "start": 911.44,
+        "duration": 4.88
+    },
+    {
+        "text": "zooming out on on a more general topic",
+        "start": 913.519,
+        "duration": 5.281
+    },
+    {
+        "text": "for that topic How much compute was",
+        "start": 916.32,
+        "duration": 5.199
+    },
+    {
+        "text": "required and in general to contribute as",
+        "start": 918.8,
+        "duration": 4.88
+    },
+    {
+        "text": "a researchers",
+        "start": 921.519,
+        "duration": 4.32
+    },
+    {
+        "text": "Are there places where not too much",
+        "start": 923.68,
+        "duration": 3.519
+    },
+    {
+        "text": "compute is required where you can",
+        "start": 925.839,
+        "duration": 3.041
+    },
+    {
+        "text": "actually contribute as an individual",
+        "start": 927.199,
+        "duration": 2.961
+    },
+    {
+        "text": "researcher",
+        "start": 928.88,
+        "duration": 3.12
+    },
+    {
+        "text": "i for on the character training thing I",
+        "start": 930.16,
+        "duration": 3.2
+    },
+    {
+        "text": "think this research is built on",
+        "start": 932.0,
+        "duration": 3.76
+    },
+    {
+        "text": "fine-tuning about 7 billion parameter",
+        "start": 933.36,
+        "duration": 5.279
+    },
+    {
+        "text": "models with Laura which is like a",
+        "start": 935.76,
+        "duration": 4.639
+    },
+    {
+        "text": "essentially you only fine-tune a small",
+        "start": 938.639,
+        "duration": 3.44
+    },
+    {
+        "text": "subset of the weights of the model I",
+        "start": 940.399,
+        "duration": 4.481
+    },
+    {
+        "text": "don't know exactly how many GPU hours",
+        "start": 942.079,
+        "duration": 4.641
+    },
+    {
+        "text": "that would take but it's doable",
+        "start": 944.88,
+        "duration": 3.68
+    },
+    {
+        "text": "i not doable for every academic So the",
+        "start": 946.72,
+        "duration": 3.679
+    },
+    {
+        "text": "situation for some academics is like so",
+        "start": 948.56,
+        "duration": 3.68
+    },
+    {
+        "text": "dire that the only work you can do is",
+        "start": 950.399,
+        "duration": 3.761
+    },
+    {
+        "text": "doing inference where you have closed",
+        "start": 952.24,
+        "duration": 3.519
+    },
+    {
+        "text": "models or open models and you get",
+        "start": 954.16,
+        "duration": 3.039
+    },
+    {
+        "text": "completions from them and you can look",
+        "start": 955.759,
+        "duration": 3.2
+    },
+    {
+        "text": "at them and understand the models and",
+        "start": 957.199,
+        "duration": 3.44
+    },
+    {
+        "text": "that's very well suited to evaluation",
+        "start": 958.959,
+        "duration": 4.0
+    },
+    {
+        "text": "which you become ex you want to be the",
+        "start": 960.639,
+        "duration": 5.44
+    },
+    {
+        "text": "best at creating representative problems",
+        "start": 962.959,
+        "duration": 5.521
+    },
+    {
+        "text": "that the models fail on or show certain",
+        "start": 966.079,
+        "duration": 4.481
+    },
+    {
+        "text": "abilities which I think that you can",
+        "start": 968.48,
+        "duration": 4.56
+    },
+    {
+        "text": "break through with this So I've like I",
+        "start": 970.56,
+        "duration": 4.8
+    },
+    {
+        "text": "think that the top end goal for a",
+        "start": 973.04,
+        "duration": 4.32
+    },
+    {
+        "text": "researcher working on evaluation if you",
+        "start": 975.36,
+        "duration": 4.159
+    },
+    {
+        "text": "want to have career momentum is the",
+        "start": 977.36,
+        "duration": 4.159
+    },
+    {
+        "text": "frontier labs pick up your evaluation",
+        "start": 979.519,
+        "duration": 3.44
+    },
+    {
+        "text": "So it's like you don't need to have",
+        "start": 981.519,
+        "duration": 3.361
+    },
+    {
+        "text": "every project do this But if you go",
+        "start": 982.959,
+        "duration": 3.601
+    },
+    {
+        "text": "from a small university with no compute",
+        "start": 984.88,
+        "duration": 3.28
+    },
+    {
+        "text": "and you figure out something that claude",
+        "start": 986.56,
+        "duration": 3.36
+    },
+    {
+        "text": "struggles with and then the next cloud",
+        "start": 988.16,
+        "duration": 4.08
+    },
+    {
+        "text": "model has it in the blog post like there",
+        "start": 989.92,
+        "duration": 4.88
+    },
+    {
+        "text": "there's your career rocket ship I think",
+        "start": 992.24,
+        "duration": 4.08
+    },
+    {
+        "text": "that that's hard but it's like if you",
+        "start": 994.8,
+        "duration": 3.039
+    },
+    {
+        "text": "want to scope the maximum possible",
+        "start": 996.32,
+        "duration": 3.759
+    },
+    {
+        "text": "impact with minimum compute it's",
+        "start": 997.839,
+        "duration": 3.841
+    },
+    {
+        "text": "something like that which is just get",
+        "start": 1000.079,
+        "duration": 4.0
+    },
+    {
+        "text": "very narrow and it takes learning of",
+        "start": 1001.68,
+        "duration": 3.92
+    },
+    {
+        "text": "where the models are going So you need",
+        "start": 1004.079,
+        "duration": 4.481
+    },
+    {
+        "text": "to like build a tool that tests where",
+        "start": 1005.6,
+        "duration": 5.679
+    },
+    {
+        "text": "not cloud 4.5 will fail If you're going",
+        "start": 1008.56,
+        "duration": 3.92
+    },
+    {
+        "text": "to do a re if I'm going to start a",
+        "start": 1011.279,
+        "duration": 2.641
+    },
+    {
+        "text": "research project I need to think where",
+        "start": 1012.48,
+        "duration": 3.12
+    },
+    {
+        "text": "the models in 8 months are going to be",
+        "start": 1013.92,
+        "duration": 2.56
+    },
+    {
+        "text": "struggling",
+        "start": 1015.6,
+        "duration": 2.56
+    },
+    {
+        "text": "i Well what about developing totally novel",
+        "start": 1016.48,
+        "duration": 3.039
+    },
+    {
+        "text": "ideas",
+        "start": 1018.16,
+        "duration": 3.2
+    },
+    {
+        "text": "i This is a tradeoff I think that if",
+        "start": 1019.519,
+        "duration": 3.68
+    },
+    {
+        "text": "you're doing a PhD, you could also be",
+        "start": 1021.36,
+        "duration": 4.64
+    },
+    {
+        "text": "like it's too risky to work in language",
+        "start": 1023.199,
+        "duration": 4.961
+    },
+    {
+        "text": "models I'm going way longer terms which",
+        "start": 1026.0,
+        "duration": 4.0
+    },
+    {
+        "text": "is like what is",
+        "start": 1028.16,
+        "duration": 3.36
+    },
+    {
+        "text": "i what is the thing that's going to define",
+        "start": 1030.0,
+        "duration": 3.52
+    },
+    {
+        "text": "language model development in 10 years",
+        "start": 1031.52,
+        "duration": 3.76
+    },
+    {
+        "text": "which I think that I end up being a",
+        "start": 1033.52,
+        "duration": 3.6
+    },
+    {
+        "text": "person that's pretty practical I mean",
+        "start": 1035.28,
+        "duration": 4.08
+    },
+    {
+        "text": "I went to my PhD where it's like I got",
+        "start": 1037.12,
+        "duration": 3.52
+    },
+    {
+        "text": "into Berkeley, worst case I get a",
+        "start": 1039.36,
+        "duration": 3.04
+    },
+    {
+        "text": "masters and then I go work in techs It's",
+        "start": 1040.64,
+        "duration": 3.439
+    },
+    {
+        "text": "like I'm very practical about it on",
+        "start": 1042.4,
+        "duration": 4.88
+    },
+    {
+        "text": "like the life afforded to people to work",
+        "start": 1044.079,
+        "duration": 5.281
+    },
+    {
+        "text": "at these AI companies The amount of",
+        "start": 1047.28,
+        "duration": 4.24
+    },
+    {
+        "text": "like OpenAI's average compensation is",
+        "start": 1049.36,
+        "duration": 3.84
+    },
+    {
+        "text": "over a million dollars in stock a year",
+        "start": 1051.52,
+        "duration": 4.96
+    },
+    {
+        "text": "per employee Any normal person in the",
+        "start": 1053.2,
+        "duration": 5.44
+    },
+    {
+        "text": "US to get into this AI lab is",
+        "start": 1056.48,
+        "duration": 3.68
+    },
+    {
+        "text": "transformation for your life So I'm",
+        "start": 1058.64,
+        "duration": 3.52
+    },
+    {
+        "text": "pretty practical of like there's still a",
+        "start": 1060.16,
+        "duration": 3.6
+    },
+    {
+        "text": "lot of upward mobility working in",
+        "start": 1062.16,
+        "duration": 3.68
+    },
+    {
+        "text": "language models if you're focused and",
+        "start": 1063.76,
+        "duration": 3.76
+    },
+    {
+        "text": "the outcomes is like look at these jobs",
+        "start": 1065.84,
+        "duration": 3.44
+    },
+    {
+        "text": "But from a research perspective the",
+        "start": 1067.52,
+        "duration": 4.64
+    },
+    {
+        "text": "transformation impact in these academic",
+        "start": 1069.28,
+        "duration": 5.12
+    },
+    {
+        "text": "awards and like be the next Yan Lacun is",
+        "start": 1072.16,
+        "duration": 4.08
+    },
+    {
+        "text": "from not working on not caring about",
+        "start": 1074.4,
+        "duration": 3.84
+    },
+    {
+        "text": "language model development very much",
+        "start": 1076.24,
+        "duration": 3.84
+    },
+    {
+        "text": "It's a big financial sacrifice in that",
+        "start": 1078.24,
+        "duration": 2.16
+    },
+    {
+        "text": "case",
+        "start": 1080.08,
+        "duration": 2.0
+    },
+    {
+        "text": "i So I get to work with some awesome",
+        "start": 1080.4,
+        "duration": 3.6
+    },
+    {
+        "text": "students and they're like should I go",
+        "start": 1082.08,
+        "duration": 4.08
+    },
+    {
+        "text": "work at an AI lab And I'm like like",
+        "start": 1084.0,
+        "duration": 4.0
+    },
+    {
+        "text": "you're getting a PhD at a top school or",
+        "start": 1086.16,
+        "duration": 3.36
+    },
+    {
+        "text": "you're going to leave to go to a lab",
+        "start": 1088.0,
+        "duration": 3.44
+    },
+    {
+        "text": "I'm like I don't know Like if you go",
+        "start": 1089.52,
+        "duration": 3.68
+    },
+    {
+        "text": "work at a top lab I don't blame you",
+        "start": 1091.44,
+        "duration": 3.28
+    },
+    {
+        "text": "Don't go work at some random startup",
+        "start": 1093.2,
+        "duration": 2.88
+    },
+    {
+        "text": "that might go to zero but if you're",
+        "start": 1094.72,
+        "duration": 3.839
+    },
+    {
+        "text": "going to open AI, I'm like it could be",
+        "start": 1096.08,
+        "duration": 5.28
+    },
+    {
+        "text": "worth leaving a PhD for Let's more",
+        "start": 1098.559,
+        "duration": 5.841
+    },
+    {
+        "text": "rigorously think through this So, where",
+        "start": 1101.36,
+        "duration": 4.48
+    },
+    {
+        "text": "would you give a recommendation for",
+        "start": 1104.4,
+        "duration": 3.519
+    },
+    {
+        "text": "people to do a research contribution",
+        "start": 1105.84,
+        "duration": 4.64
+    },
+    {
+        "text": "So, the options are academia so get get",
+        "start": 1107.919,
+        "duration": 7.281
+    },
+    {
+        "text": "a PhD, spend 5 years publishing",
+        "start": 1110.48,
+        "duration": 6.72
+    },
+    {
+        "text": "Computer resources are constrained",
+        "start": 1115.2,
+        "duration": 4.16
+    },
+    {
+        "text": "there's uh",
+        "start": 1117.2,
+        "duration": 4.08
+    },
+    {
+        "text": "there's research labs that are more",
+        "start": 1119.36,
+        "duration": 6.319
+    },
+    {
+        "text": "focused on open weight models and so",
+        "start": 1121.28,
+        "duration": 9.44
+    },
+    {
+        "text": "working there or closed frontier labs",
+        "start": 1125.679,
+        "duration": 7.041
+    },
+    {
+        "text": "research labs",
+        "start": 1130.72,
+        "duration": 4.4
+    },
+    {
+        "text": "i open AI anthropic ai so on",
+        "start": 1132.72,
+        "duration": 4.48
+    },
+    {
+        "text": "i um the two gradients are the more closed",
+        "start": 1135.12,
+        "duration": 4.64
+    },
+    {
+        "text": "the more money you tend to get and but",
+        "start": 1137.2,
+        "duration": 5.76
+    },
+    {
+        "text": "also the le you get less credit so in",
+        "start": 1139.76,
+        "duration": 7.279
+    },
+    {
+        "text": "terms of building a like a portfolio of",
+        "start": 1142.96,
+        "duration": 6.4
+    },
+    {
+        "text": "things that you've done like it's very",
+        "start": 1147.039,
+        "duration": 3.76
+    },
+    {
+        "text": "clear of what you have done as an",
+        "start": 1149.36,
+        "duration": 3.12
+    },
+    {
+        "text": "academic and you have done this and",
+        "start": 1150.799,
+        "duration": 4.161
+    },
+    {
+        "text": "versus if you are going to go be like",
+        "start": 1152.48,
+        "duration": 5.439
+    },
+    {
+        "text": "trade this fairly reasonable progression",
+        "start": 1154.96,
+        "duration": 4.8
+    },
+    {
+        "text": "for being a cog in the machine which",
+        "start": 1157.919,
+        "duration": 3.841
+    },
+    {
+        "text": "could also be very fun So I think it's",
+        "start": 1159.76,
+        "duration": 4.88
+    },
+    {
+        "text": "a very different career paths but the",
+        "start": 1161.76,
+        "duration": 4.56
+    },
+    {
+        "text": "like the opportunity cost for being a",
+        "start": 1164.64,
+        "duration": 3.44
+    },
+    {
+        "text": "researcher is very high because PhD",
+        "start": 1166.32,
+        "duration": 3.599
+    },
+    {
+        "text": "students are paid essentially nothing",
+        "start": 1168.08,
+        "duration": 3.28
+    },
+    {
+        "text": "So I think it ends up rewarding people",
+        "start": 1169.919,
+        "duration": 4.561
+    },
+    {
+        "text": "that have a fairly stable safety net and",
+        "start": 1171.36,
+        "duration": 4.8
+    },
+    {
+        "text": "they realize that they can operate in",
+        "start": 1174.48,
+        "duration": 3.36
+    },
+    {
+        "text": "the long term which is they want to do",
+        "start": 1176.16,
+        "duration": 3.28
+    },
+    {
+        "text": "very interesting work and get a very",
+        "start": 1177.84,
+        "duration": 4.56
+    },
+    {
+        "text": "interesting job So it is a fairly like",
+        "start": 1179.44,
+        "duration": 4.479
+    },
+    {
+        "text": "it is a privileged position to be like",
+        "start": 1182.4,
+        "duration": 3.2
+    },
+    {
+        "text": "I'm going to see out my PhD and figure",
+        "start": 1183.919,
+        "duration": 3.76
+    },
+    {
+        "text": "it out after because I I want to do this",
+        "start": 1185.6,
+        "duration": 4.56
+    },
+    {
+        "text": "and I think a lot of arcade like at the",
+        "start": 1187.679,
+        "duration": 4.641
+    },
+    {
+        "text": "same time the academic ecosystem is",
+        "start": 1190.16,
+        "duration": 4.24
+    },
+    {
+        "text": "getting bombarded by funding getting cut",
+        "start": 1192.32,
+        "duration": 3.76
+    },
+    {
+        "text": "and stuff So, there's just like so many",
+        "start": 1194.4,
+        "duration": 3.36
+    },
+    {
+        "text": "different tradeoffs where I understand",
+        "start": 1196.08,
+        "duration": 3.68
+    },
+    {
+        "text": "plenty of people that are like \"Oh, I'm",
+        "start": 1197.76,
+        "duration": 4.48
+    },
+    {
+        "text": "I can't deal with this funding search I",
+        "start": 1199.76,
+        "duration": 4.64
+    },
+    {
+        "text": "grant got cut for no reason by the",
+        "start": 1202.24,
+        "duration": 4.4
+    },
+    {
+        "text": "government or I don't know what's going",
+        "start": 1204.4,
+        "duration": 4.399
+    },
+    {
+        "text": "to happened So, I think there's a lot of",
+        "start": 1206.64,
+        "duration": 4.0
+    },
+    {
+        "text": "uncertainty and tradeoffs that in my",
+        "start": 1208.799,
+        "duration": 4.961
+    },
+    {
+        "text": "opinion favor just like take the take",
+        "start": 1210.64,
+        "duration": 4.64
+    },
+    {
+        "text": "the well-paying job with meaningful",
+        "start": 1213.76,
+        "duration": 2.88
+    },
+    {
+        "text": "impact So, it's like not also like",
+        "start": 1215.28,
+        "duration": 2.56
+    },
+    {
+        "text": "you're getting paid to sit around at",
+        "start": 1216.64,
+        "duration": 3.36
+    },
+    {
+        "text": "OpenAI. building like the cutting edge",
+        "start": 1217.84,
+        "duration": 4.56
+    },
+    {
+        "text": "of things that are",
+        "start": 1220.0,
+        "duration": 4.32
+    },
+    {
+        "text": "i changing millions of people's",
+        "start": 1222.4,
+        "duration": 3.279
+    },
+    {
+        "text": "relationship to techs",
+        "start": 1224.32,
+        "duration": 3.68
+    },
+    {
+        "text": "i but publication wise they're being more",
+        "start": 1225.679,
+        "duration": 4.561
+    },
+    {
+        "text": "secretive increasingly so So you're",
+        "start": 1228.0,
+        "duration": 3.52
+    },
+    {
+        "text": "publishing less and less and less and",
+        "start": 1230.24,
+        "duration": 3.919
+    },
+    {
+        "text": "less and so you're you are having a",
+        "start": 1231.52,
+        "duration": 5.36
+    },
+    {
+        "text": "positive impact at scale but it's you're",
+        "start": 1234.159,
+        "duration": 4.241
+    },
+    {
+        "text": "a cog in the machine",
+        "start": 1236.88,
+        "duration": 4.24
+    },
+    {
+        "text": "i I think it's honestly it hasn't changed",
+        "start": 1238.4,
+        "duration": 5.12
+    },
+    {
+        "text": "that much Uh so I have been in",
+        "start": 1241.12,
+        "duration": 4.559
+    },
+    {
+        "text": "academia I'm not in academia anymore",
+        "start": 1243.52,
+        "duration": 3.36
+    },
+    {
+        "text": "At the same time I wouldn't want to",
+        "start": 1245.679,
+        "duration": 3.201
+    },
+    {
+        "text": "miss my time in academia But what I",
+        "start": 1246.88,
+        "duration": 4.0
+    },
+    {
+        "text": "wanted to say before I get to that part",
+        "start": 1248.88,
+        "duration": 4.08
+    },
+    {
+        "text": "I think it hasn't changed that much I",
+        "start": 1250.88,
+        "duration": 5.279
+    },
+    {
+        "text": "um was working in um like I was using AI",
+        "start": 1252.96,
+        "duration": 5.12
+    },
+    {
+        "text": "or machine learning methods um for",
+        "start": 1256.159,
+        "duration": 3.601
+    },
+    {
+        "text": "applications and computational biology",
+        "start": 1258.08,
+        "duration": 4.8
+    },
+    {
+        "text": "with collaborators and a lot of people",
+        "start": 1259.76,
+        "duration": 6.72
+    },
+    {
+        "text": "went from academia directly to Google",
+        "start": 1262.88,
+        "duration": 5.279
+    },
+    {
+        "text": "and I think it's the same thing back",
+        "start": 1266.48,
+        "duration": 3.76
+    },
+    {
+        "text": "then the professors were like you know",
+        "start": 1268.159,
+        "duration": 4.721
+    },
+    {
+        "text": "sad that their students went into um",
+        "start": 1270.24,
+        "duration": 4.64
+    },
+    {
+        "text": "industry because they couldn't carry on",
+        "start": 1272.88,
+        "duration": 4.32
+    },
+    {
+        "text": "their legacy in that sense and I I think",
+        "start": 1274.88,
+        "duration": 4.08
+    },
+    {
+        "text": "it's the same thing it's like it it",
+        "start": 1277.2,
+        "duration": 3.839
+    },
+    {
+        "text": "hasn't changed I think that much the",
+        "start": 1278.96,
+        "duration": 3.92
+    },
+    {
+        "text": "only thing that has changed is the scale",
+        "start": 1281.039,
+        "duration": 4.241
+    },
+    {
+        "text": "but you know cool stuff was always",
+        "start": 1282.88,
+        "duration": 4.0
+    },
+    {
+        "text": "developed in industry that was closed",
+        "start": 1285.28,
+        "duration": 3.6
+    },
+    {
+        "text": "you could couldn't talk about it and I",
+        "start": 1286.88,
+        "duration": 5.44
+    },
+    {
+        "text": "think the difference now is um well your",
+        "start": 1288.88,
+        "duration": 4.96
+    },
+    {
+        "text": "preference do you like to talk about",
+        "start": 1292.32,
+        "duration": 4.56
+    },
+    {
+        "text": "your work publish or you know you you",
+        "start": 1293.84,
+        "duration": 6.319
+    },
+    {
+        "text": "are more in a closed step uh the that's",
+        "start": 1296.88,
+        "duration": 4.799
+    },
+    {
+        "text": "one difference the compensation of",
+        "start": 1300.159,
+        "duration": 3.681
+    },
+    {
+        "text": "course but it's always been like that I",
+        "start": 1301.679,
+        "duration": 5.201
+    },
+    {
+        "text": "think so it really depends on you know",
+        "start": 1303.84,
+        "duration": 4.56
+    },
+    {
+        "text": "where you feel comfortable and it's also",
+        "start": 1306.88,
+        "duration": 3.44
+    },
+    {
+        "text": "nothing is forever the only thing right",
+        "start": 1308.4,
+        "duration": 4.32
+    },
+    {
+        "text": "now is there's a third option which is",
+        "start": 1310.32,
+        "duration": 4.88
+    },
+    {
+        "text": "um starting a startup that's a lot of",
+        "start": 1312.72,
+        "duration": 6.16
+    },
+    {
+        "text": "people doing startups very risky move uh",
+        "start": 1315.2,
+        "duration": 5.599
+    },
+    {
+        "text": "but can be high is a high risk high",
+        "start": 1318.88,
+        "duration": 4.32
+    },
+    {
+        "text": "reward type of situation where joining",
+        "start": 1320.799,
+        "duration": 4.561
+    },
+    {
+        "text": "an industry lab I think is pretty safe",
+        "start": 1323.2,
+        "duration": 4.88
+    },
+    {
+        "text": "you know also upward mobility Honestly,",
+        "start": 1325.36,
+        "duration": 4.559
+    },
+    {
+        "text": "I think if once you have been at a",
+        "start": 1328.08,
+        "duration": 3.92
+    },
+    {
+        "text": "industry lab it will be easier to find",
+        "start": 1329.919,
+        "duration": 4.801
+    },
+    {
+        "text": "future jobs But then again you know",
+        "start": 1332.0,
+        "duration": 5.28
+    },
+    {
+        "text": "you know it's like yeah how much do",
+        "start": 1334.72,
+        "duration": 5.68
+    },
+    {
+        "text": "you enjoy the team and working on",
+        "start": 1337.28,
+        "duration": 5.6
+    },
+    {
+        "text": "propriety things versus how do you like",
+        "start": 1340.4,
+        "duration": 4.56
+    },
+    {
+        "text": "the publishing work I mean publishing",
+        "start": 1342.88,
+        "duration": 6.0
+    },
+    {
+        "text": "is stressful It is um you know like uh",
+        "start": 1344.96,
+        "duration": 5.599
+    },
+    {
+        "text": "acceptance rate at conferences can be",
+        "start": 1348.88,
+        "duration": 4.08
+    },
+    {
+        "text": "arbitrary can be very frustrating but",
+        "start": 1350.559,
+        "duration": 4.24
+    },
+    {
+        "text": "also high reward If you have a paper",
+        "start": 1352.96,
+        "duration": 3.52
+    },
+    {
+        "text": "published you feel good because your",
+        "start": 1354.799,
+        "duration": 3.041
+    },
+    {
+        "text": "name is on there You have a high",
+        "start": 1356.48,
+        "duration": 2.559
+    },
+    {
+        "text": "accomplishment and you know",
+        "start": 1357.84,
+        "duration": 2.64
+    },
+    {
+        "text": "i I feel like my friends who are",
+        "start": 1359.039,
+        "duration": 3.281
+    },
+    {
+        "text": "professors seem on average happier than",
+        "start": 1360.48,
+        "duration": 3.9
+    },
+    {
+        "text": "my friends who work at a frontier lab",
+        "start": 1362.32,
+        "duration": 4.08
+    },
+    {
+        "text": "laughter to be totally honest cut",
+        "start": 1364.38,
+        "duration": 4.659
+    },
+    {
+        "text": "that's just grounding and the frontier",
+        "start": 1366.4,
+        "duration": 5.519
+    },
+    {
+        "text": "labs definitely do this 996 which",
+        "start": 1369.039,
+        "duration": 4.481
+    },
+    {
+        "text": "essentially is shorthand for work all",
+        "start": 1371.919,
+        "duration": 2.321
+    },
+    {
+        "text": "the time",
+        "start": 1373.52,
+        "duration": 3.12
+    },
+    {
+        "text": "i Can you describe 996 as culture that's I",
+        "start": 1374.24,
+        "duration": 4.72
+    },
+    {
+        "text": "believe you could say invented in China",
+        "start": 1376.64,
+        "duration": 5.279
+    },
+    {
+        "text": "and uh adopted in Silicon Valley. What's",
+        "start": 1378.96,
+        "duration": 6.0
+    },
+    {
+        "text": "what's 996? Just 9:00 am to 9:00 pump",
+        "start": 1381.919,
+        "duration": 4.0
+    },
+    {
+        "text": "i 6 days a week",
+        "start": 1384.96,
+        "duration": 3.68
+    },
+    {
+        "text": "i 6 days a week What is that 72 hours",
+        "start": 1385.919,
+        "duration": 5.041
+    },
+    {
+        "text": "Okay. So, what is this basically the",
+        "start": 1388.64,
+        "duration": 5.2
+    },
+    {
+        "text": "standard in AI companies in Silicon",
+        "start": 1390.96,
+        "duration": 5.76
+    },
+    {
+        "text": "Valley? More and more this kind of grind",
+        "start": 1393.84,
+        "duration": 5.04
+    },
+    {
+        "text": "mindset Yeah. I mean not maybe not",
+        "start": 1396.72,
+        "duration": 3.68
+    },
+    {
+        "text": "exactly like that but I think there is",
+        "start": 1398.88,
+        "duration": 3.039
+    },
+    {
+        "text": "a trend towards it And it's",
+        "start": 1400.4,
+        "duration": 3.84
+    },
+    {
+        "text": "interesting I think it almost flipped",
+        "start": 1401.919,
+        "duration": 4.321
+    },
+    {
+        "text": "because when I was in academia I felt",
+        "start": 1404.24,
+        "duration": 4.0
+    },
+    {
+        "text": "like that because uh as a professor you",
+        "start": 1406.24,
+        "duration": 4.24
+    },
+    {
+        "text": "had to write grants you had to do you",
+        "start": 1408.24,
+        "duration": 3.76
+    },
+    {
+        "text": "had to teach and you had to do your",
+        "start": 1410.48,
+        "duration": 3.52
+    },
+    {
+        "text": "research It's like three jobs in one",
+        "start": 1412.0,
+        "duration": 4.4
+    },
+    {
+        "text": "and it is more than a full-time job if",
+        "start": 1414.0,
+        "duration": 5.039
+    },
+    {
+        "text": "you want to be successful And um I feel",
+        "start": 1416.4,
+        "duration": 5.04
+    },
+    {
+        "text": "like now like Nathan just said the",
+        "start": 1419.039,
+        "duration": 4.561
+    },
+    {
+        "text": "professors in comparison to a lab I",
+        "start": 1421.44,
+        "duration": 4.56
+    },
+    {
+        "text": "think they have less like even maybe",
+        "start": 1423.6,
+        "duration": 4.079
+    },
+    {
+        "text": "pressure or workload than at a frontier",
+        "start": 1426.0,
+        "duration": 2.24
+    },
+    {
+        "text": "lab because",
+        "start": 1427.679,
+        "duration": 1.841
+    },
+    {
+        "text": "i they work a lot They're just so",
+        "start": 1428.24,
+        "duration": 3.04
+    },
+    {
+        "text": "fulfilled by like working with students",
+        "start": 1429.52,
+        "duration": 3.44
+    },
+    {
+        "text": "and having a constant runway of",
+        "start": 1431.28,
+        "duration": 4.0
+    },
+    {
+        "text": "mentorship and like a mission that is",
+        "start": 1432.96,
+        "duration": 4.4
+    },
+    {
+        "text": "very people oriented I think in an era",
+        "start": 1435.28,
+        "duration": 4.32
+    },
+    {
+        "text": "when things are moving very fast and are",
+        "start": 1437.36,
+        "duration": 3.76
+    },
+    {
+        "text": "very chaotic is very rewarding to",
+        "start": 1439.6,
+        "duration": 4.079
+    },
+    {
+        "text": "people Yeah. And I think at a startup I",
+        "start": 1441.12,
+        "duration": 5.2
+    },
+    {
+        "text": "think it's this pressure It's like you",
+        "start": 1443.679,
+        "duration": 4.641
+    },
+    {
+        "text": "have to make it and it's like it is",
+        "start": 1446.32,
+        "duration": 3.68
+    },
+    {
+        "text": "really important that people put in the",
+        "start": 1448.32,
+        "duration": 4.0
+    },
+    {
+        "text": "time but well it is really hard because",
+        "start": 1450.0,
+        "duration": 4.72
+    },
+    {
+        "text": "you have to deliver constantly and I've",
+        "start": 1452.32,
+        "duration": 4.959
+    },
+    {
+        "text": "been at a startup I had a good time but",
+        "start": 1454.72,
+        "duration": 4.079
+    },
+    {
+        "text": "I don't know if I could do it forever",
+        "start": 1457.279,
+        "duration": 4.721
+    },
+    {
+        "text": "It's like a interesting pace Um and is",
+        "start": 1458.799,
+        "duration": 4.801
+    },
+    {
+        "text": "exactly like we talked about in the",
+        "start": 1462.0,
+        "duration": 3.919
+    },
+    {
+        "text": "beginning these models are leapfrogging",
+        "start": 1463.6,
+        "duration": 5.04
+    },
+    {
+        "text": "each other and they are just constantly",
+        "start": 1465.919,
+        "duration": 4.561
+    },
+    {
+        "text": "like trying to take the next step",
+        "start": 1468.64,
+        "duration": 3.279
+    },
+    {
+        "text": "compared to the competitors It's just",
+        "start": 1470.48,
+        "duration": 2.559
+    },
+    {
+        "text": "ruthless I think right now",
+        "start": 1471.919,
+        "duration": 3.12
+    },
+    {
+        "text": "i I think this leapfrogging nature and",
+        "start": 1473.039,
+        "duration": 3.681
+    },
+    {
+        "text": "having multiple players is actually an",
+        "start": 1475.039,
+        "duration": 3.52
+    },
+    {
+        "text": "underrated driver of language modeling",
+        "start": 1476.72,
+        "duration": 5.199
+    },
+    {
+        "text": "process where competition is so deeply",
+        "start": 1478.559,
+        "duration": 6.641
+    },
+    {
+        "text": "ingrained to people and these companies",
+        "start": 1481.919,
+        "duration": 5.521
+    },
+    {
+        "text": "have intentionally created very strong",
+        "start": 1485.2,
+        "duration": 5.2
+    },
+    {
+        "text": "culture like anthropic is known to be so",
+        "start": 1487.44,
+        "duration": 6.719
+    },
+    {
+        "text": "culturally like deeply committed and",
+        "start": 1490.4,
+        "duration": 5.68
+    },
+    {
+        "text": "organized I mean like we hear so little",
+        "start": 1494.159,
+        "duration": 3.681
+    },
+    {
+        "text": "from them and everybody at anthropic",
+        "start": 1496.08,
+        "duration": 4.24
+    },
+    {
+        "text": "seems very aligned and it's like being",
+        "start": 1497.84,
+        "duration": 6.0
+    },
+    {
+        "text": "at a culture that is super tight and",
+        "start": 1500.32,
+        "duration": 5.76
+    },
+    {
+        "text": "having this competitive dynamic is like",
+        "start": 1503.84,
+        "duration": 3.68
+    },
+    {
+        "text": "talk about a thing that's going to make",
+        "start": 1506.08,
+        "duration": 4.24
+    },
+    {
+        "text": "you work hard and create things that are",
+        "start": 1507.52,
+        "duration": 5.12
+    },
+    {
+        "text": "better So I think that this that comes",
+        "start": 1510.32,
+        "duration": 4.16
+    },
+    {
+        "text": "at the cost of human capital which is",
+        "start": 1512.64,
+        "duration": 2.48
+    },
+    {
+        "text": "like",
+        "start": 1514.48,
+        "duration": 2.64
+    },
+    {
+        "text": "i you can only do this for so long and",
+        "start": 1515.12,
+        "duration": 3.919
+    },
+    {
+        "text": "people are definitely burning out I",
+        "start": 1517.12,
+        "duration": 4.559
+    },
+    {
+        "text": "think I I wrote a post on burnout was",
+        "start": 1519.039,
+        "duration": 4.401
+    },
+    {
+        "text": "like I've tried in and out of this",
+        "start": 1521.679,
+        "duration": 4.0
+    },
+    {
+        "text": "myself especially trying to like be a",
+        "start": 1523.44,
+        "duration": 3.92
+    },
+    {
+        "text": "manager of bull mode training It's a",
+        "start": 1525.679,
+        "duration": 4.24
+    },
+    {
+        "text": "crazy job doing this The book Apple in",
+        "start": 1527.36,
+        "duration": 4.799
+    },
+    {
+        "text": "China by Patrick McGee. He talked about",
+        "start": 1529.919,
+        "duration": 3.921
+    },
+    {
+        "text": "the how hard the Apple engineers worked",
+        "start": 1532.159,
+        "duration": 3.441
+    },
+    {
+        "text": "to set up the supply chains in China and",
+        "start": 1533.84,
+        "duration": 4.079
+    },
+    {
+        "text": "he was like they had saving marriage",
+        "start": 1535.6,
+        "duration": 5.84
+    },
+    {
+        "text": "programs and he told in a podcast he was",
+        "start": 1537.919,
+        "duration": 5.441
+    },
+    {
+        "text": "like people died from this level of",
+        "start": 1541.44,
+        "duration": 4.56
+    },
+    {
+        "text": "working hard So I think there just like",
+        "start": 1543.36,
+        "duration": 4.88
+    },
+    {
+        "text": "it's a perfect environment for creating",
+        "start": 1546.0,
+        "duration": 5.36
+    },
+    {
+        "text": "progress based on human expense and I",
+        "start": 1548.24,
+        "duration": 5.039
+    },
+    {
+        "text": "it's there's going to be a lot there's a",
+        "start": 1551.36,
+        "duration": 4.559
+    },
+    {
+        "text": "lot of the human expense is the 996 that",
+        "start": 1553.279,
+        "duration": 4.241
+    },
+    {
+        "text": "we started this with which is like",
+        "start": 1555.919,
+        "duration": 4.24
+    },
+    {
+        "text": "people do really grind I also read this",
+        "start": 1557.52,
+        "duration": 4.48
+    },
+    {
+        "text": "book I think they had a code word for",
+        "start": 1560.159,
+        "duration": 4.161
+    },
+    {
+        "text": "if someone had to go home to spend time",
+        "start": 1562.0,
+        "duration": 3.84
+    },
+    {
+        "text": "with their family to save the marriage",
+        "start": 1564.32,
+        "duration": 3.76
+    },
+    {
+        "text": "and it's crazy Then colleagues want to",
+        "start": 1565.84,
+        "duration": 4.56
+    },
+    {
+        "text": "say okay this is like red alert for this",
+        "start": 1568.08,
+        "duration": 4.24
+    },
+    {
+        "text": "situation We have to let that person go",
+        "start": 1570.4,
+        "duration": 4.159
+    },
+    {
+        "text": "home this weekend And um but at the",
+        "start": 1572.32,
+        "duration": 3.92
+    },
+    {
+        "text": "same time I don't think they were forced",
+        "start": 1574.559,
+        "duration": 2.961
+    },
+    {
+        "text": "to work It's really they were so",
+        "start": 1576.24,
+        "duration": 2.64
+    },
+    {
+        "text": "passionate about the product I guess",
+        "start": 1577.52,
+        "duration": 3.6
+    },
+    {
+        "text": "that it is it is you you get into that",
+        "start": 1578.88,
+        "duration": 4.08
+    },
+    {
+        "text": "mindset and I I had that sometimes as an",
+        "start": 1581.12,
+        "duration": 3.679
+    },
+    {
+        "text": "academic but also as an independent",
+        "start": 1582.96,
+        "duration": 3.92
+    },
+    {
+        "text": "person I have that sometimes I overwork",
+        "start": 1584.799,
+        "duration": 4.24
+    },
+    {
+        "text": "and it's unhealthy I had you know I",
+        "start": 1586.88,
+        "duration": 3.36
+    },
+    {
+        "text": "had back issues I had neck issues",
+        "start": 1589.039,
+        "duration": 3.281
+    },
+    {
+        "text": "because I did not take the breaks that I",
+        "start": 1590.24,
+        "duration": 3.84
+    },
+    {
+        "text": "maybe should have taken But it's not",
+        "start": 1592.32,
+        "duration": 3.28
+    },
+    {
+        "text": "because no one forced me to It's",
+        "start": 1594.08,
+        "duration": 3.04
+    },
+    {
+        "text": "because I wanted to work because",
+        "start": 1595.6,
+        "duration": 3.52
+    },
+    {
+        "text": "i that's what Open AI and like they want",
+        "start": 1597.12,
+        "duration": 2.96
+    },
+    {
+        "text": "to do this work",
+        "start": 1599.12,
+        "duration": 3.36
+    },
+    {
+        "text": "i Yeah. There's also there's also a a",
+        "start": 1600.08,
+        "duration": 4.479
+    },
+    {
+        "text": "feeling a fervor that's building",
+        "start": 1602.48,
+        "duration": 3.76
+    },
+    {
+        "text": "especially in Silicon Valley aligned",
+        "start": 1604.559,
+        "duration": 3.761
+    },
+    {
+        "text": "with the scaling laws idea where there's",
+        "start": 1606.24,
+        "duration": 4.0
+    },
+    {
+        "text": "this hype where the world will be",
+        "start": 1608.32,
+        "duration": 4.239
+    },
+    {
+        "text": "transformed on a scale of weeks and you",
+        "start": 1610.24,
+        "duration": 4.64
+    },
+    {
+        "text": "want to be at the center of it and then",
+        "start": 1612.559,
+        "duration": 6.561
+    },
+    {
+        "text": "you know um I have this great fortune of",
+        "start": 1614.88,
+        "duration": 6.96
+    },
+    {
+        "text": "having conversations with wide variety",
+        "start": 1619.12,
+        "duration": 5.36
+    },
+    {
+        "text": "of human beings and from there I get to",
+        "start": 1621.84,
+        "duration": 5.12
+    },
+    {
+        "text": "see all these bubbles and echo chambers",
+        "start": 1624.48,
+        "duration": 3.76
+    },
+    {
+        "text": "across snorts the world and it's",
+        "start": 1626.96,
+        "duration": 3.44
+    },
+    {
+        "text": "fascinating to see how we humans form",
+        "start": 1628.24,
+        "duration": 4.24
+    },
+    {
+        "text": "And I think it's fair to say that",
+        "start": 1630.4,
+        "duration": 5.12
+    },
+    {
+        "text": "Silicon Valley is a kind of echo chamber",
+        "start": 1632.48,
+        "duration": 6.64
+    },
+    {
+        "text": "uh a kind of u silo and bubble I think",
+        "start": 1635.52,
+        "duration": 6.56
+    },
+    {
+        "text": "bubbles are actually really useful and",
+        "start": 1639.12,
+        "duration": 4.88
+    },
+    {
+        "text": "effective It's not necessarily a",
+        "start": 1642.08,
+        "duration": 3.199
+    },
+    {
+        "text": "negative thing cut you could be ultra",
+        "start": 1644.0,
+        "duration": 3.12
+    },
+    {
+        "text": "productive It could be the the Steve",
+        "start": 1645.279,
+        "duration": 3.441
+    },
+    {
+        "text": "Jobs",
+        "start": 1647.12,
+        "duration": 3.76
+    },
+    {
+        "text": "reality distortion field cut you just",
+        "start": 1648.72,
+        "duration": 4.4
+    },
+    {
+        "text": "convince each other the breakthroughs",
+        "start": 1650.88,
+        "duration": 4.399
+    },
+    {
+        "text": "are imminent and by convincing each",
+        "start": 1653.12,
+        "duration": 5.28
+    },
+    {
+        "text": "other of that you make the breakthroughs",
+        "start": 1655.279,
+        "duration": 4.241
+    },
+    {
+        "text": "imminent Mhm.",
+        "start": 1658.4,
+        "duration": 2.879
+    },
+    {
+        "text": "i Burn Hobart wrote a book classifying",
+        "start": 1659.52,
+        "duration": 3.44
+    },
+    {
+        "text": "bubbles but essentially one of them is",
+        "start": 1661.279,
+        "duration": 3.041
+    },
+    {
+        "text": "financial bubbles which is like",
+        "start": 1662.96,
+        "duration": 2.88
+    },
+    {
+        "text": "speculation which is bad and the other",
+        "start": 1664.32,
+        "duration": 3.359
+    },
+    {
+        "text": "one is like I don't know the term but",
+        "start": 1665.84,
+        "duration": 3.439
+    },
+    {
+        "text": "effectively for bailouts because it",
+        "start": 1667.679,
+        "duration": 2.961
+    },
+    {
+        "text": "pushes people to build these things and",
+        "start": 1669.279,
+        "duration": 3.601
+    },
+    {
+        "text": "I do think AI is in this but I worry",
+        "start": 1670.64,
+        "duration": 3.759
+    },
+    {
+        "text": "about it transitioning to a financial",
+        "start": 1672.88,
+        "duration": 3.2
+    },
+    {
+        "text": "bubble which is like it's",
+        "start": 1674.399,
+        "duration": 4.64
+    },
+    {
+        "text": "i yeah but also in the space of ideas that",
+        "start": 1676.08,
+        "duration": 4.479
+    },
+    {
+        "text": "bubble",
+        "start": 1679.039,
+        "duration": 4.0
+    },
+    {
+        "text": "you are doing a reality distortion field",
+        "start": 1680.559,
+        "duration": 4.961
+    },
+    {
+        "text": "and that means you are deviating from",
+        "start": 1683.039,
+        "duration": 4.561
+    },
+    {
+        "text": "reality and if you go too far from",
+        "start": 1685.52,
+        "duration": 3.44
+    },
+    {
+        "text": "reality",
+        "start": 1687.6,
+        "duration": 5.36
+    },
+    {
+        "text": "while also working you know 996 and you",
+        "start": 1688.96,
+        "duration": 6.4
+    },
+    {
+        "text": "you might miss some fundamental aspects",
+        "start": 1692.96,
+        "duration": 4.56
+    },
+    {
+        "text": "of the human experience including in",
+        "start": 1695.36,
+        "duration": 3.52
+    },
+    {
+        "text": "Silicon Valley and this is a common",
+        "start": 1697.52,
+        "duration": 3.759
+    },
+    {
+        "text": "problem in Silicon Valley is like it's a",
+        "start": 1698.88,
+        "duration": 5.2
+    },
+    {
+        "text": "very specific geographic area you might",
+        "start": 1701.279,
+        "duration": 4.721
+    },
+    {
+        "text": "not understand the Midwest perspective",
+        "start": 1704.08,
+        "duration": 4.719
+    },
+    {
+        "text": "the full experience of all the other",
+        "start": 1706.0,
+        "duration": 4.32
+    },
+    {
+        "text": "different humans in the United States",
+        "start": 1708.799,
+        "duration": 3.6
+    },
+    {
+        "text": "and across the world and you and you",
+        "start": 1710.32,
+        "duration": 3.76
+    },
+    {
+        "text": "speak a certain way to each other you",
+        "start": 1712.399,
+        "duration": 3.601
+    },
+    {
+        "text": "convince each other of a certain thing",
+        "start": 1714.08,
+        "duration": 3.92
+    },
+    {
+        "text": "and that that gets you into real",
+        "start": 1716.0,
+        "duration": 4.559
+    },
+    {
+        "text": "trouble Whether AI is a big success and",
+        "start": 1718.0,
+        "duration": 5.44
+    },
+    {
+        "text": "becomes a powerful technology or it's",
+        "start": 1720.559,
+        "duration": 5.6
+    },
+    {
+        "text": "not in either trajectory you can get",
+        "start": 1723.44,
+        "duration": 4.56
+    },
+    {
+        "text": "yourself into trouble So, you have to",
+        "start": 1726.159,
+        "duration": 4.321
+    },
+    {
+        "text": "consider all of that Here you are a",
+        "start": 1728.0,
+        "duration": 3.919
+    },
+    {
+        "text": "young person trying to decide what you",
+        "start": 1730.48,
+        "duration": 3.199
+    },
+    {
+        "text": "want to do with your life The thing",
+        "start": 1731.919,
+        "duration": 4.161
+    },
+    {
+        "text": "that is I don't even really understand",
+        "start": 1733.679,
+        "duration": 5.6
+    },
+    {
+        "text": "this but the SF AAI memos have gotten to",
+        "start": 1736.08,
+        "duration": 5.12
+    },
+    {
+        "text": "the point where permanent underclass was",
+        "start": 1739.279,
+        "duration": 4.081
+    },
+    {
+        "text": "one of them which was the idea that the",
+        "start": 1741.2,
+        "duration": 4.959
+    },
+    {
+        "text": "last 6 months of 2025 was the only time",
+        "start": 1743.36,
+        "duration": 5.28
+    },
+    {
+        "text": "to build durable value in an AI startup",
+        "start": 1746.159,
+        "duration": 5.201
+    },
+    {
+        "text": "or model otherwise all the value will be",
+        "start": 1748.64,
+        "duration": 4.399
+    },
+    {
+        "text": "captured by existing companies and you",
+        "start": 1751.36,
+        "duration": 4.799
+    },
+    {
+        "text": "will therefore be poor which like that's",
+        "start": 1753.039,
+        "duration": 5.841
+    },
+    {
+        "text": "an example of the SF thing that goes so",
+        "start": 1756.159,
+        "duration": 5.041
+    },
+    {
+        "text": "far I still think for young people that",
+        "start": 1758.88,
+        "duration": 4.399
+    },
+    {
+        "text": "going to be able to tap into it if you",
+        "start": 1761.2,
+        "duration": 3.68
+    },
+    {
+        "text": "are really passionate about wanting to",
+        "start": 1763.279,
+        "duration": 3.841
+    },
+    {
+        "text": "have impact in AI like being physically",
+        "start": 1764.88,
+        "duration": 4.64
+    },
+    {
+        "text": "in SF is the most likely place where",
+        "start": 1767.12,
+        "duration": 4.159
+    },
+    {
+        "text": "you're going to do this but it has it",
+        "start": 1769.52,
+        "duration": 4.08
+    },
+    {
+        "text": "has tradeoffs I think SF is an",
+        "start": 1771.279,
+        "duration": 5.52
+    },
+    {
+        "text": "incredible place but there is a bit of a",
+        "start": 1773.6,
+        "duration": 5.6
+    },
+    {
+        "text": "bubble and if you go into that bubble",
+        "start": 1776.799,
+        "duration": 6.0
+    },
+    {
+        "text": "which is extremely valuable just get out",
+        "start": 1779.2,
+        "duration": 7.04
+    },
+    {
+        "text": "also read history books read literature",
+        "start": 1782.799,
+        "duration": 5.441
+    },
+    {
+        "text": "uh visit other places in the world",
+        "start": 1786.24,
+        "duration": 4.559
+    },
+    {
+        "text": "Twitter is not and Substack is not the",
+        "start": 1788.24,
+        "duration": 5.28
+    },
+    {
+        "text": "entire world I think I would One of my",
+        "start": 1790.799,
+        "duration": 4.161
+    },
+    {
+        "text": "one of people I worked with is moving to",
+        "start": 1793.52,
+        "duration": 2.96
+    },
+    {
+        "text": "SF and it's like I need to get him a",
+        "start": 1794.96,
+        "duration": 3.12
+    },
+    {
+        "text": "copy of the season of the witch which is",
+        "start": 1796.48,
+        "duration": 5.439
+    },
+    {
+        "text": "a history of SF from like 1960 to 1985",
+        "start": 1798.08,
+        "duration": 6.24
+    },
+    {
+        "text": "which goes through like the hippie re",
+        "start": 1801.919,
+        "duration": 6.081
+    },
+    {
+        "text": "revolution like they all the um gays",
+        "start": 1804.32,
+        "duration": 5.359
+    },
+    {
+        "text": "kind of taking over the city and that",
+        "start": 1808.0,
+        "duration": 4.32
+    },
+    {
+        "text": "culture emerging and then the HIV AIDS",
+        "start": 1809.679,
+        "duration": 4.161
+    },
+    {
+        "text": "crisis and other things and it's just",
+        "start": 1812.32,
+        "duration": 3.599
+    },
+    {
+        "text": "like that is so recent and so much",
+        "start": 1813.84,
+        "duration": 5.28
+    },
+    {
+        "text": "turmoil and hurt but also like love and",
+        "start": 1815.919,
+        "duration": 4.961
+    },
+    {
+        "text": "SF and it's like no one knows about",
+        "start": 1819.12,
+        "duration": 3.12
+    },
+    {
+        "text": "this It's a great book Season of the",
+        "start": 1820.88,
+        "duration": 3.12
+    },
+    {
+        "text": "Witch. I recommend it a bunch of my SF",
+        "start": 1822.24,
+        "duration": 5.12
+    },
+    {
+        "text": "friends were who do get out recommended",
+        "start": 1824.0,
+        "duration": 5.6
+    },
+    {
+        "text": "it to me and I think that it's just like",
+        "start": 1827.36,
+        "duration": 4.48
+    },
+    {
+        "text": "living there like I lived there and I",
+        "start": 1829.6,
+        "duration": 4.24
+    },
+    {
+        "text": "didn't appreciate this context and it's",
+        "start": 1831.84,
+        "duration": 6.839
+    },
+    {
+        "text": "just like so recently",
+        "start": 1833.84,
+        "duration": 4.839
+    }
+]

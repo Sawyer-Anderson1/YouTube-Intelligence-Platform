@@ -2,14 +2,18 @@
 # os is inprted to access the YouTube API key
 # Google API client's build is imported to build the service object, for YouTube API
 # HttpError is imported
-# ...
+# imports to calculate the time 6 months ago
+# and import to detect language
 import os
 import json
 from pathlib import Path
+import re
+
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 from datetime import datetime, timezone
 from dateutil.relativedelta import relativedelta
+from langdetect import detect
 
 # get the youtube api key and build the service object for the youtube api calls
 youtube_api_key = os.getenv('YOUTUBE_API_KEY')
@@ -18,6 +22,7 @@ youtube = build('youtube', 'v3', developerKey=youtube_api_key)
 # Create the collection(s) I need:
 channels = youtube.channels()
 playlist_items = youtube.playlistItems()
+videos = youtube.videos()
 
 # function to get the rfc 3339 time a certaim amount of months ago
 def get_time_months_ago_rfc3339(months_ago: int) -> str:
@@ -35,58 +40,149 @@ def get_time_months_ago_rfc3339(months_ago: int) -> str:
     rfc3339_utc_str = past_time.isoformat().replace('+00:00', 'Z')
     return rfc3339_utc_str
 
+# function to chewck if an input string has letters
+def has_letters(string):
+    return bool(re.search('[a-zA-Z]', string))
+
 # function to check a video from a chennel's uploads playlist for date (within 6 months), contentc, etc.
 def check_vids(upload_items):
     # get the month time 6 months ago
     time_6_months_ago = get_time_months_ago_rfc3339(6)
 
     # list with acceptable terms on the topic of AI
-    terms = ['ai', 'artificial intelligence', 'generative ai', 'large language models', 'llms', 'neural networds', 'ai bubble', 'machine learning', 'ml', 'chatgpt', 'agents', 'agentic ai']
-    # iterate through the items and do the checks
+    terms = ['ai', 'artificial intelligence', 'generative ai', 'large language models', 'llms', 'neural networds', 'ai bubble', 'machine learning', 'ml', 'chatgpt', 'agents', 'agentic ai', 'claude', 'gemini', 'moltbook', 'openclaw', 'grok']
+
+    # the final array of fully filtered/checked vids
     vids_filtered = []
+
+    # make the video id array for the uploads and prefilter for the information available in the playlistItem
+    prefiltered_vid_ids = []
+    hit_6_month_limit = False
+
     for vid in upload_items:
         # only get videos with privacy status public
         if vid['status']['privacyStatus'] == 'public':
             # check if the current vid is at past limit
-            if str(vid['contentDetails']['videoPublishedAt']) == time_6_months_ago:
-                return vids_filtered, True
+            if vid['contentDetails']['videoPublishedAt'] <= time_6_months_ago:
+                hit_6_month_limit = True
+                break
 
             # else continue and check for relevant vids
             # get title and description and lower case for checking for terms
-            title = vid['snippet']['title']
-            description = vid['snippet']['description']
+            title = vid['snippet'].get('title', '').lower()
+            description = vid['snippet'].get('description', '').lower()
 
-            if any(term in title for term in terms) or any(term in description for term in terms):
-                # then add video id to list
-                vids_filtered.append(vid['contentDetails']['videoId'])
-    return vids_filtered, False
+            # use langdetect on the titel and description
+            if has_letters(title) and has_letters(description):
+                description_lang = detect(description)
+                title_lang = detect(title)
+                is_english_video = (title_lang == 'en' and description_lang == 'en')
+            elif has_letters(title):
+                title_lang = detect(title)
+                is_english_video = (title_lang == 'en')
+            else:
+                continue # skip following operations
+
+            term_pattern = re.compile(r'\b(?:' + '|'.join(terms) + r')\b', re.IGNORECASE)
+            if term_pattern.search(title) and term_pattern.search(description) and is_english_video:
+                prefiltered_vid_ids.append(vid['contentDetails']['videoId'])
+
+    # make the videos list request much more efficient by adding a list of video ids
+    if not prefiltered_vid_ids:
+        return vids_filtered, hit_6_month_limit
+
+    video_list = videos.list(
+        part='snippet, statistics, contentDetails',
+        id=prefiltered_vid_ids
+    )
+
+    # exectue request
+    try:
+        video = video_list.execute()
+        video_items = video.get('items', [])
+
+        # iterate through the video ids and do the rest of the checks
+        for item_id in range(len(video_items)):
+            view_count = int(video_items[item_id]['statistics']['viewCount'])
+
+            # check if video is in English using defaultLanguage or defaultAudioLanguage
+            default_language = video_items[item_id]['snippet'].get('defaultLanguage', '')
+            default_audio_language = video_items[item_id]['snippet'].get('defaultAudioLanguage', '')
+            is_english_video_or_not_set = (default_language == 'en' or default_audio_language == 'en-US' or default_language == '' or default_audio_language == '')
+
+            if view_count > 5000 and is_english_video_or_not_set:
+                # get the region restriction dict if available
+                region_restriction = video_items[item_id]['contentDetails'].get('regionRestriction', {})
+
+                # then if there are region restrictions check if the proxy server's countries are all in the allowed array
+                if region_restriction != {}:
+                    if 'US' in region_restriction.get('allowed', []):
+                        # then add video id to list
+                        vids_filtered.append(video_items[item_id]['id'])
+                else:
+                    vids_filtered.append(video_items[item_id]['id'])
+
+        # return filtered list
+        return vids_filtered, hit_6_month_limit
+    except HttpError as e:
+        print(f'Error response status code : {e.status_code}, reason : {e.error_details}')
+
+    # return the final filtered list
+    return vids_filtered, hit_6_month_limit
 
 # read in the list of important channels on the topic of AI
 try:
     file_path_pathlib = Path(__file__).parent.parent.parent / 'data' / 'channels.json'
 
     with open(file_path_pathlib, 'r') as file:
-        data = json.load(file)
-    
+        channel_ids = json.load(file)
+
     # Call the request for channel list
     # save a dictionary for each channel's uploads playlist
     channel_uploads = {}
-    for id in data:
+
+    # have entire channel_ids in singular channels.list call to make it much more efficient
+    # but since there is a limit of 50 ids per .list request create a list of them in a for statement
+    channel_lists = []
+    if len(channel_ids) >= 50:
+        for i in range(0, len(channel_ids), 50):
+            channel = channels.list(
+                        part="snippet, contentDetails",
+                        id=channel_ids[i:i+50]
+            )
+            # add the current channel.list to channel_lists array
+            channel_lists.append(channel)
+    else:
         channel = channels.list(
-                part="contentDetails",
-                id=id
+            part="snippet, contentDetails",
+            id=channel_ids
         )
+        channel_lists.append(channel)
 
-        # Execute request for channel playlists
-        try:
-            channel_response = channel.execute()
+    # Execute requests for channel playlists
+    try:
+        channel_items = []
+        for i in range(len(channel_lists)):
+            channel_response = channel_lists[i].execute()
+            channel_item = channel_response.get('items', [])
 
-            # get the uploads playlist id
-            uploads_id = channel_response['items'][0]['contentDetails']['relatedPlaylists']['uploads']
-            channel_uploads[id] = uploads_id
-        except HttpError as e:
+            # then extend the current list of items for the response to the collective channel_items array
+            channel_items.extend(channel_item)
+
+        for item_id in range(len(channel_items)):
+            # check for the snippet.defaultLanguage is english and (maybe) snippet.country
+            default_language = channel_items[item_id]['snippet'].get('defaultLanguage', '')
+            if default_language == 'en':
+                # get the uploads playlist id
+                uploads_id = channel_items[item_id]['contentDetails']['relatedPlaylists']['uploads']
+                channel_uploads[channel_ids[item_id]] = uploads_id
+            elif default_language == '':
+                # get the uploads playlist id
+                uploads_id = channel_items[item_id]['contentDetails']['relatedPlaylists']['uploads']
+                channel_uploads[channel_ids[item_id]] = uploads_id
+    except HttpError as e:
             print(f'Error response status code : {e.status_code}, reason : {e.error_details}')
-    
+
     # using the uploads playlist, get the videos from the playlist
     for channel, upload_id in channel_uploads.items():
         items = playlist_items.list(
@@ -110,7 +206,7 @@ try:
 
             # then do pagination till the check_vids has elements that went to 6 months ago or there are no more nextPageTokens
             # also add a limit to not keep so much vids from just one channel
-            VID_PER_CHANNEL = 75
+            VID_PER_CHANNEL = 50
             while True and len(channels_vids) <= VID_PER_CHANNEL:
                 if nextPageToken != None and MONTH_LIMIT_FLAG != True:
                     items = playlist_items.list(
@@ -122,25 +218,45 @@ try:
                 else:
                     break
 
-                playlist_response = items.execute()
-                nextPageToken = playlist_response.get('nextPageToken')
-                playlist_item = playlist_response.get('items', [])
+                try:
+                    playlist_response = items.execute()
+                    nextPageToken = playlist_response.get('nextPageToken')
+                    playlist_item = playlist_response.get('items', [])
 
-                # then check the vids for the category if within month limit
-                filtered_vids,MONTH_LIMIT_FLAG = check_vids(playlist_item)
-                channels_vids.extend(filtered_vids)
+                    # then check the vids for the category if within month limit
+                    filtered_vids, MONTH_LIMIT_FLAG = check_vids(playlist_item)
+                    channels_vids.extend(filtered_vids)
+                except HttpError as e:
+                    print(f'Error response status code : {e.status_code}, reason : {e.error_details}')
+            # then add the video id list for a specific channel to the channel_uploads dictionary
+            channel_uploads[channel] = channels_vids
         except HttpError as e:
             print(f'Error response status code : {e.status_code}, reason : {e.error_details}')
 
-        # then add the video id list for a specific channel to the channel_uploads dictionary
-        channel_uploads[channel] = channels_vids
-
     # we have the relevant videos for our set of channels
+    # then choose the top channels from there
+    channel_uploads = dict(sorted(channel_uploads.items(), key=lambda x: len(x[1]), reverse=True))
+    print(channel_uploads)
+
+    # get up to 1500 videos or up to 20 channels
+    MAX_VIDS = 1500
+    MAX_CHANNELS = 20
+
+    vids_count = 0
+    channel_key_index = list(channel_uploads.keys())
+    curr_index = 0
+    selected_channels_vids = {}
+    while len(selected_channels_vids) < MAX_CHANNELS and vids_count < MAX_VIDS and curr_index < len(channel_key_index):
+        if channel_uploads[channel_key_index[curr_index]] != []:
+            selected_channels_vids[channel_key_index[curr_index]] = channel_uploads[channel_key_index[curr_index]]
+            vids_count += len(channel_uploads[channel_key_index[curr_index]])
+        curr_index += 1
+
     # then export to json
     filename = "data/channel_vids.json"
     try:
         with open(filename, 'w') as json_file:
-            json.dump(channel_uploads, json_file, indent=4)
+            json.dump(selected_channels_vids, json_file, indent=4)
     except IOError as e:
         print(f"Error with writing to json file: {e}")
 

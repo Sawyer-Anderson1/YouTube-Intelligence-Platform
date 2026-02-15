@@ -1,0 +1,317 @@
+[
+    {
+        "text": "But also there's just the practical",
+        "start": 3.04,
+        "duration": 4.16
+    },
+    {
+        "text": "reality If you look out at Silicon",
+        "start": 5.04,
+        "duration": 5.04
+    },
+    {
+        "text": "Valley, most of the developer world",
+        "start": 7.2,
+        "duration": 5.2
+    },
+    {
+        "text": "that's kind of playing with LLMs and",
+        "start": 10.08,
+        "duration": 5.84
+    },
+    {
+        "text": "argentic AI, they're all using Apple",
+        "start": 12.4,
+        "duration": 5.28
+    },
+    {
+        "text": "products And then at the same time",
+        "start": 15.92,
+        "duration": 4.16
+    },
+    {
+        "text": "Apple is not really like leaning on",
+        "start": 17.68,
+        "duration": 4.64
+    },
+    {
+        "text": "that Like they're not they're not",
+        "start": 20.08,
+        "duration": 3.84
+    },
+    {
+        "text": "opening up and playing and working",
+        "start": 22.32,
+        "duration": 3.84
+    },
+    {
+        "text": "together and like Yes. Isn't Isn't it",
+        "start": 23.92,
+        "duration": 5.759
+    },
+    {
+        "text": "funny how they completely blunder AI and",
+        "start": 26.16,
+        "duration": 5.28
+    },
+    {
+        "text": "yet everybody's buying Mac minis",
+        "start": 29.679,
+        "duration": 2.321
+    },
+    {
+        "text": "laughter",
+        "start": 31.44,
+        "duration": 2.959
+    },
+    {
+        "text": "i How Wait, does that even make sense",
+        "start": 32.0,
+        "duration": 4.96
+    },
+    {
+        "text": "You're you're you're quite possibly the",
+        "start": 34.399,
+        "duration": 4.561
+    },
+    {
+        "text": "world's greatest",
+        "start": 36.96,
+        "duration": 4.88
+    },
+    {
+        "text": "Mac salesman of all time",
+        "start": 38.96,
+        "duration": 4.4
+    },
+    {
+        "text": "i No, you don't need a Mac Mini to install",
+        "start": 41.84,
+        "duration": 6.0
+    },
+    {
+        "text": "OpenClaw. You can install it on the web",
+        "start": 43.36,
+        "duration": 6.32
+    },
+    {
+        "text": "There's there's a concept called nodes",
+        "start": 47.84,
+        "duration": 4.32
+    },
+    {
+        "text": "So, you can like make your computer a",
+        "start": 49.68,
+        "duration": 5.68
+    },
+    {
+        "text": "node and it will do the same There is",
+        "start": 52.16,
+        "duration": 6.239
+    },
+    {
+        "text": "something said for running it on",
+        "start": 55.36,
+        "duration": 5.679
+    },
+    {
+        "text": "separate hardware",
+        "start": 58.399,
+        "duration": 5.281
+    },
+    {
+        "text": "that right now is useful",
+        "start": 61.039,
+        "duration": 4.961
+    },
+    {
+        "text": "Um",
+        "start": 63.68,
+        "duration": 6.799
+    },
+    {
+        "text": "there is there's a big argument for",
+        "start": 66.0,
+        "duration": 6.96
+    },
+    {
+        "text": "the browser you know I built some",
+        "start": 70.479,
+        "duration": 5.281
+    },
+    {
+        "text": "enigmatic browser use in there and I",
+        "start": 72.96,
+        "duration": 4.479
+    },
+    {
+        "text": "mean it's basically playwright with bunch",
+        "start": 75.76,
+        "duration": 3.359
+    },
+    {
+        "text": "of extras to make it easier for agents",
+        "start": 77.439,
+        "duration": 3.281
+    },
+    {
+        "text": "i Playright is a library that controls the",
+        "start": 79.119,
+        "duration": 3.601
+    },
+    {
+        "text": "browser is really nice easy to used",
+        "start": 80.72,
+        "duration": 5.12
+    },
+    {
+        "text": "i and our internet is slowly closing down",
+        "start": 82.72,
+        "duration": 5.52
+    },
+    {
+        "text": "Like there there's a whole movement to",
+        "start": 85.84,
+        "duration": 4.56
+    },
+    {
+        "text": "make it harder for agents to used So if",
+        "start": 88.24,
+        "duration": 4.96
+    },
+    {
+        "text": "you do the same in a data center and",
+        "start": 90.4,
+        "duration": 4.64
+    },
+    {
+        "text": "websites detect that it's an IP from a",
+        "start": 93.2,
+        "duration": 3.919
+    },
+    {
+        "text": "data center the website might just",
+        "start": 95.04,
+        "duration": 4.0
+    },
+    {
+        "text": "block you or it make it really hard or",
+        "start": 97.119,
+        "duration": 3.521
+    },
+    {
+        "text": "put a lot of captures in the in the way",
+        "start": 99.04,
+        "duration": 3.119
+    },
+    {
+        "text": "of the agent I mean agents are quite",
+        "start": 100.64,
+        "duration": 3.04
+    },
+    {
+        "text": "good at happily clicking I'm not a",
+        "start": 102.159,
+        "duration": 3.681
+    },
+    {
+        "text": "robot Um,",
+        "start": 103.68,
+        "duration": 2.719
+    },
+    {
+        "text": "i yeah",
+        "start": 105.84,
+        "duration": 4.559
+    },
+    {
+        "text": "i but having that on a residential IP",
+        "start": 106.399,
+        "duration": 8.161
+    },
+    {
+        "text": "makes a lot of things simpler So,",
+        "start": 110.399,
+        "duration": 6.241
+    },
+    {
+        "text": "there's ways Yeah, but it really does",
+        "start": 114.56,
+        "duration": 5.36
+    },
+    {
+        "text": "not need to be a Mac. It can it can be",
+        "start": 116.64,
+        "duration": 5.92
+    },
+    {
+        "text": "any old hardware I always say like",
+        "start": 119.92,
+        "duration": 6.559
+    },
+    {
+        "text": "maybe use the use the",
+        "start": 122.56,
+        "duration": 5.839
+    },
+    {
+        "text": "opportunity to get yourself a new",
+        "start": 126.479,
+        "duration": 4.4
+    },
+    {
+        "text": "MacBook or whatever computer you use and",
+        "start": 128.399,
+        "duration": 4.881
+    },
+    {
+        "text": "use the old one as your server snorts",
+        "start": 130.879,
+        "duration": 5.601
+    },
+    {
+        "text": "instead of buying a standalone Mac Mini.",
+        "start": 133.28,
+        "duration": 4.56
+    },
+    {
+        "text": "But then there's again there's a lot of",
+        "start": 136.48,
+        "duration": 3.2
+    },
+    {
+        "text": "very cute things people with Mac minis",
+        "start": 137.84,
+        "duration": 2.8
+    },
+    {
+        "text": "that I like",
+        "start": 139.68,
+        "duration": 1.279
+    },
+    {
+        "text": "i Yeah.",
+        "start": 140.64,
+        "duration": 2.16
+    },
+    {
+        "text": "i Um I know I don't get commission from",
+        "start": 140.959,
+        "duration": 5.681
+    },
+    {
+        "text": "Apple. Um they sighs",
+        "start": 142.8,
+        "duration": 5.92
+    },
+    {
+        "text": "didn't really communicate much",
+        "start": 146.64,
+        "duration": 5.84
+    },
+    {
+        "text": "i It's sad It's sad",
+        "start": 148.72,
+        "duration": 3.76
+    }
+]

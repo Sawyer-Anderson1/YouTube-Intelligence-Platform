@@ -45,8 +45,9 @@ ai_search = search.list(
     publishedAfter=time_6_months_ago,
     regionCode='US',
     type='video',
-    topicId = '/m/098wr',
+    videoCategoryId = '28',
     relevanceLanguage = 'en',
+    videoCaption='closedCaption',
     q='AI',
 ) 
 
@@ -59,7 +60,7 @@ try:
     nextPageToken = search_response.get('nextPageToken')
     vids.extend(search_response.get('items', []))
 
-    LIMIT = 20
+    LIMIT = 25
     curr_page = 1
     while True:
         # add limit to pagination
@@ -74,8 +75,9 @@ try:
                 publishedAfter=time_6_months_ago,
                 regionCode='US',
                 type='video',
-                topicId = '/m/098wr',
+                videoCategoryId = '28',
                 relevanceLanguage = 'en',
+                videoCaption='closedCaption',
                 q='AI',
             )
         else:
@@ -97,36 +99,13 @@ for vid in vids:
     if channelId not in channel:
         channel.append(channelId)
 
-# get detailed information on the channels found
-# choose the channels with most video count and view count
-prolific_channels = {}
-for channel_id in channel:
-    channel_search = channels.list(
-            part='statistics, topicDetails',
-            id=channel_id
-    )
-    
-    # execute the request
-    try:
-        channel_response = channel_search.execute()
-        channel_items = channel_response.get('items', [])
-        
-        if int(channel_items[0]['statistics']['videoCount']) > 100:
-            # then add to the dictionary
-            prolific_channels[channel_id] = channel_items[0]['statistics']['videoCount']
-    except HttpError as e:
-        print(f'Error response status code : {e.status_code}, reason : {e.error_details}')
-
-# put the top 20 channels into json dict
-prolific_channels = [*prolific_channels]
-prolific_channels = prolific_channels[:20]
+# put then put channels into json dict ordered by video count (will narrow down to 10-20 channels after getting the video ids after filtering)
 filename = 'data/channels.json'
 try:
     with open(filename, 'w') as json_file:
-        json.dump(prolific_channels, json_file, indent=4)
+        json.dump(channel, json_file, indent=4)
 except IOError as e:
     print(f"Error with writing to json file: {e}")
-
 
 # close the service object for YouTube API
 youtube.close()
