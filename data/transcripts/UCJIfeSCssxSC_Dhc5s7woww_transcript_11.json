@@ -1,0 +1,712 @@
+[
+    {
+        "text": "All right we should say that both of",
+        "start": 2.96,
+        "duration": 4.16
+    },
+    {
+        "text": "you are legit on multiple fronts",
+        "start": 4.56,
+        "duration": 5.68
+    },
+    {
+        "text": "Researchers, programmers educators",
+        "start": 7.12,
+        "duration": 4.67
+    },
+    {
+        "text": "tweeterers,",
+        "start": 10.24,
+        "duration": 2.96
+    },
+    {
+        "text": "laughter",
+        "start": 11.79,
+        "duration": 4.85
+    },
+    {
+        "text": "and on the book front too So, Nathan",
+        "start": 13.2,
+        "duration": 6.72
+    },
+    {
+        "text": "at some point soon hopefully has an RHF",
+        "start": 16.64,
+        "duration": 4.08
+    },
+    {
+        "text": "book coming out",
+        "start": 19.92,
+        "duration": 2.32
+    },
+    {
+        "text": "i It's available for pre-order, and",
+        "start": 20.72,
+        "duration": 4.08
+    },
+    {
+        "text": "there's a full digital reprint just",
+        "start": 22.24,
+        "duration": 4.08
+    },
+    {
+        "text": "making it pretty and better organized",
+        "start": 24.8,
+        "duration": 3.52
+    },
+    {
+        "text": "for the physical thing which is a lot of",
+        "start": 26.32,
+        "duration": 4.32
+    },
+    {
+        "text": "why I do it because it's fun to create",
+        "start": 28.32,
+        "duration": 4.16
+    },
+    {
+        "text": "things that you think are excellent in",
+        "start": 30.64,
+        "duration": 3.599
+    },
+    {
+        "text": "the physical form when so much of our",
+        "start": 32.48,
+        "duration": 3.84
+    },
+    {
+        "text": "life is digital I should say going to",
+        "start": 34.239,
+        "duration": 4.16
+    },
+    {
+        "text": "perplexity here Sebastian Rashka is a",
+        "start": 36.32,
+        "duration": 3.759
+    },
+    {
+        "text": "machine learning researcher and author",
+        "start": 38.399,
+        "duration": 3.761
+    },
+    {
+        "text": "known for several influential books a",
+        "start": 40.079,
+        "duration": 3.601
+    },
+    {
+        "text": "couple of them that I wanted to mention",
+        "start": 42.16,
+        "duration": 4.0
+    },
+    {
+        "text": "which is a book I highly recommend build",
+        "start": 43.68,
+        "duration": 5.199
+    },
+    {
+        "text": "a large language model from scratch and",
+        "start": 46.16,
+        "duration": 5.68
+    },
+    {
+        "text": "the new one build a reasoning model from",
+        "start": 48.879,
+        "duration": 5.84
+    },
+    {
+        "text": "scratch so I'm really excited about that",
+        "start": 51.84,
+        "duration": 4.559
+    },
+    {
+        "text": "building stuff from scratch is one of",
+        "start": 54.719,
+        "duration": 3.281
+    },
+    {
+        "text": "the most powerful ways of learning",
+        "start": 56.399,
+        "duration": 2.96
+    },
+    {
+        "text": "i Honestly, building an element from",
+        "start": 58.0,
+        "duration": 3.199
+    },
+    {
+        "text": "scratch is a lot of fun It's also a lot",
+        "start": 59.359,
+        "duration": 3.281
+    },
+    {
+        "text": "of to learn And like you said it's",
+        "start": 61.199,
+        "duration": 2.96
+    },
+    {
+        "text": "probably the best way to learn how",
+        "start": 62.64,
+        "duration": 4.24
+    },
+    {
+        "text": "something really works cut you can look",
+        "start": 64.159,
+        "duration": 4.161
+    },
+    {
+        "text": "at figures but figures can have",
+        "start": 66.88,
+        "duration": 3.68
+    },
+    {
+        "text": "mistakes You can look at at concepts",
+        "start": 68.32,
+        "duration": 4.08
+    },
+    {
+        "text": "explanations but you might",
+        "start": 70.56,
+        "duration": 4.8
+    },
+    {
+        "text": "misunderstand them But if you see the",
+        "start": 72.4,
+        "duration": 5.68
+    },
+    {
+        "text": "there is code and the code works you",
+        "start": 75.36,
+        "duration": 4.0
+    },
+    {
+        "text": "know it's correct I mean there's no",
+        "start": 78.08,
+        "duration": 2.88
+    },
+    {
+        "text": "misunderstanding It's like it's precise",
+        "start": 79.36,
+        "duration": 3.2
+    },
+    {
+        "text": "otherwise it wouldn't work And I think",
+        "start": 80.96,
+        "duration": 2.96
+    },
+    {
+        "text": "that's like kind of like the beauty",
+        "start": 82.56,
+        "duration": 3.44
+    },
+    {
+        "text": "behind coding it is kind of like it",
+        "start": 83.92,
+        "duration": 4.64
+    },
+    {
+        "text": "doesn't lie It's math basically So",
+        "start": 86.0,
+        "duration": 4.479
+    },
+    {
+        "text": "even though with math I think you can",
+        "start": 88.56,
+        "duration": 3.36
+    },
+    {
+        "text": "have mistakes in a book you would never",
+        "start": 90.479,
+        "duration": 3.041
+    },
+    {
+        "text": "notice because you're not running the",
+        "start": 91.92,
+        "duration": 3.6
+    },
+    {
+        "text": "math when you're reading the book you",
+        "start": 93.52,
+        "duration": 3.52
+    },
+    {
+        "text": "can't verify this And with code what's",
+        "start": 95.52,
+        "duration": 3.76
+    },
+    {
+        "text": "what's nice is you can verify it",
+        "start": 97.04,
+        "duration": 4.079
+    },
+    {
+        "text": "i Yeah I agree with you about the LM from",
+        "start": 99.28,
+        "duration": 4.32
+    },
+    {
+        "text": "scratch book It's nice to tune out",
+        "start": 101.119,
+        "duration": 3.921
+    },
+    {
+        "text": "everything else the internet and so on",
+        "start": 103.6,
+        "duration": 3.92
+    },
+    {
+        "text": "and just focus on the book But, you",
+        "start": 105.04,
+        "duration": 5.68
+    },
+    {
+        "text": "know I read uh several like you know",
+        "start": 107.52,
+        "duration": 7.2
+    },
+    {
+        "text": "uh history books It's just less lonely",
+        "start": 110.72,
+        "duration": 6.399
+    },
+    {
+        "text": "somehow It's really more fun Like, uh",
+        "start": 114.72,
+        "duration": 3.999
+    },
+    {
+        "text": "for example on the programming front I",
+        "start": 117.119,
+        "duration": 3.441
+    },
+    {
+        "text": "think it's genuinely more fun to program",
+        "start": 118.719,
+        "duration": 3.201
+    },
+    {
+        "text": "with an LLM.",
+        "start": 120.56,
+        "duration": 3.76
+    },
+    {
+        "text": "i And I think it's genuinely more fun to",
+        "start": 121.92,
+        "duration": 4.239
+    },
+    {
+        "text": "read with an LLM,",
+        "start": 124.32,
+        "duration": 4.559
+    },
+    {
+        "text": "i but you're right like this distraction",
+        "start": 126.159,
+        "duration": 5.121
+    },
+    {
+        "text": "should be minimized So it's uh you use",
+        "start": 128.879,
+        "duration": 6.321
+    },
+    {
+        "text": "the LLM to basically enrich the",
+        "start": 131.28,
+        "duration": 6.88
+    },
+    {
+        "text": "experience maybe add more context",
+        "start": 135.2,
+        "duration": 5.6
+    },
+    {
+        "text": "Maybe the I just the rate of aha moments",
+        "start": 138.16,
+        "duration": 5.68
+    },
+    {
+        "text": "for me in a small scale is really high",
+        "start": 140.8,
+        "duration": 6.0
+    },
+    {
+        "text": "with LLMs. 100%. I would I also want to",
+        "start": 143.84,
+        "duration": 4.479
+    },
+    {
+        "text": "correct myself I'm not suggesting not",
+        "start": 146.8,
+        "duration": 4.079
+    },
+    {
+        "text": "to use LLM. Uh I suggest doing it in",
+        "start": 148.319,
+        "duration": 4.481
+    },
+    {
+        "text": "multiple passes like one pass just",
+        "start": 150.879,
+        "duration": 4.64
+    },
+    {
+        "text": "offline focus mode and then after that",
+        "start": 152.8,
+        "duration": 5.84
+    },
+    {
+        "text": "uh I mean I also take notes but I I try",
+        "start": 155.519,
+        "duration": 5.761
+    },
+    {
+        "text": "to resist the urge to immediately look",
+        "start": 158.64,
+        "duration": 5.04
+    },
+    {
+        "text": "things up I I do a second pass It's",
+        "start": 161.28,
+        "duration": 3.76
+    },
+    {
+        "text": "just like for me more structured this",
+        "start": 163.68,
+        "duration": 3.52
+    },
+    {
+        "text": "way and I get le I mean sometimes things",
+        "start": 165.04,
+        "duration": 3.919
+    },
+    {
+        "text": "are answered in the chapter but",
+        "start": 167.2,
+        "duration": 3.759
+    },
+    {
+        "text": "sometimes also it just helps to let it",
+        "start": 168.959,
+        "duration": 4.081
+    },
+    {
+        "text": "sink in and think about it Other people",
+        "start": 170.959,
+        "duration": 3.601
+    },
+    {
+        "text": "have different preferences I would",
+        "start": 173.04,
+        "duration": 3.199
+    },
+    {
+        "text": "highly recommend using LLMs when reading",
+        "start": 174.56,
+        "duration": 3.6
+    },
+    {
+        "text": "books For me it's just it's not the",
+        "start": 176.239,
+        "duration": 3.441
+    },
+    {
+        "text": "first thing to do It's like the second",
+        "start": 178.16,
+        "duration": 2.0
+    },
+    {
+        "text": "pass",
+        "start": 179.68,
+        "duration": 2.479
+    },
+    {
+        "text": "i By way of recommendation is to say I do",
+        "start": 180.16,
+        "duration": 4.32
+    },
+    {
+        "text": "the opposite I like to use the LLM at",
+        "start": 182.159,
+        "duration": 3.281
+    },
+    {
+        "text": "the beginning",
+        "start": 184.48,
+        "duration": 3.28
+    },
+    {
+        "text": "i to lay out the full context of like what",
+        "start": 185.44,
+        "duration": 4.64
+    },
+    {
+        "text": "is this world that I'm now stepping",
+        "start": 187.76,
+        "duration": 5.44
+    },
+    {
+        "text": "into but I try to avoid clicking out of",
+        "start": 190.08,
+        "duration": 6.64
+    },
+    {
+        "text": "the LLM into the world of like Twitter",
+        "start": 193.2,
+        "duration": 6.16
+    },
+    {
+        "text": "and blogs and because then you're now",
+        "start": 196.72,
+        "duration": 4.32
+    },
+    {
+        "text": "down this rabbit hole You're reading",
+        "start": 199.36,
+        "duration": 4.0
+    },
+    {
+        "text": "somebody's opinion there's a flame war",
+        "start": 201.04,
+        "duration": 3.919
+    },
+    {
+        "text": "about a particular topic and all a",
+        "start": 203.36,
+        "duration": 3.44
+    },
+    {
+        "text": "sudden you're no longer you're now in",
+        "start": 204.959,
+        "duration": 3.681
+    },
+    {
+        "text": "the in the realm of the internet and",
+        "start": 206.8,
+        "duration": 5.2
+    },
+    {
+        "text": "Reddit and so on But if you're purely",
+        "start": 208.64,
+        "duration": 6.0
+    },
+    {
+        "text": "letting the LLM give you the context of",
+        "start": 212.0,
+        "duration": 4.319
+    },
+    {
+        "text": "why this matters what are the big",
+        "start": 214.64,
+        "duration": 4.239
+    },
+    {
+        "text": "picture ideas uh but sometimes books",
+        "start": 216.319,
+        "duration": 4.64
+    },
+    {
+        "text": "themselves are good at doing that but",
+        "start": 218.879,
+        "duration": 3.28
+    },
+    {
+        "text": "not always So",
+        "start": 220.959,
+        "duration": 2.721
+    },
+    {
+        "text": "i this is why I like the chat GPT ape",
+        "start": 222.159,
+        "duration": 4.08
+    },
+    {
+        "text": "because it gives the AI a home in your",
+        "start": 223.68,
+        "duration": 4.32
+    },
+    {
+        "text": "computer when you are f you can focus on",
+        "start": 226.239,
+        "duration": 3.761
+    },
+    {
+        "text": "it rather than just being another tab in",
+        "start": 228.0,
+        "duration": 5.36
+    },
+    {
+        "text": "my mess of internet options and I think",
+        "start": 230.0,
+        "duration": 5.68
+    },
+    {
+        "text": "cloud code and these particular does a",
+        "start": 233.36,
+        "duration": 3.92
+    },
+    {
+        "text": "good job of making that a joy where it",
+        "start": 235.68,
+        "duration": 4.16
+    },
+    {
+        "text": "seems very engaging as a product",
+        "start": 237.28,
+        "duration": 5.519
+    },
+    {
+        "text": "designed to be an interface that your AI",
+        "start": 239.84,
+        "duration": 4.64
+    },
+    {
+        "text": "will then go out into the world and is",
+        "start": 242.799,
+        "duration": 2.8
+    },
+    {
+        "text": "something that is very kind of",
+        "start": 244.48,
+        "duration": 3.44
+    },
+    {
+        "text": "intangible between it and codex is that",
+        "start": 245.599,
+        "duration": 5.121
+    },
+    {
+        "text": "it just feels kind of warm and engaging",
+        "start": 247.92,
+        "duration": 4.56
+    },
+    {
+        "text": "where Codex can often be as good from",
+        "start": 250.72,
+        "duration": 4.0
+    },
+    {
+        "text": "open AI but it just kind of like feels a",
+        "start": 252.48,
+        "duration": 3.68
+    },
+    {
+        "text": "little bit rougher on the edges whereas",
+        "start": 254.72,
+        "duration": 3.68
+    },
+    {
+        "text": "like cloud code is just makes it fun to",
+        "start": 256.16,
+        "duration": 4.0
+    },
+    {
+        "text": "build things particularly from scratch",
+        "start": 258.4,
+        "duration": 3.2
+    },
+    {
+        "text": "where you just don't like you don't have",
+        "start": 260.16,
+        "duration": 3.44
+    },
+    {
+        "text": "to care but you trust that it'll make",
+        "start": 261.6,
+        "duration": 3.44
+    },
+    {
+        "text": "something like obviously this is good",
+        "start": 263.6,
+        "duration": 4.24
+    },
+    {
+        "text": "for websites and kind of refreshing",
+        "start": 265.04,
+        "duration": 5.28
+    },
+    {
+        "text": "tooling and stuff like this which I use",
+        "start": 267.84,
+        "duration": 5.2
+    },
+    {
+        "text": "it for or data analysis so I my my blog",
+        "start": 270.32,
+        "duration": 4.4
+    },
+    {
+        "text": "we scrape hugging paste we keep the",
+        "start": 273.04,
+        "duration": 3.12
+    },
+    {
+        "text": "download numbers for every data set and",
+        "start": 274.72,
+        "duration": 3.039
+    },
+    {
+        "text": "model over time now so we have them and",
+        "start": 276.16,
+        "duration": 3.759
+    },
+    {
+        "text": "it's like claude was just like yeah I've",
+        "start": 277.759,
+        "duration": 3.921
+    },
+    {
+        "text": "made use of that data no problem And I",
+        "start": 279.919,
+        "duration": 3.041
+    },
+    {
+        "text": "was like that would have taken me days",
+        "start": 281.68,
+        "duration": 2.959
+    },
+    {
+        "text": "And I was like then I have enough",
+        "start": 282.96,
+        "duration": 3.2
+    },
+    {
+        "text": "situational awareness to be like okay",
+        "start": 284.639,
+        "duration": 3.041
+    },
+    {
+        "text": "these trends obviously make sense and",
+        "start": 286.16,
+        "duration": 3.92
+    },
+    {
+        "text": "you can check things cut that's just a",
+        "start": 287.68,
+        "duration": 3.84
+    },
+    {
+        "text": "kind of wonderful interface where you",
+        "start": 290.08,
+        "duration": 3.28
+    },
+    {
+        "text": "can have an intermediary and not have to",
+        "start": 291.52,
+        "duration": 4.48
+    },
+    {
+        "text": "do the kind of awful low-level work that",
+        "start": 293.36,
+        "duration": 3.839
+    },
+    {
+        "text": "you would have to do to maintain",
+        "start": 296.0,
+        "duration": 5.88
+    },
+    {
+        "text": "different web projects and do this Huh?",
+        "start": 297.199,
+        "duration": 4.681
+    }
+]

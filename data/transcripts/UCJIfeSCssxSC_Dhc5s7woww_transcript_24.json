@@ -1,0 +1,257 @@
+[
+    {
+        "text": "We didn't really mention programming",
+        "start": 3.04,
+        "duration": 4.719
+    },
+    {
+        "text": "That's another use case that a lot of",
+        "start": 5.44,
+        "duration": 4.4
+    },
+    {
+        "text": "people deeply care about So I use",
+        "start": 7.759,
+        "duration": 5.201
+    },
+    {
+        "text": "basically half and half cursor and claw",
+        "start": 9.84,
+        "duration": 5.36
+    },
+    {
+        "text": "code because there I find them to be",
+        "start": 12.96,
+        "duration": 3.76
+    },
+    {
+        "text": "like fundamentally different experience",
+        "start": 15.2,
+        "duration": 4.48
+    },
+    {
+        "text": "and both useful Uh what do you guys you",
+        "start": 16.72,
+        "duration": 4.96
+    },
+    {
+        "text": "program quite a bit So what what do you",
+        "start": 19.68,
+        "duration": 3.92
+    },
+    {
+        "text": "used What's the current vibe",
+        "start": 21.68,
+        "duration": 5.04
+    },
+    {
+        "text": "i So I use the codex plugin for VS Code.",
+        "start": 23.6,
+        "duration": 4.48
+    },
+    {
+        "text": "You know it's very convenient It's just",
+        "start": 26.72,
+        "duration": 2.639
+    },
+    {
+        "text": "like a plugin and then it's a chat",
+        "start": 28.08,
+        "duration": 2.72
+    },
+    {
+        "text": "interface It has access to your",
+        "start": 29.359,
+        "duration": 4.481
+    },
+    {
+        "text": "repository I know that cloud code is I",
+        "start": 30.8,
+        "duration": 4.32
+    },
+    {
+        "text": "think a bit different It is a bit more",
+        "start": 33.84,
+        "duration": 2.879
+    },
+    {
+        "text": "agent It touches more things It does a",
+        "start": 35.12,
+        "duration": 3.52
+    },
+    {
+        "text": "whole project for you I'm not quite",
+        "start": 36.719,
+        "duration": 3.761
+    },
+    {
+        "text": "there yet where I'm comfortable with",
+        "start": 38.64,
+        "duration": 4.4
+    },
+    {
+        "text": "that because uh maybe I'm a control",
+        "start": 40.48,
+        "duration": 4.72
+    },
+    {
+        "text": "freak but I still would like to see a",
+        "start": 43.04,
+        "duration": 4.48
+    },
+    {
+        "text": "bit what's going on and codex is kind",
+        "start": 45.2,
+        "duration": 4.0
+    },
+    {
+        "text": "of like right now for me like the sweet",
+        "start": 47.52,
+        "duration": 4.24
+    },
+    {
+        "text": "spot where it is helping me but it is",
+        "start": 49.2,
+        "duration": 4.72
+    },
+    {
+        "text": "not taking completely over I should",
+        "start": 51.76,
+        "duration": 3.76
+    },
+    {
+        "text": "mention one of the reasons I do use",
+        "start": 53.92,
+        "duration": 4.4
+    },
+    {
+        "text": "claude code is to build the skill of",
+        "start": 55.52,
+        "duration": 4.64
+    },
+    {
+        "text": "programming with English. I mean the",
+        "start": 58.32,
+        "duration": 3.36
+    },
+    {
+        "text": "experience is fundamentally different",
+        "start": 60.16,
+        "duration": 4.719
+    },
+    {
+        "text": "You're as opposed to micromanaging the",
+        "start": 61.68,
+        "duration": 5.52
+    },
+    {
+        "text": "details of the process of the generation",
+        "start": 64.879,
+        "duration": 5.121
+    },
+    {
+        "text": "of the code and uh looking at the riff",
+        "start": 67.2,
+        "duration": 4.88
+    },
+    {
+        "text": "which you can in cursor if that's the",
+        "start": 70.0,
+        "duration": 5.119
+    },
+    {
+        "text": "idea you use and and then changing",
+        "start": 72.08,
+        "duration": 5.76
+    },
+    {
+        "text": "altering looking and reading the code",
+        "start": 75.119,
+        "duration": 4.801
+    },
+    {
+        "text": "and understanding the code deeply as you",
+        "start": 77.84,
+        "duration": 5.76
+    },
+    {
+        "text": "progress versus just kind of like",
+        "start": 79.92,
+        "duration": 7.04
+    },
+    {
+        "text": "thinking in this design space and just",
+        "start": 83.6,
+        "duration": 6.8
+    },
+    {
+        "text": "guiding it at this uh macro level which",
+        "start": 86.96,
+        "duration": 6.479
+    },
+    {
+        "text": "I think uh is another way of thinking",
+        "start": 90.4,
+        "duration": 5.44
+    },
+    {
+        "text": "about the programming process Also, we",
+        "start": 93.439,
+        "duration": 4.961
+    },
+    {
+        "text": "should say that cloud code it just",
+        "start": 95.84,
+        "duration": 5.279
+    },
+    {
+        "text": "seems to be somehow a better utilization",
+        "start": 98.4,
+        "duration": 4.719
+    },
+    {
+        "text": "of cloud opus 45.",
+        "start": 101.119,
+        "duration": 3.761
+    },
+    {
+        "text": "i It's a good side by side for people to",
+        "start": 103.119,
+        "duration": 3.36
+    },
+    {
+        "text": "do So, you can have cloud code open",
+        "start": 104.88,
+        "duration": 2.96
+    },
+    {
+        "text": "you can have cursor open you can have",
+        "start": 106.479,
+        "duration": 2.881
+    },
+    {
+        "text": "VS code open and you can select the",
+        "start": 107.84,
+        "duration": 3.2
+    },
+    {
+        "text": "same models on all of them and ask",
+        "start": 109.36,
+        "duration": 3.36
+    },
+    {
+        "text": "questions It's very interesting like",
+        "start": 111.04,
+        "duration": 4.24
+    },
+    {
+        "text": "the the cloud code is way better in that",
+        "start": 112.72,
+        "duration": 6.28
+    },
+    {
+        "text": "domain It's remarkable",
+        "start": 115.28,
+        "duration": 3.72
+    }
+]

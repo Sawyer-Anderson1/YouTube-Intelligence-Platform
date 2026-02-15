@@ -1,0 +1,957 @@
+[
+    {
+        "text": "I think this has been happening over the",
+        "start": 2.879,
+        "duration": 3.361
+    },
+    {
+        "text": "last few weeks where people have gone",
+        "start": 4.64,
+        "duration": 3.76
+    },
+    {
+        "text": "from a month ago of like oh yeah",
+        "start": 6.24,
+        "duration": 4.8
+    },
+    {
+        "text": "agents are kind of sloppy",
+        "start": 8.4,
+        "duration": 6.239
+    },
+    {
+        "text": "quote to like the what is a little bit",
+        "start": 11.04,
+        "duration": 5.6
+    },
+    {
+        "text": "of a meme of like the industrialization",
+        "start": 14.639,
+        "duration": 4.001
+    },
+    {
+        "text": "of software when anyone can just create",
+        "start": 16.64,
+        "duration": 3.92
+    },
+    {
+        "text": "software at their fingerprints Like I",
+        "start": 18.64,
+        "duration": 3.76
+    },
+    {
+        "text": "do think we are closer to that side of",
+        "start": 20.56,
+        "duration": 4.959
+    },
+    {
+        "text": "things and it takes direction and like",
+        "start": 22.4,
+        "duration": 4.959
+    },
+    {
+        "text": "understanding how the systems work to",
+        "start": 25.519,
+        "duration": 3.361
+    },
+    {
+        "text": "extract that best from the language",
+        "start": 27.359,
+        "duration": 3.041
+    },
+    {
+        "text": "models And I think it's hard to like",
+        "start": 28.88,
+        "duration": 4.16
+    },
+    {
+        "text": "accept the gravity of how much is going",
+        "start": 30.4,
+        "duration": 4.319
+    },
+    {
+        "text": "to change with software development and",
+        "start": 33.04,
+        "duration": 3.359
+    },
+    {
+        "text": "how many more people can do things",
+        "start": 34.719,
+        "duration": 3.36
+    },
+    {
+        "text": "without ever looking at I think what's",
+        "start": 36.399,
+        "duration": 3.041
+    },
+    {
+        "text": "interesting is to think about whether",
+        "start": 38.079,
+        "duration": 3.601
+    },
+    {
+        "text": "these systems will be um independent",
+        "start": 39.44,
+        "duration": 3.76
+    },
+    {
+        "text": "like completely independent in the sense",
+        "start": 41.68,
+        "duration": 4.16
+    },
+    {
+        "text": "that well I have no doubt that LMS will",
+        "start": 43.2,
+        "duration": 5.039
+    },
+    {
+        "text": "kind of at some point solve coding in a",
+        "start": 45.84,
+        "duration": 5.199
+    },
+    {
+        "text": "sense like calculators solve calculating",
+        "start": 48.239,
+        "duration": 4.401
+    },
+    {
+        "text": "right so at some point humans developed",
+        "start": 51.039,
+        "duration": 3.761
+    },
+    {
+        "text": "a tool that you know you never need a",
+        "start": 52.64,
+        "duration": 3.759
+    },
+    {
+        "text": "human to calculate that number you just",
+        "start": 54.8,
+        "duration": 4.64
+    },
+    {
+        "text": "type it in and it's an algorithm you you",
+        "start": 56.399,
+        "duration": 5.121
+    },
+    {
+        "text": "can do it in a in that sense and I I",
+        "start": 59.44,
+        "duration": 4.0
+    },
+    {
+        "text": "think that's the same probably for",
+        "start": 61.52,
+        "duration": 4.16
+    },
+    {
+        "text": "coding but the question is so I think",
+        "start": 63.44,
+        "duration": 3.92
+    },
+    {
+        "text": "what will happen is yeah you will just",
+        "start": 65.68,
+        "duration": 3.36
+    },
+    {
+        "text": "say build that website it will make a",
+        "start": 67.36,
+        "duration": 3.439
+    },
+    {
+        "text": "really good website and then you maybe",
+        "start": 69.04,
+        "duration": 4.079
+    },
+    {
+        "text": "refine it But will it do things",
+        "start": 70.799,
+        "duration": 6.081
+    },
+    {
+        "text": "independently where so will you be still",
+        "start": 73.119,
+        "duration": 6.64
+    },
+    {
+        "text": "having humans asking the AI to do",
+        "start": 76.88,
+        "duration": 4.879
+    },
+    {
+        "text": "something like will there be a person",
+        "start": 79.759,
+        "duration": 4.481
+    },
+    {
+        "text": "say build that website or will there be",
+        "start": 81.759,
+        "duration": 4.0
+    },
+    {
+        "text": "AI that just builds websites or",
+        "start": 84.24,
+        "duration": 2.96
+    },
+    {
+        "text": "something or whatever",
+        "start": 85.759,
+        "duration": 4.0
+    },
+    {
+        "text": "i I think using talking about building",
+        "start": 87.2,
+        "duration": 3.84
+    },
+    {
+        "text": "websites is the",
+        "start": 89.759,
+        "duration": 3.68
+    },
+    {
+        "text": "i too simple It's just like there's the",
+        "start": 91.04,
+        "duration": 3.759
+    },
+    {
+        "text": "the problem with websites and the",
+        "start": 93.439,
+        "duration": 3.121
+    },
+    {
+        "text": "problem with the web you know HTML and",
+        "start": 94.799,
+        "duration": 2.96
+    },
+    {
+        "text": "all that kind of stuff",
+        "start": 96.56,
+        "duration": 3.519
+    },
+    {
+        "text": "i It's very resilient to just",
+        "start": 97.759,
+        "duration": 4.801
+    },
+    {
+        "text": "i slope It will show you slop as good as",
+        "start": 100.079,
+        "duration": 3.68
+    },
+    {
+        "text": "showing slope",
+        "start": 102.56,
+        "duration": 3.919
+    },
+    {
+        "text": "i I would rather like think of like safety",
+        "start": 103.759,
+        "duration": 6.481
+    },
+    {
+        "text": "critical systems like uh asking AI to",
+        "start": 106.479,
+        "duration": 6.32
+    },
+    {
+        "text": "end to end generate",
+        "start": 110.24,
+        "duration": 5.04
+    },
+    {
+        "text": "something that manages logistics",
+        "start": 112.799,
+        "duration": 4.881
+    },
+    {
+        "text": "i or manages cars a fleet of cars all",
+        "start": 115.28,
+        "duration": 4.479
+    },
+    {
+        "text": "that kind of stuff So end to end",
+        "start": 117.68,
+        "duration": 3.92
+    },
+    {
+        "text": "generates that for you I think a more",
+        "start": 119.759,
+        "duration": 3.521
+    },
+    {
+        "text": "intermediate example is take something",
+        "start": 121.6,
+        "duration": 4.72
+    },
+    {
+        "text": "like Slack or Microsoft Word. I think if",
+        "start": 123.28,
+        "duration": 5.199
+    },
+    {
+        "text": "the organizations allow it AI could",
+        "start": 126.32,
+        "duration": 5.04
+    },
+    {
+        "text": "very easily implement features end to",
+        "start": 128.479,
+        "duration": 5.12
+    },
+    {
+        "text": "end and do a fairly good job for like",
+        "start": 131.36,
+        "duration": 3.92
+    },
+    {
+        "text": "things that you want to try You want to",
+        "start": 133.599,
+        "duration": 4.72
+    },
+    {
+        "text": "add a new like tab in Slack that you",
+        "start": 135.28,
+        "duration": 4.8
+    },
+    {
+        "text": "want to use and I think AI will be able",
+        "start": 138.319,
+        "duration": 2.721
+    },
+    {
+        "text": "to do that pretty well",
+        "start": 140.08,
+        "duration": 2.4
+    },
+    {
+        "text": "i Actually, that's a really great example",
+        "start": 141.04,
+        "duration": 3.12
+    },
+    {
+        "text": "How far away are we from that",
+        "start": 142.48,
+        "duration": 3.44
+    },
+    {
+        "text": "i Like",
+        "start": 144.16,
+        "duration": 2.56
+    },
+    {
+        "text": "this years",
+        "start": 145.92,
+        "duration": 3.52
+    },
+    {
+        "text": "i See, I don't I don't know I don't know",
+        "start": 146.72,
+        "duration": 4.32
+    },
+    {
+        "text": "I I guess I don't know how bad",
+        "start": 149.44,
+        "duration": 3.28
+    },
+    {
+        "text": "production code bases are but I think",
+        "start": 151.04,
+        "duration": 2.559
+    },
+    {
+        "text": "that",
+        "start": 152.72,
+        "duration": 3.68
+    },
+    {
+        "text": "i within like on the order of low years a",
+        "start": 153.599,
+        "duration": 4.081
+    },
+    {
+        "text": "lot of people are going to be pushed to",
+        "start": 156.4,
+        "duration": 3.199
+    },
+    {
+        "text": "be more of like a designer and product",
+        "start": 157.68,
+        "duration": 3.839
+    },
+    {
+        "text": "manager where you have multiple of these",
+        "start": 159.599,
+        "duration": 4.161
+    },
+    {
+        "text": "agents that can try things for you and",
+        "start": 161.519,
+        "duration": 3.681
+    },
+    {
+        "text": "they might take one to two days to",
+        "start": 163.76,
+        "duration": 3.839
+    },
+    {
+        "text": "implement a feature or attempt to fix a",
+        "start": 165.2,
+        "duration": 4.48
+    },
+    {
+        "text": "bug and you have these dashboards which",
+        "start": 167.599,
+        "duration": 3.28
+    },
+    {
+        "text": "I think Slack is actually a good",
+        "start": 169.68,
+        "duration": 2.72
+    },
+    {
+        "text": "dashboard where your agents will talk to",
+        "start": 170.879,
+        "duration": 4.561
+    },
+    {
+        "text": "you and you'll then give feedback But",
+        "start": 172.4,
+        "duration": 5.68
+    },
+    {
+        "text": "things like like I make a website it's",
+        "start": 175.44,
+        "duration": 4.32
+    },
+    {
+        "text": "like you want to make a logo that's",
+        "start": 178.08,
+        "duration": 3.04
+    },
+    {
+        "text": "passible Like I think these like",
+        "start": 179.76,
+        "duration": 4.479
+    },
+    {
+        "text": "cohesive design things and this style is",
+        "start": 181.12,
+        "duration": 5.36
+    },
+    {
+        "text": "going to be very hard for models and",
+        "start": 184.239,
+        "duration": 4.801
+    },
+    {
+        "text": "deciding on what to add the next time",
+        "start": 186.48,
+        "duration": 5.28
+    },
+    {
+        "text": "i I just Okay, so I hang out with a lot of",
+        "start": 189.04,
+        "duration": 5.44
+    },
+    {
+        "text": "programmers and some of them are",
+        "start": 191.76,
+        "duration": 4.72
+    },
+    {
+        "text": "a little bit on the skeptical side in",
+        "start": 194.48,
+        "duration": 4.16
+    },
+    {
+        "text": "general That's just vibe wise they're",
+        "start": 196.48,
+        "duration": 4.16
+    },
+    {
+        "text": "like that",
+        "start": 198.64,
+        "duration": 3.92
+    },
+    {
+        "text": "I just think there's a lot of complexity",
+        "start": 200.64,
+        "duration": 4.08
+    },
+    {
+        "text": "involved in adding features to complex",
+        "start": 202.56,
+        "duration": 4.48
+    },
+    {
+        "text": "systems Like if you look at the browser",
+        "start": 204.72,
+        "duration": 4.08
+    },
+    {
+        "text": "Chrome,",
+        "start": 207.04,
+        "duration": 3.919
+    },
+    {
+        "text": "if I wanted to add a feature if I",
+        "start": 208.8,
+        "duration": 5.2
+    },
+    {
+        "text": "wanted to have tabs as as opposed to up",
+        "start": 210.959,
+        "duration": 4.801
+    },
+    {
+        "text": "top I want them on the left side",
+        "start": 214.0,
+        "duration": 2.319
+    },
+    {
+        "text": "i Mhm.",
+        "start": 215.76,
+        "duration": 3.92
+    },
+    {
+        "text": "i interface right You I think we're not",
+        "start": 216.319,
+        "duration": 4.961
+    },
+    {
+        "text": "this is not a next year thing One of",
+        "start": 219.68,
+        "duration": 3.119
+    },
+    {
+        "text": "the cloud releases this years one of",
+        "start": 221.28,
+        "duration": 3.599
+    },
+    {
+        "text": "their tests was we give it a piece of",
+        "start": 222.799,
+        "duration": 4.0
+    },
+    {
+        "text": "software and leave cloud to run to",
+        "start": 224.879,
+        "duration": 4.321
+    },
+    {
+        "text": "recreate it entirely and it could almost",
+        "start": 226.799,
+        "duration": 5.201
+    },
+    {
+        "text": "rebuild sir like slack from scratch just",
+        "start": 229.2,
+        "duration": 4.56
+    },
+    {
+        "text": "given the parameters of the software and",
+        "start": 232.0,
+        "duration": 4.4
+    },
+    {
+        "text": "left in a sandbox environment",
+        "start": 233.76,
+        "duration": 5.679
+    },
+    {
+        "text": "i The scratch part I like almost better",
+        "start": 236.4,
+        "duration": 4.72
+    },
+    {
+        "text": "i So it might be that the smaller newer",
+        "start": 239.439,
+        "duration": 3.281
+    },
+    {
+        "text": "companies are advantaged and they're",
+        "start": 241.12,
+        "duration": 4.56
+    },
+    {
+        "text": "like we don't have to have the bloat and",
+        "start": 242.72,
+        "duration": 5.439
+    },
+    {
+        "text": "complexity and therefore this future",
+        "start": 245.68,
+        "duration": 3.919
+    },
+    {
+        "text": "exists And I think this gets to the",
+        "start": 248.159,
+        "duration": 3.201
+    },
+    {
+        "text": "point what you mentioned that some",
+        "start": 249.599,
+        "duration": 3.84
+    },
+    {
+        "text": "people are you talked to are skeptical",
+        "start": 251.36,
+        "duration": 4.239
+    },
+    {
+        "text": "and I think that's not because the LM",
+        "start": 253.439,
+        "duration": 5.36
+    },
+    {
+        "text": "can't do XYZ. It's because people don't",
+        "start": 255.599,
+        "duration": 5.04
+    },
+    {
+        "text": "want it to do it this way Some of that",
+        "start": 258.799,
+        "duration": 3.28
+    },
+    {
+        "text": "could be a skill issue on the human",
+        "start": 260.639,
+        "duration": 3.681
+    },
+    {
+        "text": "side Unfortunately, we have to be",
+        "start": 262.079,
+        "duration": 4.001
+    },
+    {
+        "text": "honest with ourselves and some of that",
+        "start": 264.32,
+        "duration": 3.92
+    },
+    {
+        "text": "could be an under specification issue",
+        "start": 266.08,
+        "duration": 4.96
+    },
+    {
+        "text": "So programming",
+        "start": 268.24,
+        "duration": 5.6
+    },
+    {
+        "text": "like you're like you're just assuming",
+        "start": 271.04,
+        "duration": 5.2
+    },
+    {
+        "text": "this is like in in relationships and",
+        "start": 273.84,
+        "duration": 4.56
+    },
+    {
+        "text": "friendships communication type of issue",
+        "start": 276.24,
+        "duration": 3.679
+    },
+    {
+        "text": "You're assuming the LM somehow is",
+        "start": 278.4,
+        "duration": 3.2
+    },
+    {
+        "text": "supposed to read your mind I think this",
+        "start": 279.919,
+        "duration": 3.361
+    },
+    {
+        "text": "is where spec driven design is really",
+        "start": 281.6,
+        "duration": 4.159
+    },
+    {
+        "text": "important Like you just using natural",
+        "start": 283.28,
+        "duration": 4.479
+    },
+    {
+        "text": "language specify like what you want I",
+        "start": 285.759,
+        "duration": 3.281
+    },
+    {
+        "text": "think that's like if you talk to people",
+        "start": 287.759,
+        "duration": 3.361
+    },
+    {
+        "text": "at the labs they use these in their",
+        "start": 289.04,
+        "duration": 4.159
+    },
+    {
+        "text": "training in production code like cloud",
+        "start": 291.12,
+        "duration": 4.16
+    },
+    {
+        "text": "code is built with cloud code and they",
+        "start": 293.199,
+        "duration": 3.921
+    },
+    {
+        "text": "all use these things extensively and",
+        "start": 295.28,
+        "duration": 4.56
+    },
+    {
+        "text": "Dario talks about how much collar code",
+        "start": 297.12,
+        "duration": 5.2
+    },
+    {
+        "text": "own and it's like these people are",
+        "start": 299.84,
+        "duration": 4.079
+    },
+    {
+        "text": "slightly ahead in terms of the",
+        "start": 302.32,
+        "duration": 3.76
+    },
+    {
+        "text": "capabilities they have and they",
+        "start": 303.919,
+        "duration": 5.28
+    },
+    {
+        "text": "i probably spend on inference they could",
+        "start": 306.08,
+        "duration": 5.36
+    },
+    {
+        "text": "spend 10 to 100 plus x as much as we're",
+        "start": 309.199,
+        "duration": 4.081
+    },
+    {
+        "text": "spending like we're on a lowly$100 or",
+        "start": 311.44,
+        "duration": 4.24
+    },
+    {
+        "text": "$200 a month plan like they truly let it",
+        "start": 313.28,
+        "duration": 6.0
+    },
+    {
+        "text": "rip and I think that that like with the",
+        "start": 315.68,
+        "duration": 5.68
+    },
+    {
+        "text": "pace of progress that we have it seems",
+        "start": 319.28,
+        "duration": 4.72
+    },
+    {
+        "text": "like like where a year ago we didn't",
+        "start": 321.36,
+        "duration": 4.24
+    },
+    {
+        "text": "have cloud code and we didn't really",
+        "start": 324.0,
+        "duration": 3.44
+    },
+    {
+        "text": "have reasoning models and it's like the",
+        "start": 325.6,
+        "duration": 3.28
+    },
+    {
+        "text": "difference between sitting here today",
+        "start": 327.44,
+        "duration": 4.08
+    },
+    {
+        "text": "and what we can do with these models and",
+        "start": 328.88,
+        "duration": 4.48
+    },
+    {
+        "text": "it seems like there's a lot of like",
+        "start": 331.52,
+        "duration": 3.28
+    },
+    {
+        "text": "there's a lot of low hanging fruit to",
+        "start": 333.36,
+        "duration": 3.839
+    },
+    {
+        "text": "improve them The failure modes are",
+        "start": 334.8,
+        "duration": 4.8
+    },
+    {
+        "text": "pretty dumb It's like Claude, you tried",
+        "start": 337.199,
+        "duration": 4.0
+    },
+    {
+        "text": "to use the CLI command I don't have",
+        "start": 339.6,
+        "duration": 3.68
+    },
+    {
+        "text": "installed 14 times and then then I sent",
+        "start": 341.199,
+        "duration": 4.081
+    },
+    {
+        "text": "you the command to run It's like that",
+        "start": 343.28,
+        "duration": 3.919
+    },
+    {
+        "text": "thing from a modeling perspective is",
+        "start": 345.28,
+        "duration": 3.52
+    },
+    {
+        "text": "pretty fixable",
+        "start": 347.199,
+        "duration": 2.321
+    },
+    {
+        "text": "i So I I",
+        "start": 348.8,
+        "duration": 3.28
+    },
+    {
+        "text": "i I agree with you I've be been uh",
+        "start": 349.52,
+        "duration": 4.08
+    },
+    {
+        "text": "becoming more and more bullish in",
+        "start": 352.08,
+        "duration": 3.04
+    },
+    {
+        "text": "general Speaking to what you're",
+        "start": 353.6,
+        "duration": 4.24
+    },
+    {
+        "text": "articulating I think it is a human",
+        "start": 355.12,
+        "duration": 6.32
+    },
+    {
+        "text": "skill issue So Anthropic is leading the",
+        "start": 357.84,
+        "duration": 6.88
+    },
+    {
+        "text": "way in or other companies in",
+        "start": 361.44,
+        "duration": 5.92
+    },
+    {
+        "text": "understanding how to best use the models",
+        "start": 364.72,
+        "duration": 4.16
+    },
+    {
+        "text": "for programming Therefore, they're",
+        "start": 367.36,
+        "duration": 3.36
+    },
+    {
+        "text": "effectively using them I think there's",
+        "start": 368.88,
+        "duration": 3.92
+    },
+    {
+        "text": "a lot of programmers on the outskirts",
+        "start": 370.72,
+        "duration": 5.36
+    },
+    {
+        "text": "They're like they don't I mean there's",
+        "start": 372.8,
+        "duration": 4.959
+    },
+    {
+        "text": "not a really good guide on how to use",
+        "start": 376.08,
+        "duration": 3.2
+    },
+    {
+        "text": "them People are trying to figure it out",
+        "start": 377.759,
+        "duration": 2.16
+    },
+    {
+        "text": "exactly",
+        "start": 379.28,
+        "duration": 2.24
+    },
+    {
+        "text": "i It might be very expensive Like it",
+        "start": 379.919,
+        "duration": 2.881
+    },
+    {
+        "text": "might be that the entry point for that",
+        "start": 381.52,
+        "duration": 3.28
+    },
+    {
+        "text": "is $2,000 a month which is only teach",
+        "start": 382.8,
+        "duration": 4.239
+    },
+    {
+        "text": "companies and rich people which is like",
+        "start": 384.8,
+        "duration": 3.92
+    },
+    {
+        "text": "like that could be it",
+        "start": 387.039,
+        "duration": 3.44
+    },
+    {
+        "text": "i but it might be worth it I mean if if",
+        "start": 388.72,
+        "duration": 3.84
+    },
+    {
+        "text": "if the final result is is a working",
+        "start": 390.479,
+        "duration": 4.0
+    },
+    {
+        "text": "software system might be worth it But",
+        "start": 392.56,
+        "duration": 3.759
+    },
+    {
+        "text": "by the way it's funny how we converge",
+        "start": 394.479,
+        "duration": 3.84
+    },
+    {
+        "text": "from the discussion of timeline to AGI",
+        "start": 396.319,
+        "duration": 6.841
+    },
+    {
+        "text": "to something more pragmatic and useful",
+        "start": 398.319,
+        "duration": 4.841
+    }
+]

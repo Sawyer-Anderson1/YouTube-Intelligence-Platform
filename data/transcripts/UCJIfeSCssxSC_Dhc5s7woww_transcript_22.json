@@ -1,0 +1,2362 @@
+[
+    {
+        "text": "I guess the big question here is we",
+        "start": 2.879,
+        "duration": 3.44
+    },
+    {
+        "text": "talked quite a bit here on the",
+        "start": 5.12,
+        "duration": 4.32
+    },
+    {
+        "text": "architecture behind the pre-training.",
+        "start": 6.319,
+        "duration": 6.001
+    },
+    {
+        "text": "Are the scaling laws holding strong",
+        "start": 9.44,
+        "duration": 4.56
+    },
+    {
+        "text": "across pre-training, post training",
+        "start": 12.32,
+        "duration": 4.56
+    },
+    {
+        "text": "inference context size data synthetic",
+        "start": 14.0,
+        "duration": 3.68
+    },
+    {
+        "text": "data",
+        "start": 16.88,
+        "duration": 2.399
+    },
+    {
+        "text": "i I like to start with the technical",
+        "start": 17.68,
+        "duration": 3.2
+    },
+    {
+        "text": "definition of scaling law which kind of",
+        "start": 19.279,
+        "duration": 3.121
+    },
+    {
+        "text": "informs all of this The scaling law is",
+        "start": 20.88,
+        "duration": 4.159
+    },
+    {
+        "text": "a power law relationship between you can",
+        "start": 22.4,
+        "duration": 4.4
+    },
+    {
+        "text": "think of the x-axis. So kind of what you",
+        "start": 25.039,
+        "duration": 4.08
+    },
+    {
+        "text": "are scaling is a combination of compute",
+        "start": 26.8,
+        "duration": 5.12
+    },
+    {
+        "text": "and data which are kind of similar and",
+        "start": 29.119,
+        "duration": 5.361
+    },
+    {
+        "text": "then the axis is like the held out",
+        "start": 31.92,
+        "duration": 4.72
+    },
+    {
+        "text": "prediction accuracy over next token So",
+        "start": 34.48,
+        "duration": 3.44
+    },
+    {
+        "text": "we talk about models being auto",
+        "start": 36.64,
+        "duration": 2.8
+    },
+    {
+        "text": "regressive It's like if you keep a set",
+        "start": 37.92,
+        "duration": 3.2
+    },
+    {
+        "text": "of",
+        "start": 39.44,
+        "duration": 3.68
+    },
+    {
+        "text": "text that the model has not seen how",
+        "start": 41.12,
+        "duration": 3.2
+    },
+    {
+        "text": "accurate will it get when you will",
+        "start": 43.12,
+        "duration": 4.0
+    },
+    {
+        "text": "train And the idea of scaling laws came",
+        "start": 44.32,
+        "duration": 4.88
+    },
+    {
+        "text": "when people figured out that that was a",
+        "start": 47.12,
+        "duration": 4.32
+    },
+    {
+        "text": "very predictable relationship And I",
+        "start": 49.2,
+        "duration": 5.28
+    },
+    {
+        "text": "think that that technical term is",
+        "start": 51.44,
+        "duration": 4.72
+    },
+    {
+        "text": "continuing And then the question is",
+        "start": 54.48,
+        "duration": 3.52
+    },
+    {
+        "text": "like what do users get out of it And",
+        "start": 56.16,
+        "duration": 3.6
+    },
+    {
+        "text": "then there are more types of scaling",
+        "start": 58.0,
+        "duration": 4.719
+    },
+    {
+        "text": "where um OpenAI's 01 was famous for",
+        "start": 59.76,
+        "duration": 4.799
+    },
+    {
+        "text": "introducing inference time scaling and",
+        "start": 62.719,
+        "duration": 4.4
+    },
+    {
+        "text": "I think less famously for also showing",
+        "start": 64.559,
+        "duration": 4.401
+    },
+    {
+        "text": "that you can scale reinforce learning",
+        "start": 67.119,
+        "duration": 4.641
+    },
+    {
+        "text": "training and get kind of this log axis",
+        "start": 68.96,
+        "duration": 4.24
+    },
+    {
+        "text": "and then a linear increase in",
+        "start": 71.76,
+        "duration": 3.52
+    },
+    {
+        "text": "performance on ya axis So there's kind",
+        "start": 73.2,
+        "duration": 4.0
+    },
+    {
+        "text": "of these three axes now where the",
+        "start": 75.28,
+        "duration": 3.839
+    },
+    {
+        "text": "traditional scaling laws are talk talked",
+        "start": 77.2,
+        "duration": 3.36
+    },
+    {
+        "text": "about for restraining which is how big",
+        "start": 79.119,
+        "duration": 3.04
+    },
+    {
+        "text": "your model is and how big your data set",
+        "start": 80.56,
+        "duration": 4.16
+    },
+    {
+        "text": "is and then scaling reinforcer learning",
+        "start": 82.159,
+        "duration": 4.081
+    },
+    {
+        "text": "which is like how long can you do this",
+        "start": 84.72,
+        "duration": 3.28
+    },
+    {
+        "text": "trial and error learning that we we'll",
+        "start": 86.24,
+        "duration": 3.6
+    },
+    {
+        "text": "talk about we'll define more of this and",
+        "start": 88.0,
+        "duration": 3.2
+    },
+    {
+        "text": "then this inference time compute which",
+        "start": 89.84,
+        "duration": 2.959
+    },
+    {
+        "text": "is just letting the model generate more",
+        "start": 91.2,
+        "duration": 3.84
+    },
+    {
+        "text": "tokens on a specific problem So I'm",
+        "start": 92.799,
+        "duration": 4.64
+    },
+    {
+        "text": "kind of bullish where they they're all",
+        "start": 95.04,
+        "duration": 3.84
+    },
+    {
+        "text": "really still working but the low",
+        "start": 97.439,
+        "duration": 3.281
+    },
+    {
+        "text": "hanging fruit has mostly been taken",
+        "start": 98.88,
+        "duration": 4.239
+    },
+    {
+        "text": "especially in the last year on um",
+        "start": 100.72,
+        "duration": 4.079
+    },
+    {
+        "text": "reinforce learning with verifiable",
+        "start": 103.119,
+        "duration": 3.521
+    },
+    {
+        "text": "rewards which is this RLVR and then",
+        "start": 104.799,
+        "duration": 4.32
+    },
+    {
+        "text": "inference time scaling which is just why",
+        "start": 106.64,
+        "duration": 4.159
+    },
+    {
+        "text": "these models feel so different to use",
+        "start": 109.119,
+        "duration": 2.96
+    },
+    {
+        "text": "where previously you would get that",
+        "start": 110.799,
+        "duration": 3.36
+    },
+    {
+        "text": "first token immediately and now they",
+        "start": 112.079,
+        "duration": 4.4
+    },
+    {
+        "text": "will go off for seconds minutes or even",
+        "start": 114.159,
+        "duration": 4.881
+    },
+    {
+        "text": "hours generating these hidden thoughts",
+        "start": 116.479,
+        "duration": 4.561
+    },
+    {
+        "text": "before giving you the first word of your",
+        "start": 119.04,
+        "duration": 3.039
+    },
+    {
+        "text": "answer and that's all about this",
+        "start": 121.04,
+        "duration": 3.2
+    },
+    {
+        "text": "inference time scaling which",
+        "start": 122.079,
+        "duration": 4.881
+    },
+    {
+        "text": "such a wonderful kind of step function",
+        "start": 124.24,
+        "duration": 4.159
+    },
+    {
+        "text": "in terms of how the models change",
+        "start": 126.96,
+        "duration": 3.2
+    },
+    {
+        "text": "abilities They kind of enabled this",
+        "start": 128.399,
+        "duration": 3.521
+    },
+    {
+        "text": "tool use stuff and enabled this much",
+        "start": 130.16,
+        "duration": 3.6
+    },
+    {
+        "text": "better software engineering that we were",
+        "start": 131.92,
+        "duration": 4.72
+    },
+    {
+        "text": "talking about And this when we say",
+        "start": 133.76,
+        "duration": 5.119
+    },
+    {
+        "text": "enabled almost entirely downstream of",
+        "start": 136.64,
+        "duration": 4.4
+    },
+    {
+        "text": "the fact that this reinforce learning",
+        "start": 138.879,
+        "duration": 3.841
+    },
+    {
+        "text": "was verifiable rewards training just",
+        "start": 141.04,
+        "duration": 4.24
+    },
+    {
+        "text": "kind of let the models pick up these",
+        "start": 142.72,
+        "duration": 5.28
+    },
+    {
+        "text": "skills very easily So it let the models",
+        "start": 145.28,
+        "duration": 3.92
+    },
+    {
+        "text": "learn And so if you look at the",
+        "start": 148.0,
+        "duration": 2.879
+    },
+    {
+        "text": "reasoning process when the models are",
+        "start": 149.2,
+        "duration": 3.039
+    },
+    {
+        "text": "generating a lot of tokens what it'll",
+        "start": 150.879,
+        "duration": 3.521
+    },
+    {
+        "text": "be often doing is it tries a tools it",
+        "start": 152.239,
+        "duration": 3.681
+    },
+    {
+        "text": "looks at what it gets back It tries",
+        "start": 154.4,
+        "duration": 3.44
+    },
+    {
+        "text": "another API, it sees what it gets back",
+        "start": 155.92,
+        "duration": 3.76
+    },
+    {
+        "text": "and if it solves the problem So the",
+        "start": 157.84,
+        "duration": 3.119
+    },
+    {
+        "text": "models when you're training them very",
+        "start": 159.68,
+        "duration": 4.48
+    },
+    {
+        "text": "quickly learn to do this And then at",
+        "start": 160.959,
+        "duration": 4.881
+    },
+    {
+        "text": "the end of the day that gives this kind",
+        "start": 164.16,
+        "duration": 3.359
+    },
+    {
+        "text": "of general foundation where the model",
+        "start": 165.84,
+        "duration": 3.84
+    },
+    {
+        "text": "can use CLI commands very nicely in your",
+        "start": 167.519,
+        "duration": 4.401
+    },
+    {
+        "text": "rep and handle git for you and move",
+        "start": 169.68,
+        "duration": 4.4
+    },
+    {
+        "text": "things around and organize things or",
+        "start": 171.92,
+        "duration": 4.399
+    },
+    {
+        "text": "search to find more information which",
+        "start": 174.08,
+        "duration": 4.48
+    },
+    {
+        "text": "if we're sitting in these chairs a year",
+        "start": 176.319,
+        "duration": 4.56
+    },
+    {
+        "text": "ago is something that we didn't really",
+        "start": 178.56,
+        "duration": 3.84
+    },
+    {
+        "text": "think of the models being doing So,",
+        "start": 180.879,
+        "duration": 2.881
+    },
+    {
+        "text": "this is just kind of something that has",
+        "start": 182.4,
+        "duration": 3.68
+    },
+    {
+        "text": "happened this year and has totally",
+        "start": 183.76,
+        "duration": 4.08
+    },
+    {
+        "text": "transformed how we think of using AI,",
+        "start": 186.08,
+        "duration": 4.239
+    },
+    {
+        "text": "which I think is very magical was such",
+        "start": 187.84,
+        "duration": 5.759
+    },
+    {
+        "text": "an interesting evolution and just so",
+        "start": 190.319,
+        "duration": 6.081
+    },
+    {
+        "text": "unlock so much value but it's it's like",
+        "start": 193.599,
+        "duration": 5.041
+    },
+    {
+        "text": "it's not clear what the next avenue will",
+        "start": 196.4,
+        "duration": 3.839
+    },
+    {
+        "text": "be in terms of unlocking stuff like",
+        "start": 198.64,
+        "duration": 3.679
+    },
+    {
+        "text": "this I think that there's there's we'll",
+        "start": 200.239,
+        "duration": 3.441
+    },
+    {
+        "text": "get to continual learning later but",
+        "start": 202.319,
+        "duration": 2.56
+    },
+    {
+        "text": "there's a lot of buzz around certain",
+        "start": 203.68,
+        "duration": 2.88
+    },
+    {
+        "text": "areas of AI, but no one knows when the",
+        "start": 204.879,
+        "duration": 3.601
+    },
+    {
+        "text": "next step function will will really",
+        "start": 206.56,
+        "duration": 2.319
+    },
+    {
+        "text": "come",
+        "start": 208.48,
+        "duration": 2.399
+    },
+    {
+        "text": "i So, you you've actually said quite a lot",
+        "start": 208.879,
+        "duration": 5.841
+    },
+    {
+        "text": "of things there and said profound things",
+        "start": 210.879,
+        "duration": 6.241
+    },
+    {
+        "text": "quickly It would be nice to unpack them",
+        "start": 214.72,
+        "duration": 3.92
+    },
+    {
+        "text": "a little bit You said you're bullish",
+        "start": 217.12,
+        "duration": 4.08
+    },
+    {
+        "text": "basically on every version of scaling",
+        "start": 218.64,
+        "duration": 4.159
+    },
+    {
+        "text": "So, can we just even start at the",
+        "start": 221.2,
+        "duration": 5.2
+    },
+    {
+        "text": "beginning pre-training?",
+        "start": 222.799,
+        "duration": 5.681
+    },
+    {
+        "text": "Are we kind of implying that the",
+        "start": 226.4,
+        "duration": 4.72
+    },
+    {
+        "text": "lowhanging fruit on restraining scaling",
+        "start": 228.48,
+        "duration": 5.92
+    },
+    {
+        "text": "has been picked Is is restraining hit",
+        "start": 231.12,
+        "duration": 5.839
+    },
+    {
+        "text": "a plateau or is even restraining still",
+        "start": 234.4,
+        "duration": 3.759
+    },
+    {
+        "text": "you're bullish on",
+        "start": 236.959,
+        "duration": 3.121
+    },
+    {
+        "text": "i Pre-training has gotten extremely",
+        "start": 238.159,
+        "duration": 3.681
+    },
+    {
+        "text": "expensive I think to scale up",
+        "start": 240.08,
+        "duration": 4.0
+    },
+    {
+        "text": "pre-training, it's also implying that",
+        "start": 241.84,
+        "duration": 4.56
+    },
+    {
+        "text": "you're going to serve a very large model",
+        "start": 244.08,
+        "duration": 5.359
+    },
+    {
+        "text": "to the users So I think that it's been",
+        "start": 246.4,
+        "duration": 5.36
+    },
+    {
+        "text": "loosely established the likes of GPT4",
+        "start": 249.439,
+        "duration": 4.08
+    },
+    {
+        "text": "and similar models were around one",
+        "start": 251.76,
+        "duration": 3.119
+    },
+    {
+        "text": "trillion like this order of trillion",
+        "start": 253.519,
+        "duration": 2.801
+    },
+    {
+        "text": "parameters at the biggest size There's",
+        "start": 254.879,
+        "duration": 2.64
+    },
+    {
+        "text": "a lot of rumors that they've actually",
+        "start": 256.32,
+        "duration": 2.879
+    },
+    {
+        "text": "gotten smaller as training has gotten",
+        "start": 257.519,
+        "duration": 3.921
+    },
+    {
+        "text": "more efficient You want to make the",
+        "start": 259.199,
+        "duration": 4.0
+    },
+    {
+        "text": "model smaller because then your costs of",
+        "start": 261.44,
+        "duration": 4.0
+    },
+    {
+        "text": "serving go down proportionally These",
+        "start": 263.199,
+        "duration": 4.56
+    },
+    {
+        "text": "models the cost of training them is",
+        "start": 265.44,
+        "duration": 4.08
+    },
+    {
+        "text": "really low relative to the cost of",
+        "start": 267.759,
+        "duration": 3.361
+    },
+    {
+        "text": "serving them to hundreds of millions of",
+        "start": 269.52,
+        "duration": 3.36
+    },
+    {
+        "text": "users I think DeepS had this famous",
+        "start": 271.12,
+        "duration": 4.079
+    },
+    {
+        "text": "number of about i million for",
+        "start": 272.88,
+        "duration": 4.4
+    },
+    {
+        "text": "restraining at cloud market rates I",
+        "start": 275.199,
+        "duration": 5.44
+    },
+    {
+        "text": "think three um section 2.4 in the paper",
+        "start": 277.28,
+        "duration": 5.76
+    },
+    {
+        "text": "we just detailed how long we had the GPU",
+        "start": 280.639,
+        "duration": 3.921
+    },
+    {
+        "text": "clusters sitting around for training",
+        "start": 283.04,
+        "duration": 4.159
+    },
+    {
+        "text": "which includes engineering issues",
+        "start": 284.56,
+        "duration": 4.96
+    },
+    {
+        "text": "multiple seeds and it was like about i",
+        "start": 287.199,
+        "duration": 4.161
+    },
+    {
+        "text": "million to rent the cluster to like deal",
+        "start": 289.52,
+        "duration": 3.2
+    },
+    {
+        "text": "with all the problems and headaches of",
+        "start": 291.36,
+        "duration": 4.24
+    },
+    {
+        "text": "training a model So these models are",
+        "start": 292.72,
+        "duration": 5.68
+    },
+    {
+        "text": "pretty like a lot of people could get",
+        "start": 295.6,
+        "duration": 5.12
+    },
+    {
+        "text": "to $10 million to train a model but the",
+        "start": 298.4,
+        "duration": 4.96
+    },
+    {
+        "text": "recurring costs of serving millions of",
+        "start": 300.72,
+        "duration": 4.56
+    },
+    {
+        "text": "users is really billions of dollars of",
+        "start": 303.36,
+        "duration": 4.08
+    },
+    {
+        "text": "computer I think that you can look at",
+        "start": 305.28,
+        "duration": 4.08
+    },
+    {
+        "text": "close like a thousand GPU rental you can",
+        "start": 307.44,
+        "duration": 4.56
+    },
+    {
+        "text": "pay 100 grand a day for and these",
+        "start": 309.36,
+        "duration": 5.04
+    },
+    {
+        "text": "companies could have millions of GPUs",
+        "start": 312.0,
+        "duration": 3.68
+    },
+    {
+        "text": "like you can look at how much these",
+        "start": 314.4,
+        "duration": 2.72
+    },
+    {
+        "text": "things cost to sit around So that's",
+        "start": 315.68,
+        "duration": 4.0
+    },
+    {
+        "text": "kind of a big thing and then it's like",
+        "start": 317.12,
+        "duration": 4.72
+    },
+    {
+        "text": "if scaling is actually giving you a",
+        "start": 319.68,
+        "duration": 3.519
+    },
+    {
+        "text": "better model like is it going to be",
+        "start": 321.84,
+        "duration": 3.28
+    },
+    {
+        "text": "financially worth it and I think it'll",
+        "start": 323.199,
+        "duration": 3.921
+    },
+    {
+        "text": "kind of slowly will push it out as AI",
+        "start": 325.12,
+        "duration": 4.079
+    },
+    {
+        "text": "solves more compelling tasks So like",
+        "start": 327.12,
+        "duration": 4.32
+    },
+    {
+        "text": "the likes of cloud opus 4.5 making cloud",
+        "start": 329.199,
+        "duration": 5.201
+    },
+    {
+        "text": "code just work for things I think I I",
+        "start": 331.44,
+        "duration": 4.72
+    },
+    {
+        "text": "launched this project called like the",
+        "start": 334.4,
+        "duration": 3.359
+    },
+    {
+        "text": "atom project which is like American",
+        "start": 336.16,
+        "duration": 4.319
+    },
+    {
+        "text": "truly open models in July and that was",
+        "start": 337.759,
+        "duration": 6.321
+    },
+    {
+        "text": "like a true vibecoded website and like I",
+        "start": 340.479,
+        "duration": 6.401
+    },
+    {
+        "text": "have a job um make plots and stuff and",
+        "start": 344.08,
+        "duration": 4.32
+    },
+    {
+        "text": "then I came back to refresh it in the",
+        "start": 346.88,
+        "duration": 3.599
+    },
+    {
+        "text": "last few weeks and it's like claw opus",
+        "start": 348.4,
+        "duration": 3.92
+    },
+    {
+        "text": "4.5 versus whatever model at the time",
+        "start": 350.479,
+        "duration": 3.521
+    },
+    {
+        "text": "was like just crushed all the issues",
+        "start": 352.32,
+        "duration": 3.84
+    },
+    {
+        "text": "that I had from building in June and",
+        "start": 354.0,
+        "duration": 4.479
+    },
+    {
+        "text": "July and like might be a bigger model",
+        "start": 356.16,
+        "duration": 3.44
+    },
+    {
+        "text": "there's a lot of things that go into",
+        "start": 358.479,
+        "duration": 2.481
+    },
+    {
+        "text": "this but that's like there's still",
+        "start": 359.6,
+        "duration": 2.72
+    },
+    {
+        "text": "progress coming So, so what you're",
+        "start": 360.96,
+        "duration": 3.12
+    },
+    {
+        "text": "speaking to is the nuance of the axis",
+        "start": 362.32,
+        "duration": 4.4
+    },
+    {
+        "text": "of the scaling laws that the way it's",
+        "start": 364.08,
+        "duration": 4.64
+    },
+    {
+        "text": "experienced versus on a benchmark the",
+        "start": 366.72,
+        "duration": 3.84
+    },
+    {
+        "text": "actual intelligence is might might be",
+        "start": 368.72,
+        "duration": 4.24
+    },
+    {
+        "text": "different but still your intuition about",
+        "start": 370.56,
+        "duration": 4.72
+    },
+    {
+        "text": "restraining if you scale the the size",
+        "start": 372.96,
+        "duration": 6.079
+    },
+    {
+        "text": "of compute will the models get better",
+        "start": 375.28,
+        "duration": 5.84
+    },
+    {
+        "text": "not whether it's financially viable but",
+        "start": 379.039,
+        "duration": 4.801
+    },
+    {
+        "text": "just from the law aspect of it do you",
+        "start": 381.12,
+        "duration": 4.32
+    },
+    {
+        "text": "think the models will get smarter",
+        "start": 383.84,
+        "duration": 4.32
+    },
+    {
+        "text": "i yeah and I think that there's and this",
+        "start": 385.44,
+        "duration": 5.199
+    },
+    {
+        "text": "sometimes comes off as like almost like",
+        "start": 388.16,
+        "duration": 4.4
+    },
+    {
+        "text": "disillusioned from people leadership at",
+        "start": 390.639,
+        "duration": 3.361
+    },
+    {
+        "text": "AI companies saying this but they're",
+        "start": 392.56,
+        "duration": 3.68
+    },
+    {
+        "text": "like it's held for 13 orders of",
+        "start": 394.0,
+        "duration": 3.84
+    },
+    {
+        "text": "magnitude of computers something like",
+        "start": 396.24,
+        "duration": 2.799
+    },
+    {
+        "text": "why would it ever end So I think",
+        "start": 397.84,
+        "duration": 4.479
+    },
+    {
+        "text": "fundamentally it is pretty unlikely to",
+        "start": 399.039,
+        "duration": 4.641
+    },
+    {
+        "text": "stop It's just like eventually we're",
+        "start": 402.319,
+        "duration": 2.641
+    },
+    {
+        "text": "not even going to be able to test the",
+        "start": 403.68,
+        "duration": 2.639
+    },
+    {
+        "text": "bigger scales because of all the",
+        "start": 404.96,
+        "duration": 3.76
+    },
+    {
+        "text": "problems that come with more computer I",
+        "start": 406.319,
+        "duration": 4.401
+    },
+    {
+        "text": "think that there's a lot of talk on how",
+        "start": 408.72,
+        "duration": 5.68
+    },
+    {
+        "text": "2026 is a year when very large Blackwell",
+        "start": 410.72,
+        "duration": 5.68
+    },
+    {
+        "text": "compute clusters like gigawatt scale",
+        "start": 414.4,
+        "duration": 3.919
+    },
+    {
+        "text": "facilities hyperscalers are coming",
+        "start": 416.4,
+        "duration": 4.239
+    },
+    {
+        "text": "online and",
+        "start": 418.319,
+        "duration": 5.201
+    },
+    {
+        "text": "these were all contracts for power and",
+        "start": 420.639,
+        "duration": 5.521
+    },
+    {
+        "text": "data centers that were signed and sought",
+        "start": 423.52,
+        "duration": 6.079
+    },
+    {
+        "text": "out in like 22 and 2023. So before or",
+        "start": 426.16,
+        "duration": 5.52
+    },
+    {
+        "text": "right after chat GBT. So it took this 2",
+        "start": 429.599,
+        "duration": 3.681
+    },
+    {
+        "text": "to three year lead time to build these",
+        "start": 431.68,
+        "duration": 3.6
+    },
+    {
+        "text": "bigger clusters to train the models",
+        "start": 433.28,
+        "duration": 3.52
+    },
+    {
+        "text": "Well, there's obviously immense interest",
+        "start": 435.28,
+        "duration": 3.12
+    },
+    {
+        "text": "in building even more data centers than",
+        "start": 436.8,
+        "duration": 3.839
+    },
+    {
+        "text": "that So, that is like kind of the crux",
+        "start": 438.4,
+        "duration": 3.919
+    },
+    {
+        "text": "that people are saying is like these new",
+        "start": 440.639,
+        "duration": 3.28
+    },
+    {
+        "text": "clusters are coming The labs are going",
+        "start": 442.319,
+        "duration": 2.801
+    },
+    {
+        "text": "to have more compute for training",
+        "start": 443.919,
+        "duration": 3.441
+    },
+    {
+        "text": "They're going to utilize this But, it's",
+        "start": 445.12,
+        "duration": 4.639
+    },
+    {
+        "text": "not a given And it's like I I've seen",
+        "start": 447.36,
+        "duration": 4.16
+    },
+    {
+        "text": "so much progress that I expect it and I",
+        "start": 449.759,
+        "duration": 3.44
+    },
+    {
+        "text": "expect a little bit bigger models And I",
+        "start": 451.52,
+        "duration": 5.519
+    },
+    {
+        "text": "expect um I would say it's more like we",
+        "start": 453.199,
+        "duration": 5.681
+    },
+    {
+        "text": "will see a $2,000 subscription this",
+        "start": 457.039,
+        "duration": 3.6
+    },
+    {
+        "text": "years We've seen $200 subscriptions",
+        "start": 458.88,
+        "duration": 3.68
+    },
+    {
+        "text": "It's like that could six again And",
+        "start": 460.639,
+        "duration": 3.68
+    },
+    {
+        "text": "these are the kind of things that could",
+        "start": 462.56,
+        "duration": 3.28
+    },
+    {
+        "text": "come and they're all downstream of this",
+        "start": 464.319,
+        "duration": 3.921
+    },
+    {
+        "text": "like bit big bit bigger model that",
+        "start": 465.84,
+        "duration": 4.0
+    },
+    {
+        "text": "offers just a little bit more cutting",
+        "start": 468.24,
+        "duration": 2.32
+    },
+    {
+        "text": "edge",
+        "start": 469.84,
+        "duration": 3.12
+    },
+    {
+        "text": "i So you know it's reported that XAI is",
+        "start": 470.56,
+        "duration": 4.96
+    },
+    {
+        "text": "going to hit that uh 1 await scale",
+        "start": 472.96,
+        "duration": 8.48
+    },
+    {
+        "text": "early 26 and full 2 await by year end",
+        "start": 475.52,
+        "duration": 8.399
+    },
+    {
+        "text": "How do you think they'll utilize that in",
+        "start": 481.44,
+        "duration": 5.36
+    },
+    {
+        "text": "the context of scaling laws Is is a lot",
+        "start": 483.919,
+        "duration": 4.96
+    },
+    {
+        "text": "of that inference is a lot of that",
+        "start": 486.8,
+        "duration": 5.28
+    },
+    {
+        "text": "training it ends up being all of the",
+        "start": 488.879,
+        "duration": 5.76
+    },
+    {
+        "text": "above So I think that all of your",
+        "start": 492.08,
+        "duration": 4.32
+    },
+    {
+        "text": "decisions when you're training a model",
+        "start": 494.639,
+        "duration": 3.521
+    },
+    {
+        "text": "come back to pre-training. So if you're",
+        "start": 496.4,
+        "duration": 4.0
+    },
+    {
+        "text": "going to scale RL on a model you still",
+        "start": 498.16,
+        "duration": 3.92
+    },
+    {
+        "text": "need to decide on your architecture that",
+        "start": 500.4,
+        "duration": 3.68
+    },
+    {
+        "text": "enables this We're talking about like",
+        "start": 502.08,
+        "duration": 4.16
+    },
+    {
+        "text": "other architectures than using different",
+        "start": 504.08,
+        "duration": 3.6
+    },
+    {
+        "text": "types of attention We're also talking",
+        "start": 506.24,
+        "duration": 3.04
+    },
+    {
+        "text": "about mixture of experts models This",
+        "start": 507.68,
+        "duration": 4.88
+    },
+    {
+        "text": "sparse nature of models makes it much",
+        "start": 509.28,
+        "duration": 6.239
+    },
+    {
+        "text": "more efficient to do um generation which",
+        "start": 512.56,
+        "duration": 5.12
+    },
+    {
+        "text": "becomes a big part of um post training",
+        "start": 515.519,
+        "duration": 3.841
+    },
+    {
+        "text": "And it's like you need to have your",
+        "start": 517.68,
+        "duration": 3.039
+    },
+    {
+        "text": "architecture ready so that you can",
+        "start": 519.36,
+        "duration": 3.919
+    },
+    {
+        "text": "actually scale up this computer I still",
+        "start": 520.719,
+        "duration": 5.201
+    },
+    {
+        "text": "think most of the compute is going in at",
+        "start": 523.279,
+        "duration": 4.321
+    },
+    {
+        "text": "restraining because you can still make",
+        "start": 525.92,
+        "duration": 3.68
+    },
+    {
+        "text": "a model better You still want to go and",
+        "start": 527.6,
+        "duration": 3.52
+    },
+    {
+        "text": "revisit this You still want the best",
+        "start": 529.6,
+        "duration": 3.76
+    },
+    {
+        "text": "base model that you can and in a few",
+        "start": 531.12,
+        "duration": 4.32
+    },
+    {
+        "text": "years that's saturate and the the RL",
+        "start": 533.36,
+        "duration": 4.0
+    },
+    {
+        "text": "compute will just go longer Is there",
+        "start": 535.44,
+        "duration": 4.32
+    },
+    {
+        "text": "people who disagree with you that say",
+        "start": 537.36,
+        "duration": 6.08
+    },
+    {
+        "text": "basically restraining is dead It's all",
+        "start": 539.76,
+        "duration": 6.0
+    },
+    {
+        "text": "about scaling inference",
+        "start": 543.44,
+        "duration": 4.64
+    },
+    {
+        "text": "scaling pulse training scaling context",
+        "start": 545.76,
+        "duration": 5.44
+    },
+    {
+        "text": "continual learning uh scaling data",
+        "start": 548.08,
+        "duration": 4.16
+    },
+    {
+        "text": "synthetic data",
+        "start": 551.2,
+        "duration": 2.8
+    },
+    {
+        "text": "i People vibe that way and describe it in",
+        "start": 552.24,
+        "duration": 3.52
+    },
+    {
+        "text": "that way but I think it's not the",
+        "start": 554.0,
+        "duration": 2.64
+    },
+    {
+        "text": "practice that is happening",
+        "start": 555.76,
+        "duration": 2.48
+    },
+    {
+        "text": "i It's just the general vibe of people",
+        "start": 556.64,
+        "duration": 2.4
+    },
+    {
+        "text": "saying the things",
+        "start": 558.24,
+        "duration": 2.32
+    },
+    {
+        "text": "i the excitement is elsewhere So the",
+        "start": 559.04,
+        "duration": 3.44
+    },
+    {
+        "text": "lowhanging fruit in RL is elsewhere",
+        "start": 560.56,
+        "duration": 3.92
+    },
+    {
+        "text": "Like for example we released our model",
+        "start": 562.48,
+        "duration": 3.919
+    },
+    {
+        "text": "in November for every company has",
+        "start": 564.48,
+        "duration": 3.039
+    },
+    {
+        "text": "deadlines Our deadline was like",
+        "start": 566.399,
+        "duration": 3.44
+    },
+    {
+        "text": "November with and our for that our our",
+        "start": 567.519,
+        "duration": 5.841
+    },
+    {
+        "text": "run was 5 days which compared to 2024 is",
+        "start": 569.839,
+        "duration": 5.361
+    },
+    {
+        "text": "a very long time to just be doing post",
+        "start": 573.36,
+        "duration": 3.52
+    },
+    {
+        "text": "training at a model of like 30 billion",
+        "start": 575.2,
+        "duration": 3.36
+    },
+    {
+        "text": "parameters It's not a big model and",
+        "start": 576.88,
+        "duration": 3.28
+    },
+    {
+        "text": "then in December we had another release",
+        "start": 578.56,
+        "duration": 4.08
+    },
+    {
+        "text": "which was just we let the RL run for go",
+        "start": 580.16,
+        "duration": 3.84
+    },
+    {
+        "text": "for another three and a half weeks and",
+        "start": 582.64,
+        "duration": 3.04
+    },
+    {
+        "text": "the model got notably better so we",
+        "start": 584.0,
+        "duration": 3.44
+    },
+    {
+        "text": "release it and like that's a big amount",
+        "start": 585.68,
+        "duration": 4.159
+    },
+    {
+        "text": "of time to just allocate to like",
+        "start": 587.44,
+        "duration": 4.32
+    },
+    {
+        "text": "something that is going to be your um",
+        "start": 589.839,
+        "duration": 5.12
+    },
+    {
+        "text": "peak for the years So it's like there's",
+        "start": 591.76,
+        "duration": 4.96
+    },
+    {
+        "text": "these types of decisions that happen",
+        "start": 594.959,
+        "duration": 3.041
+    },
+    {
+        "text": "when they're training a model where they",
+        "start": 596.72,
+        "duration": 2.64
+    },
+    {
+        "text": "just like can't they can't leave it",
+        "start": 598.0,
+        "duration": 3.519
+    },
+    {
+        "text": "forever You have to keep",
+        "start": 599.36,
+        "duration": 3.68
+    },
+    {
+        "text": "i you have to keep pulling in the",
+        "start": 601.519,
+        "duration": 2.641
+    },
+    {
+        "text": "improvements you have from your",
+        "start": 603.04,
+        "duration": 2.64
+    },
+    {
+        "text": "researchers So that's like you redo",
+        "start": 604.16,
+        "duration": 3.2
+    },
+    {
+        "text": "pre-training. You'll do this",
+        "start": 605.68,
+        "duration": 3.92
+    },
+    {
+        "text": "post-training for a months but then you",
+        "start": 607.36,
+        "duration": 3.599
+    },
+    {
+        "text": "need to give it to your users You need",
+        "start": 609.6,
+        "duration": 3.6
+    },
+    {
+        "text": "to do safety testing So there's kind of",
+        "start": 610.959,
+        "duration": 4.0
+    },
+    {
+        "text": "just like I think there's a lot in place",
+        "start": 613.2,
+        "duration": 4.16
+    },
+    {
+        "text": "that reinforces this cycle of just keep",
+        "start": 614.959,
+        "duration": 4.32
+    },
+    {
+        "text": "updating the models There's things to",
+        "start": 617.36,
+        "duration": 3.44
+    },
+    {
+        "text": "improve if you get a new compute",
+        "start": 619.279,
+        "duration": 3.441
+    },
+    {
+        "text": "cluster that lets you do something maybe",
+        "start": 620.8,
+        "duration": 4.56
+    },
+    {
+        "text": "more stably or faster It's like you",
+        "start": 622.72,
+        "duration": 4.239
+    },
+    {
+        "text": "hear a lot about Blackwell having",
+        "start": 625.36,
+        "duration": 4.32
+    },
+    {
+        "text": "fallout issues where at AI2 most of the",
+        "start": 626.959,
+        "duration": 4.641
+    },
+    {
+        "text": "models we're restraining are on like 1",
+        "start": 629.68,
+        "duration": 3.92
+    },
+    {
+        "text": "to 2,000 GPUs, but when you're",
+        "start": 631.6,
+        "duration": 4.4
+    },
+    {
+        "text": "restraining on 10,000 or 100,000 GPUs,",
+        "start": 633.6,
+        "duration": 4.239
+    },
+    {
+        "text": "you hit very different failures So GPUs",
+        "start": 636.0,
+        "duration": 3.279
+    },
+    {
+        "text": "are known to break in weird ways And",
+        "start": 637.839,
+        "duration": 3.921
+    },
+    {
+        "text": "doing a 100,000 GPU run is like you're",
+        "start": 639.279,
+        "duration": 3.921
+    },
+    {
+        "text": "pretty much guaranteed to always have at",
+        "start": 641.76,
+        "duration": 3.28
+    },
+    {
+        "text": "least one GPU that is down And you need",
+        "start": 643.2,
+        "duration": 3.199
+    },
+    {
+        "text": "to have your training code handle that",
+        "start": 645.04,
+        "duration": 2.72
+    },
+    {
+        "text": "redundancy which is just a very",
+        "start": 646.399,
+        "duration": 3.041
+    },
+    {
+        "text": "different problem Whereas like what",
+        "start": 647.76,
+        "duration": 3.199
+    },
+    {
+        "text": "we're doing like I'm playing with post",
+        "start": 649.44,
+        "duration": 3.36
+    },
+    {
+        "text": "training on DJX Spark or you have your",
+        "start": 650.959,
+        "duration": 4.081
+    },
+    {
+        "text": "book It's like or people learning ML.",
+        "start": 652.8,
+        "duration": 4.0
+    },
+    {
+        "text": "It's like what they're battling to train",
+        "start": 655.04,
+        "duration": 4.56
+    },
+    {
+        "text": "these biggest models is just like mass",
+        "start": 656.8,
+        "duration": 6.0
+    },
+    {
+        "text": "distributed scale and it's a very",
+        "start": 659.6,
+        "duration": 5.76
+    },
+    {
+        "text": "different but that's somewhat different",
+        "start": 662.8,
+        "duration": 4.96
+    },
+    {
+        "text": "than like are these like that's a",
+        "start": 665.36,
+        "duration": 4.479
+    },
+    {
+        "text": "systems problem in order to enable the",
+        "start": 667.76,
+        "duration": 4.079
+    },
+    {
+        "text": "scaling laws especially at restraining",
+        "start": 669.839,
+        "duration": 4.56
+    },
+    {
+        "text": "you need all of these GPUs at once When",
+        "start": 671.839,
+        "duration": 4.161
+    },
+    {
+        "text": "we shift to reinforcement learning it",
+        "start": 674.399,
+        "duration": 4.161
+    },
+    {
+        "text": "actually lends itself to heterogeneous",
+        "start": 676.0,
+        "duration": 4.32
+    },
+    {
+        "text": "compute because you have many copies of",
+        "start": 678.56,
+        "duration": 4.48
+    },
+    {
+        "text": "the model And",
+        "start": 680.32,
+        "duration": 5.04
+    },
+    {
+        "text": "to do a primer for language model",
+        "start": 683.04,
+        "duration": 3.68
+    },
+    {
+        "text": "reinforcer learning what you're doing",
+        "start": 685.36,
+        "duration": 4.56
+    },
+    {
+        "text": "is you have two sets of GPUs. One is you",
+        "start": 686.72,
+        "duration": 5.04
+    },
+    {
+        "text": "can call it the actor and one you call",
+        "start": 689.92,
+        "duration": 3.84
+    },
+    {
+        "text": "the learner The learner is where your",
+        "start": 691.76,
+        "duration": 3.68
+    },
+    {
+        "text": "actual reinforcer learning updates are",
+        "start": 693.76,
+        "duration": 3.12
+    },
+    {
+        "text": "going to do These are traditionally",
+        "start": 695.44,
+        "duration": 4.399
+    },
+    {
+        "text": "policy gradient algorithms Um, proximal",
+        "start": 696.88,
+        "duration": 5.519
+    },
+    {
+        "text": "policy optimization PO and group",
+        "start": 699.839,
+        "duration": 5.201
+    },
+    {
+        "text": "relative policy optimization GRPO are",
+        "start": 702.399,
+        "duration": 5.44
+    },
+    {
+        "text": "the two popular classes and on the other",
+        "start": 705.04,
+        "duration": 4.799
+    },
+    {
+        "text": "side you're going to have actors which",
+        "start": 707.839,
+        "duration": 4.081
+    },
+    {
+        "text": "are generating completions and these",
+        "start": 709.839,
+        "duration": 3.44
+    },
+    {
+        "text": "completions are the things that you're",
+        "start": 711.92,
+        "duration": 2.72
+    },
+    {
+        "text": "going to grade So reinforcement",
+        "start": 713.279,
+        "duration": 3.68
+    },
+    {
+        "text": "learning is all about optimizing reward",
+        "start": 714.64,
+        "duration": 4.24
+    },
+    {
+        "text": "And in practice what you can do is that",
+        "start": 716.959,
+        "duration": 4.0
+    },
+    {
+        "text": "you can have a lot of different actors",
+        "start": 718.88,
+        "duration": 4.639
+    },
+    {
+        "text": "in different parts of the world doing",
+        "start": 720.959,
+        "duration": 4.0
+    },
+    {
+        "text": "different types of problems and then you",
+        "start": 723.519,
+        "duration": 3.841
+    },
+    {
+        "text": "send it back to this highlyorked compute",
+        "start": 724.959,
+        "duration": 5.361
+    },
+    {
+        "text": "cluster to do this actual learning where",
+        "start": 727.36,
+        "duration": 4.24
+    },
+    {
+        "text": "where you take the where you take the",
+        "start": 730.32,
+        "duration": 3.36
+    },
+    {
+        "text": "gradients and you need to have a tightly",
+        "start": 731.6,
+        "duration": 3.28
+    },
+    {
+        "text": "meshed network where you can do",
+        "start": 733.68,
+        "duration": 2.719
+    },
+    {
+        "text": "different types of parallelism and",
+        "start": 734.88,
+        "duration": 2.88
+    },
+    {
+        "text": "spread out your model for efficient",
+        "start": 736.399,
+        "duration": 3.921
+    },
+    {
+        "text": "training So there's just like a lot of",
+        "start": 737.76,
+        "duration": 4.639
+    },
+    {
+        "text": "every different type of training and",
+        "start": 740.32,
+        "duration": 4.0
+    },
+    {
+        "text": "serving has these considerations you",
+        "start": 742.399,
+        "duration": 3.12
+    },
+    {
+        "text": "need to scale Like we talked about",
+        "start": 744.32,
+        "duration": 2.72
+    },
+    {
+        "text": "pre-training, we talked about RL and",
+        "start": 745.519,
+        "duration": 3.521
+    },
+    {
+        "text": "then inference time scaling is like how",
+        "start": 747.04,
+        "duration": 3.76
+    },
+    {
+        "text": "do you serve a model that's thinking for",
+        "start": 749.04,
+        "duration": 4.799
+    },
+    {
+        "text": "an hour to 100 million users I'm like I",
+        "start": 750.8,
+        "duration": 4.4
+    },
+    {
+        "text": "don't really know about that but I know",
+        "start": 753.839,
+        "duration": 3.041
+    },
+    {
+        "text": "that's a hard problem and in order to",
+        "start": 755.2,
+        "duration": 3.12
+    },
+    {
+        "text": "give people this intelligence there's",
+        "start": 756.88,
+        "duration": 3.84
+    },
+    {
+        "text": "all the systems problems and we need",
+        "start": 758.32,
+        "duration": 3.92
+    },
+    {
+        "text": "more compute and you need more stable",
+        "start": 760.72,
+        "duration": 3.919
+    },
+    {
+        "text": "compute to do it But you're bullish on",
+        "start": 762.24,
+        "duration": 4.24
+    },
+    {
+        "text": "all of these kinds of scaling is what",
+        "start": 764.639,
+        "duration": 3.841
+    },
+    {
+        "text": "I'm hearing on the inference on the",
+        "start": 766.48,
+        "duration": 4.88
+    },
+    {
+        "text": "reasoning even on the pre-training.",
+        "start": 768.48,
+        "duration": 4.88
+    },
+    {
+        "text": "i Yeah. So that's a a big can of worms",
+        "start": 771.36,
+        "duration": 4.24
+    },
+    {
+        "text": "here So there basically two the knobs",
+        "start": 773.36,
+        "duration": 4.4
+    },
+    {
+        "text": "are the training and the inference",
+        "start": 775.6,
+        "duration": 4.72
+    },
+    {
+        "text": "scaling where you can get gains and so",
+        "start": 777.76,
+        "duration": 4.8
+    },
+    {
+        "text": "in in a world where we had let's say",
+        "start": 780.32,
+        "duration": 3.759
+    },
+    {
+        "text": "infinite compute resources you want to",
+        "start": 782.56,
+        "duration": 3.76
+    },
+    {
+        "text": "do all of them like so you have training",
+        "start": 784.079,
+        "duration": 4.32
+    },
+    {
+        "text": "you have inference scaling and training",
+        "start": 786.32,
+        "duration": 3.84
+    },
+    {
+        "text": "is like a hierarchy it's restraining",
+        "start": 788.399,
+        "duration": 4.081
+    },
+    {
+        "text": "mid-training post-raining changing the",
+        "start": 790.16,
+        "duration": 3.919
+    },
+    {
+        "text": "model size more training data making",
+        "start": 792.48,
+        "duration": 4.159
+    },
+    {
+        "text": "training a bigger model gives you more",
+        "start": 794.079,
+        "duration": 4.88
+    },
+    {
+        "text": "knowledge in the model than the model um",
+        "start": 796.639,
+        "duration": 3.921
+    },
+    {
+        "text": "let's say has a better it's like a",
+        "start": 798.959,
+        "duration": 3.44
+    },
+    {
+        "text": "better base model back in the day or",
+        "start": 800.56,
+        "duration": 3.92
+    },
+    {
+        "text": "still we call it foundation model and it",
+        "start": 802.399,
+        "duration": 4.88
+    },
+    {
+        "text": "unlocks So you but you don't let's say",
+        "start": 804.48,
+        "duration": 5.28
+    },
+    {
+        "text": "have the model be able to solve your",
+        "start": 807.279,
+        "duration": 4.721
+    },
+    {
+        "text": "most complex task tasks during",
+        "start": 809.76,
+        "duration": 4.16
+    },
+    {
+        "text": "restraining or after pre-training. You",
+        "start": 812.0,
+        "duration": 3.44
+    },
+    {
+        "text": "still have these other unlock phases",
+        "start": 813.92,
+        "duration": 3.28
+    },
+    {
+        "text": "where you have mid-training non-context",
+        "start": 815.44,
+        "duration": 4.399
+    },
+    {
+        "text": "for example post training with LRVR",
+        "start": 817.2,
+        "duration": 5.04
+    },
+    {
+        "text": "that unlocks capabilities that the model",
+        "start": 819.839,
+        "duration": 4.0
+    },
+    {
+        "text": "has in terms of just knowledge in the",
+        "start": 822.24,
+        "duration": 4.88
+    },
+    {
+        "text": "restraining and I think sure if you so",
+        "start": 823.839,
+        "duration": 4.8
+    },
+    {
+        "text": "do more restraining you get a better",
+        "start": 827.12,
+        "duration": 3.36
+    },
+    {
+        "text": "base model that you can unlock later but",
+        "start": 828.639,
+        "duration": 3.44
+    },
+    {
+        "text": "like Nathan said it it just becomes too",
+        "start": 830.48,
+        "duration": 3.039
+    },
+    {
+        "text": "expensive so we don't have infinite",
+        "start": 832.079,
+        "duration": 3.121
+    },
+    {
+        "text": "compute so you have to decide do I want",
+        "start": 833.519,
+        "duration": 4.32
+    },
+    {
+        "text": "to spend that compute more on making the",
+        "start": 835.2,
+        "duration": 4.639
+    },
+    {
+        "text": "model larger but you know it's like a",
+        "start": 837.839,
+        "duration": 3.521
+    },
+    {
+        "text": "tradeoff it's it's like in ideal world",
+        "start": 839.839,
+        "duration": 3.201
+    },
+    {
+        "text": "you want to do all of them and I think",
+        "start": 841.36,
+        "duration": 3.52
+    },
+    {
+        "text": "in that sense scaling is still pretty",
+        "start": 843.04,
+        "duration": 3.359
+    },
+    {
+        "text": "much alive You would still get a better",
+        "start": 844.88,
+        "duration": 3.759
+    },
+    {
+        "text": "model but like we saw with GPD 4.5,",
+        "start": 846.399,
+        "duration": 3.68
+    },
+    {
+        "text": "it's just not worth it I mean it's",
+        "start": 848.639,
+        "duration": 3.76
+    },
+    {
+        "text": "like cut you can let's say you can",
+        "start": 850.079,
+        "duration": 4.401
+    },
+    {
+        "text": "unlock more performance with other",
+        "start": 852.399,
+        "duration": 3.921
+    },
+    {
+        "text": "techniques at that current moment",
+        "start": 854.48,
+        "duration": 3.919
+    },
+    {
+        "text": "especially um if you look at inference",
+        "start": 856.32,
+        "duration": 4.0
+    },
+    {
+        "text": "scaling That's one of the biggest gains",
+        "start": 858.399,
+        "duration": 5.201
+    },
+    {
+        "text": "this year with 01 um where it took a",
+        "start": 860.32,
+        "duration": 6.079
+    },
+    {
+        "text": "smaller model further than restraining",
+        "start": 863.6,
+        "duration": 4.88
+    },
+    {
+        "text": "a larger model like GBD 4.5. So it's",
+        "start": 866.399,
+        "duration": 4.321
+    },
+    {
+        "text": "like I wouldn't say restraining scaling",
+        "start": 868.48,
+        "duration": 3.68
+    },
+    {
+        "text": "is dead It's just like there are other",
+        "start": 870.72,
+        "duration": 3.359
+    },
+    {
+        "text": "more attractive ways to scale right now",
+        "start": 872.16,
+        "duration": 3.919
+    },
+    {
+        "text": "at the moment But at some point you",
+        "start": 874.079,
+        "duration": 3.76
+    },
+    {
+        "text": "know you will still want to make some",
+        "start": 876.079,
+        "duration": 3.281
+    },
+    {
+        "text": "progress on the pre-training. The thing",
+        "start": 877.839,
+        "duration": 5.281
+    },
+    {
+        "text": "is also to consider um where you where",
+        "start": 879.36,
+        "duration": 5.599
+    },
+    {
+        "text": "do you want to spend your money If you",
+        "start": 883.12,
+        "duration": 3.12
+    },
+    {
+        "text": "spend it more on the pre-training, it's",
+        "start": 884.959,
+        "duration": 3.281
+    },
+    {
+        "text": "like a fixed cost You train the model",
+        "start": 886.24,
+        "duration": 4.24
+    },
+    {
+        "text": "and then it has this capability forever",
+        "start": 888.24,
+        "duration": 5.039
+    },
+    {
+        "text": "You can always use it and so forth With",
+        "start": 890.48,
+        "duration": 4.88
+    },
+    {
+        "text": "inference scaling you don't spend money",
+        "start": 893.279,
+        "duration": 3.92
+    },
+    {
+        "text": "during training you spend money later",
+        "start": 895.36,
+        "duration": 3.36
+    },
+    {
+        "text": "per query and then it's also like the",
+        "start": 897.199,
+        "duration": 4.0
+    },
+    {
+        "text": "math how long is my model going to be on",
+        "start": 898.72,
+        "duration": 4.16
+    },
+    {
+        "text": "the market if I replace it in half a",
+        "start": 901.199,
+        "duration": 4.88
+    },
+    {
+        "text": "year maybe it's not worth spending",
+        "start": 902.88,
+        "duration": 5.12
+    },
+    {
+        "text": "million 10 million $100 million on the",
+        "start": 906.079,
+        "duration": 4.721
+    },
+    {
+        "text": "training it longer maybe it's just I",
+        "start": 908.0,
+        "duration": 5.199
+    },
+    {
+        "text": "will just do more inference scaling and",
+        "start": 910.8,
+        "duration": 4.479
+    },
+    {
+        "text": "get the performance from there it maybe",
+        "start": 913.199,
+        "duration": 3.44
+    },
+    {
+        "text": "cost me 2 million in terms of user",
+        "start": 915.279,
+        "duration": 2.961
+    },
+    {
+        "text": "queries it becomes a question of how",
+        "start": 916.639,
+        "duration": 3.361
+    },
+    {
+        "text": "many users you have and then doing the",
+        "start": 918.24,
+        "duration": 3.52
+    },
+    {
+        "text": "math um and I think that's also where",
+        "start": 920.0,
+        "duration": 3.92
+    },
+    {
+        "text": "it's interesting where JGBD is in a",
+        "start": 921.76,
+        "duration": 3.04
+    },
+    {
+        "text": "position I think they have a lot of",
+        "start": 923.92,
+        "duration": 2.56
+    },
+    {
+        "text": "users where they need to go a bit",
+        "start": 924.8,
+        "duration": 3.52
+    },
+    {
+        "text": "cheaper where they have that uh GP5",
+        "start": 926.48,
+        "duration": 3.599
+    },
+    {
+        "text": "model that is a bit smaller other",
+        "start": 928.32,
+        "duration": 4.56
+    },
+    {
+        "text": "companies that have as if your customers",
+        "start": 930.079,
+        "duration": 5.361
+    },
+    {
+        "text": "have other uh other um tradeoffs For",
+        "start": 932.88,
+        "duration": 5.199
+    },
+    {
+        "text": "example there was also the math",
+        "start": 935.44,
+        "duration": 4.56
+    },
+    {
+        "text": "olympiad or some of these these math",
+        "start": 938.079,
+        "duration": 5.601
+    },
+    {
+        "text": "problems where JJBT or they had a",
+        "start": 940.0,
+        "duration": 4.959
+    },
+    {
+        "text": "proprietary model and I'm pretty sure",
+        "start": 943.68,
+        "duration": 3.519
+    },
+    {
+        "text": "it's just like a model has been maybe",
+        "start": 944.959,
+        "duration": 4.161
+    },
+    {
+        "text": "fine-tuned a little bit more but most of",
+        "start": 947.199,
+        "duration": 3.361
+    },
+    {
+        "text": "it was during inference scaling to",
+        "start": 949.12,
+        "duration": 3.519
+    },
+    {
+        "text": "achieve this peak performance in certain",
+        "start": 950.56,
+        "duration": 3.36
+    },
+    {
+        "text": "tasks where you don't need that all the",
+        "start": 952.639,
+        "duration": 4.32
+    },
+    {
+        "text": "time and but yeah long story short I do",
+        "start": 953.92,
+        "duration": 5.12
+    },
+    {
+        "text": "think all of these uh restraining",
+        "start": 956.959,
+        "duration": 4.081
+    },
+    {
+        "text": "mid-training post-training infant",
+        "start": 959.04,
+        "duration": 4.08
+    },
+    {
+        "text": "scaling they are all still things you",
+        "start": 961.04,
+        "duration": 4.159
+    },
+    {
+        "text": "want to do it's just finding at the",
+        "start": 963.12,
+        "duration": 3.76
+    },
+    {
+        "text": "moment in this years it's finding the",
+        "start": 965.199,
+        "duration": 3.2
+    },
+    {
+        "text": "right ratio that gives you the best bang",
+        "start": 966.88,
+        "duration": 5.0
+    },
+    {
+        "text": "for the bucks Basically,",
+        "start": 968.399,
+        "duration": 3.481
+    }
+]

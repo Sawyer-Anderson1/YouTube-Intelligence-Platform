@@ -1,0 +1,882 @@
+[
+    {
+        "text": "So there's uh on that topic of",
+        "start": 2.96,
+        "duration": 3.2
+    },
+    {
+        "text": "enjoyment it's it's quite interesting",
+        "start": 4.56,
+        "duration": 3.68
+    },
+    {
+        "text": "We should just throw this in there that",
+        "start": 6.16,
+        "duration": 5.28
+    },
+    {
+        "text": "there is this recent survey of about 791",
+        "start": 8.24,
+        "duration": 4.479
+    },
+    {
+        "text": "professional developers Professional",
+        "start": 11.44,
+        "duration": 4.079
+    },
+    {
+        "text": "meaning 10 plus years of experience",
+        "start": 12.719,
+        "duration": 4.4
+    },
+    {
+        "text": "i That's a long time",
+        "start": 15.519,
+        "duration": 3.76
+    },
+    {
+        "text": "i Yeah, laughter that's a junior",
+        "start": 17.119,
+        "duration": 4.0
+    },
+    {
+        "text": "developer",
+        "start": 19.279,
+        "duration": 4.721
+    },
+    {
+        "text": "i Uh yeah in this day and age Uh so the",
+        "start": 21.119,
+        "duration": 6.0
+    },
+    {
+        "text": "the results here on many fronts are uh",
+        "start": 24.0,
+        "duration": 5.519
+    },
+    {
+        "text": "surprising So they break it down by",
+        "start": 27.119,
+        "duration": 4.801
+    },
+    {
+        "text": "junior and senior developers But I mean",
+        "start": 29.519,
+        "duration": 5.921
+    },
+    {
+        "text": "it just shows that both junior and",
+        "start": 31.92,
+        "duration": 5.52
+    },
+    {
+        "text": "senior developers",
+        "start": 35.44,
+        "duration": 6.32
+    },
+    {
+        "text": "use AI generated code in code they ship",
+        "start": 37.44,
+        "duration": 6.799
+    },
+    {
+        "text": "So this is not just for fun sort of",
+        "start": 41.76,
+        "duration": 4.56
+    },
+    {
+        "text": "intermediate kind of learning things",
+        "start": 44.239,
+        "duration": 5.201
+    },
+    {
+        "text": "This is code they ship And so it's 25%",
+        "start": 46.32,
+        "duration": 6.32
+    },
+    {
+        "text": "like most of them use around 50% or",
+        "start": 49.44,
+        "duration": 5.599
+    },
+    {
+        "text": "more And what's interesting is for the",
+        "start": 52.64,
+        "duration": 5.04
+    },
+    {
+        "text": "category of over 50% of your code that",
+        "start": 55.039,
+        "duration": 5.04
+    },
+    {
+        "text": "you ship is AI generated senior",
+        "start": 57.68,
+        "duration": 4.8
+    },
+    {
+        "text": "developers are much more likely to do",
+        "start": 60.079,
+        "duration": 4.641
+    },
+    {
+        "text": "so But you don't want AI to take away",
+        "start": 62.48,
+        "duration": 3.2
+    },
+    {
+        "text": "the thing you love",
+        "start": 64.72,
+        "duration": 1.439
+    },
+    {
+        "text": "i Y",
+        "start": 65.68,
+        "duration": 2.24
+    },
+    {
+        "text": "i I think this speaks to my experience",
+        "start": 66.159,
+        "duration": 3.521
+    },
+    {
+        "text": "these particular results I'm about to",
+        "start": 67.92,
+        "duration": 4.239
+    },
+    {
+        "text": "say So together about 80% of people",
+        "start": 69.68,
+        "duration": 5.68
+    },
+    {
+        "text": "find it either somewhat more enjoyable",
+        "start": 72.159,
+        "duration": 5.441
+    },
+    {
+        "text": "or significantly more enjoyable to use",
+        "start": 75.36,
+        "duration": 4.16
+    },
+    {
+        "text": "AI as part of the work",
+        "start": 77.6,
+        "duration": 4.4
+    },
+    {
+        "text": "i I think it depends on the task Um, for",
+        "start": 79.52,
+        "duration": 6.16
+    },
+    {
+        "text": "my personal usage for example I have a",
+        "start": 82.0,
+        "duration": 5.6
+    },
+    {
+        "text": "website where I sometimes tweak things",
+        "start": 85.68,
+        "duration": 3.92
+    },
+    {
+        "text": "on the website I personally don't enjoy",
+        "start": 87.6,
+        "duration": 4.879
+    },
+    {
+        "text": "this So, in that sense if the AI can",
+        "start": 89.6,
+        "duration": 4.8
+    },
+    {
+        "text": "help me to implement something on my",
+        "start": 92.479,
+        "duration": 4.161
+    },
+    {
+        "text": "website I'm all here for it It's it's",
+        "start": 94.4,
+        "duration": 4.88
+    },
+    {
+        "text": "great But then at the same time when I",
+        "start": 96.64,
+        "duration": 5.2
+    },
+    {
+        "text": "solve a complex problem well if",
+        "start": 99.28,
+        "duration": 5.199
+    },
+    {
+        "text": "there's a bug and I hunt this bug and I",
+        "start": 101.84,
+        "duration": 4.08
+    },
+    {
+        "text": "find the bug it's the best feeling in",
+        "start": 104.479,
+        "duration": 3.28
+    },
+    {
+        "text": "the world It's like you get so much",
+        "start": 105.92,
+        "duration": 3.92
+    },
+    {
+        "text": "joy like oh it's like you feel like",
+        "start": 107.759,
+        "duration": 4.881
+    },
+    {
+        "text": "great But now if you don't even think",
+        "start": 109.84,
+        "duration": 4.239
+    },
+    {
+        "text": "about thinking about the bug you just",
+        "start": 112.64,
+        "duration": 3.36
+    },
+    {
+        "text": "go directly to the LLM. Well, you never",
+        "start": 114.079,
+        "duration": 4.0
+    },
+    {
+        "text": "have this kind of feeling right But",
+        "start": 116.0,
+        "duration": 3.68
+    },
+    {
+        "text": "then there could be the middle ground",
+        "start": 118.079,
+        "duration": 4.4
+    },
+    {
+        "text": "where well you try yourself you can't",
+        "start": 119.68,
+        "duration": 4.399
+    },
+    {
+        "text": "find it you use the LLM and then you",
+        "start": 122.479,
+        "duration": 2.881
+    },
+    {
+        "text": "don't get frustrated because it helps",
+        "start": 124.079,
+        "duration": 2.72
+    },
+    {
+        "text": "you and you move on to something that",
+        "start": 125.36,
+        "duration": 3.36
+    },
+    {
+        "text": "you enjoy And so I think looking at",
+        "start": 126.799,
+        "duration": 3.761
+    },
+    {
+        "text": "these statistics I think also the",
+        "start": 128.72,
+        "duration": 4.32
+    },
+    {
+        "text": "difference is or what is not factored in",
+        "start": 130.56,
+        "duration": 4.24
+    },
+    {
+        "text": "it's averaging over all the different",
+        "start": 133.04,
+        "duration": 4.24
+    },
+    {
+        "text": "scenarios where we don't like so we",
+        "start": 134.8,
+        "duration": 4.48
+    },
+    {
+        "text": "don't know if it's for the core task or",
+        "start": 137.28,
+        "duration": 3.52
+    },
+    {
+        "text": "if it's for something mundane that",
+        "start": 139.28,
+        "duration": 3.52
+    },
+    {
+        "text": "people would not have enjoyed otherwise",
+        "start": 140.8,
+        "duration": 4.72
+    },
+    {
+        "text": "So in a sense AI is really great for",
+        "start": 142.8,
+        "duration": 5.76
+    },
+    {
+        "text": "doing mundane things that um take a lot",
+        "start": 145.52,
+        "duration": 5.2
+    },
+    {
+        "text": "of work Um so for example my wife the",
+        "start": 148.56,
+        "duration": 4.16
+    },
+    {
+        "text": "other day u she has like a podcast for",
+        "start": 150.72,
+        "duration": 3.84
+    },
+    {
+        "text": "like book uh like book discussions book",
+        "start": 152.72,
+        "duration": 4.239
+    },
+    {
+        "text": "club and she was like transferring the",
+        "start": 154.56,
+        "duration": 4.64
+    },
+    {
+        "text": "show notes from um Spotify to YouTube",
+        "start": 156.959,
+        "duration": 4.881
+    },
+    {
+        "text": "and then the links somehow broke uh and",
+        "start": 159.2,
+        "duration": 4.48
+    },
+    {
+        "text": "she had in some episodes because it is",
+        "start": 161.84,
+        "duration": 3.759
+    },
+    {
+        "text": "custom many books like 100 links or",
+        "start": 163.68,
+        "duration": 3.68
+    },
+    {
+        "text": "something and it would have been really",
+        "start": 165.599,
+        "duration": 4.0
+    },
+    {
+        "text": "painful to go in there and fix each link",
+        "start": 167.36,
+        "duration": 4.48
+    },
+    {
+        "text": "manually and so I suggested hey let's",
+        "start": 169.599,
+        "duration": 5.601
+    },
+    {
+        "text": "try we copied the text into chat and",
+        "start": 171.84,
+        "duration": 5.759
+    },
+    {
+        "text": "it fixed them and instead of two hours",
+        "start": 175.2,
+        "duration": 4.08
+    },
+    {
+        "text": "going from link to link fixing that You",
+        "start": 177.599,
+        "duration": 4.401
+    },
+    {
+        "text": "know it made that type of work much",
+        "start": 179.28,
+        "duration": 4.48
+    },
+    {
+        "text": "more seamless There was no frustration",
+        "start": 182.0,
+        "duration": 3.68
+    },
+    {
+        "text": "fixed I think everyone has a use case",
+        "start": 183.76,
+        "duration": 4.399
+    },
+    {
+        "text": "where AI is useful for something like",
+        "start": 185.68,
+        "duration": 4.16
+    },
+    {
+        "text": "that That would be really boring",
+        "start": 188.159,
+        "duration": 4.0
+    },
+    {
+        "text": "really mundane I for me personally",
+        "start": 189.84,
+        "duration": 4.88
+    },
+    {
+        "text": "since we're talking about coding uh",
+        "start": 192.159,
+        "duration": 5.841
+    },
+    {
+        "text": "and you mentioned debugging uh would a",
+        "start": 194.72,
+        "duration": 4.72
+    },
+    {
+        "text": "lot of the source of the enjoyment for",
+        "start": 198.0,
+        "duration": 3.84
+    },
+    {
+        "text": "me on more on the cursor side than the",
+        "start": 199.44,
+        "duration": 5.84
+    },
+    {
+        "text": "clawed code side is the I have a friend",
+        "start": 201.84,
+        "duration": 5.679
+    },
+    {
+        "text": "I have a cop what's that called a pair",
+        "start": 205.28,
+        "duration": 5.2
+    },
+    {
+        "text": "programmer like it's less lonely You",
+        "start": 207.519,
+        "duration": 6.561
+    },
+    {
+        "text": "you made debugging sound like this great",
+        "start": 210.48,
+        "duration": 6.08
+    },
+    {
+        "text": "joy No, I would say I would say",
+        "start": 214.08,
+        "duration": 5.439
+    },
+    {
+        "text": "debugging is like a drink of water after",
+        "start": 216.56,
+        "duration": 5.487
+    },
+    {
+        "text": "you've been going through a desert for",
+        "start": 219.519,
+        "duration": 4.401
+    },
+    {
+        "text": "laughter for for days So like you're",
+        "start": 222.047,
+        "duration": 3.793
+    },
+    {
+        "text": "you skip the whole desert part where",
+        "start": 223.92,
+        "duration": 3.92
+    },
+    {
+        "text": "you're suffering So like there",
+        "start": 225.84,
+        "duration": 4.319
+    },
+    {
+        "text": "sometimes it's nice to have a friend",
+        "start": 227.84,
+        "duration": 4.56
+    },
+    {
+        "text": "who's who can't really find the bug but",
+        "start": 230.159,
+        "duration": 3.761
+    },
+    {
+        "text": "can give you some intuition about the",
+        "start": 232.4,
+        "duration": 4.96
+    },
+    {
+        "text": "code and you're together the with that",
+        "start": 233.92,
+        "duration": 5.2
+    },
+    {
+        "text": "friend going through the desert and then",
+        "start": 237.36,
+        "duration": 3.84
+    },
+    {
+        "text": "together find that drink of water So at",
+        "start": 239.12,
+        "duration": 4.96
+    },
+    {
+        "text": "least for me uh maybe it speaks to the",
+        "start": 241.2,
+        "duration": 4.16
+    },
+    {
+        "text": "loneliness of the programming",
+        "start": 244.08,
+        "duration": 3.76
+    },
+    {
+        "text": "experience It's that is a source of",
+        "start": 245.36,
+        "duration": 3.12
+    },
+    {
+        "text": "joy",
+        "start": 247.84,
+        "duration": 2.64
+    },
+    {
+        "text": "i It's maybe also related to delayed",
+        "start": 248.48,
+        "duration": 4.0
+    },
+    {
+        "text": "gratification I'm a person who you",
+        "start": 250.48,
+        "duration": 5.36
+    },
+    {
+        "text": "know even as a kids I like the idea of",
+        "start": 252.48,
+        "duration": 5.84
+    },
+    {
+        "text": "Christmas presents having them getting",
+        "start": 255.84,
+        "duration": 5.2
+    },
+    {
+        "text": "them better than actually getting the",
+        "start": 258.32,
+        "duration": 5.12
+    },
+    {
+        "text": "presents I would look forward to the",
+        "start": 261.04,
+        "duration": 3.84
+    },
+    {
+        "text": "day I get the presents but then it's",
+        "start": 263.44,
+        "duration": 2.8
+    },
+    {
+        "text": "over and I'm disappointed And maybe",
+        "start": 264.88,
+        "duration": 3.44
+    },
+    {
+        "text": "it's something like also with let's",
+        "start": 266.24,
+        "duration": 4.64
+    },
+    {
+        "text": "say food I think food tastes better",
+        "start": 268.32,
+        "duration": 5.2
+    },
+    {
+        "text": "when you're really hungry Uh, and with",
+        "start": 270.88,
+        "duration": 4.56
+    },
+    {
+        "text": "Yeah, you're right With debugging it",
+        "start": 273.52,
+        "duration": 4.64
+    },
+    {
+        "text": "is not always you know uh great it's",
+        "start": 275.44,
+        "duration": 6.24
+    },
+    {
+        "text": "like often frustrating but um then if",
+        "start": 278.16,
+        "duration": 5.12
+    },
+    {
+        "text": "you can solve it then it's great but",
+        "start": 281.68,
+        "duration": 3.76
+    },
+    {
+        "text": "there's also like a sweet goldilocks zone",
+        "start": 283.28,
+        "duration": 4.639
+    },
+    {
+        "text": "if it's too hard then it's you know",
+        "start": 285.44,
+        "duration": 5.039
+    },
+    {
+        "text": "wasting your time but I think that is",
+        "start": 287.919,
+        "duration": 5.041
+    },
+    {
+        "text": "another challenge though how will people",
+        "start": 290.479,
+        "duration": 5.601
+    },
+    {
+        "text": "learn I mean the chart we looked at um",
+        "start": 292.96,
+        "duration": 5.84
+    },
+    {
+        "text": "we saw that more senior developers are",
+        "start": 296.08,
+        "duration": 5.119
+    },
+    {
+        "text": "shipping more AI generated code than the",
+        "start": 298.8,
+        "duration": 3.76
+    },
+    {
+        "text": "junior ones and I think it's very",
+        "start": 301.199,
+        "duration": 3.041
+    },
+    {
+        "text": "interesting because intuitively you",
+        "start": 302.56,
+        "duration": 3.28
+    },
+    {
+        "text": "would think it's the junior developers",
+        "start": 304.24,
+        "duration": 4.08
+    },
+    {
+        "text": "because they don't know let's say how to",
+        "start": 305.84,
+        "duration": 3.76
+    },
+    {
+        "text": "do the thing yet because they are more",
+        "start": 308.32,
+        "duration": 3.2
+    },
+    {
+        "text": "junior and so they use AI to do that",
+        "start": 309.6,
+        "duration": 3.84
+    },
+    {
+        "text": "thing It could either mean the AI is",
+        "start": 311.52,
+        "duration": 4.08
+    },
+    {
+        "text": "not good enough yet to solve that task",
+        "start": 313.44,
+        "duration": 4.8
+    },
+    {
+        "text": "but it could also mean experts are more",
+        "start": 315.6,
+        "duration": 5.12
+    },
+    {
+        "text": "effective at using it they know where",
+        "start": 318.24,
+        "duration": 4.32
+    },
+    {
+        "text": "and better how to use it and review the",
+        "start": 320.72,
+        "duration": 3.759
+    },
+    {
+        "text": "code and they trust the code than more",
+        "start": 322.56,
+        "duration": 5.199
+    },
+    {
+        "text": "and so I think one issue in the society",
+        "start": 324.479,
+        "duration": 4.961
+    },
+    {
+        "text": "in the future will be though how do you",
+        "start": 327.759,
+        "duration": 3.761
+    },
+    {
+        "text": "become an expert if you never try to do",
+        "start": 329.44,
+        "duration": 4.96
+    },
+    {
+        "text": "the thing yourself and I think one way",
+        "start": 331.52,
+        "duration": 5.679
+    },
+    {
+        "text": "it's always like for me how how I learn",
+        "start": 334.4,
+        "duration": 5.76
+    },
+    {
+        "text": "is by trying things myself like math",
+        "start": 337.199,
+        "duration": 5.28
+    },
+    {
+        "text": "textbooks if you look at the solutions",
+        "start": 340.16,
+        "duration": 4.0
+    },
+    {
+        "text": "yeah you learn something but I think you",
+        "start": 342.479,
+        "duration": 4.081
+    },
+    {
+        "text": "learn actually better if you try first",
+        "start": 344.16,
+        "duration": 4.64
+    },
+    {
+        "text": "and then you appreciate the solution",
+        "start": 346.56,
+        "duration": 3.52
+    },
+    {
+        "text": "differently because you know how to put",
+        "start": 348.8,
+        "duration": 4.32
+    },
+    {
+        "text": "it into your mental framework and um if",
+        "start": 350.08,
+        "duration": 5.76
+    },
+    {
+        "text": "LM are here all the time would you",
+        "start": 353.12,
+        "duration": 4.4
+    },
+    {
+        "text": "actually go through the length at",
+        "start": 355.84,
+        "duration": 4.079
+    },
+    {
+        "text": "struggling would you be willing to",
+        "start": 357.52,
+        "duration": 3.84
+    },
+    {
+        "text": "struggle because struggle is not nice",
+        "start": 359.919,
+        "duration": 4.0
+    },
+    {
+        "text": "right I mean it's struggling and if you",
+        "start": 361.36,
+        "duration": 4.24
+    },
+    {
+        "text": "use the LM to do everything at some",
+        "start": 363.919,
+        "duration": 3.041
+    },
+    {
+        "text": "point you will never really take the",
+        "start": 365.6,
+        "duration": 4.0
+    },
+    {
+        "text": "next step and then you will maybe not",
+        "start": 366.96,
+        "duration": 4.56
+    },
+    {
+        "text": "get that unlock that you would get as an",
+        "start": 369.6,
+        "duration": 4.319
+    },
+    {
+        "text": "expert using an LLM so it's like you",
+        "start": 371.52,
+        "duration": 3.76
+    },
+    {
+        "text": "know it's like I think there's like a",
+        "start": 373.919,
+        "duration": 4.241
+    },
+    {
+        "text": "goldilocks sweet spot where maybe the",
+        "start": 375.28,
+        "duration": 4.88
+    },
+    {
+        "text": "trick here is you make dedicated offline",
+        "start": 378.16,
+        "duration": 4.4
+    },
+    {
+        "text": "time where you study 2 hours a day and",
+        "start": 380.16,
+        "duration": 4.879
+    },
+    {
+        "text": "the rest of the day use LLMs. But I I",
+        "start": 382.56,
+        "duration": 4.16
+    },
+    {
+        "text": "think it's important also for people to",
+        "start": 385.039,
+        "duration": 3.6
+    },
+    {
+        "text": "still invest in themselves in my opinion",
+        "start": 386.72,
+        "duration": 4.0
+    },
+    {
+        "text": "to not just you know LLM everything",
+        "start": 388.639,
+        "duration": 3.84
+    },
+    {
+        "text": "Yeah, there is And we together as a",
+        "start": 390.72,
+        "duration": 3.68
+    },
+    {
+        "text": "civilization that we each individually",
+        "start": 392.479,
+        "duration": 6.041
+    },
+    {
+        "text": "have to find that goldilocks zone",
+        "start": 394.4,
+        "duration": 4.12
+    }
+]
