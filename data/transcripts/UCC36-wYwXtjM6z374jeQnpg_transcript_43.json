@@ -1,0 +1,7 @@
+[
+    {
+        "text": " I love benchmarks. I love this benchmark in particular. So, this is a benchmark vending bench arena that's maintained by a company named Andon Labs. The basic premise is AI agents are given simulated $500 to start. They're put in charge of a simulated vending machine. They're given tools that they can manage. So, they have the ability to send and read emails, like real full natural language emails. They're given the ability to search a simulated internet. They have a simulated bank balance. They can send money, they can receive money, they can stock and restock the vending machine, they can set prices, check inventory, collect cash, etc. So, this really is performing the role almost of a middle manager in charge of a vending machine. if they fail to pay a $2 daily fee",
+        "start": 0.08,
+        "duration": 92.32000000000002
+    }
+]

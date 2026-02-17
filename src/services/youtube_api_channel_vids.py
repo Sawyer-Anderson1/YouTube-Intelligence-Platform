@@ -13,7 +13,9 @@ from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 from datetime import datetime, timezone
 from dateutil.relativedelta import relativedelta
+
 from langdetect import detect
+from langdetect.lang_detect_exception import LangDetectException
 
 # get the youtube api key and build the service object for the youtube api calls
 youtube_api_key = os.getenv('YOUTUBE_API_KEY')
@@ -72,16 +74,18 @@ def check_vids(upload_items):
             title = vid['snippet'].get('title', '').lower()
             description = vid['snippet'].get('description', '').lower()
 
-            # use langdetect on the titel and description
-            if has_letters(title) and has_letters(description):
-                description_lang = detect(description)
-                title_lang = detect(title)
-                is_english_video = (title_lang == 'en' and description_lang == 'en')
-            elif has_letters(title):
-                title_lang = detect(title)
-                is_english_video = (title_lang == 'en')
-            else:
-                continue # skip following operations
+            is_english_video = False
+            try:
+                # use langdetect on the titel and description
+                if has_letters(title) and has_letters(description):
+                    description_lang = detect(description)
+                    title_lang = detect(title)
+                    is_english_video = (title_lang == 'en' and description_lang == 'en')
+                elif has_letters(title):
+                    title_lang = detect(title)
+                    is_english_video = (title_lang == 'en')
+            except LangDetectException:
+                is_english_video = False
 
             term_pattern = re.compile(r'\b(?:' + '|'.join(terms) + r')\b', re.IGNORECASE)
             if term_pattern.search(title) and term_pattern.search(description) and is_english_video:
@@ -236,7 +240,6 @@ try:
     # we have the relevant videos for our set of channels
     # then choose the top channels from there
     channel_uploads = dict(sorted(channel_uploads.items(), key=lambda x: len(x[1]), reverse=True))
-    print(channel_uploads)
 
     # get up to 1500 videos or up to 20 channels
     MAX_VIDS = 1500

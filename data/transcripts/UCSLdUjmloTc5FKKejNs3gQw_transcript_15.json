@@ -1,0 +1,7 @@
+[
+    {
+        "text": " Talking to AI could use up a trillion liters of water a year by 2028. That's 400,000 Olympic size swimming pools. But wait, didn't say a single chat GPT request uses up 0.000085 gallons of water? That's a 15th of a teaspoon, which doesn't seem too bad. But he's not exactly telling the whole truth because AI models run in GPU data centers that get insanely hot and need to be cooled down with water just to answer your simple questions. But even before it can get to the stage where it can answer your question, these models need to be trained. And GPC3 alone is estimated to have used 5 million L of water during its training phase, not to mention reasoning or when a model is thinking, it takes a request and fans it out to multiple internal processes just to give you a detailed response. And I know data centers also use electricity, but that typically gets recycled back into the same source of water. But for data centers, the water gets evaporated and is sent out with the heat and may end up somewhere else far away from the source. Basically, a single request isn't a tiny teaspoon. If you take into consideration training, reasoning, and scale, then the trillion L of water estimation actually starts to make sense. And don't forget to subscribe.",
+        "start": 0.08,
+        "duration": 138.48000000000002
+    }
+]
