@@ -1,0 +1,21 @@
+# .github/workflows/ci.yml
+# on: [push]
+#
+# jobs:
+#   build:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Check out repository
+#       uses: actions/checkout@v2
+#
+#       - name: Set up Python
+#       uses: actions/setup-python@v2
+#       with:
+#         python-version: '3.x'
+#
+#       - name: Run Python script
+#       env: 
+#         YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
+#         WEBSHARE_PROXY_USER: ${{ secrets.WEBSHARE_PROXY_USER }}
+#         WEBSHARE_PROXY_PASSWORD: ${{ sercrets.WEBSHARE_PROXY_PASSWORD }}
+#       run: python src\main.py

@@ -1,0 +1,7 @@
+[
+    {
+        "text": " Hey everyone, I'm Michael Zephr leading healthcare AI initiatives at NVIDIA. Pancreatic cancer is the third leading cause of cancer deaths in America. 80 to 85% of cases are diagnosed too late for effective treatment. But what if AI could help detect these deadly tumors earlier? Enter PANTS, the world's largest pancreatic tumor data set. 23 radiologists spent years annotating over 36,000 CT scans from 145 hospitals worldwide. Not just tumors, but 24 surrounding organs to give AI complete anatomical context. The result, detection accuracy jumped from 81% to 96%. That's the difference between missing cancer and catching it early. This isn't just another data set, though. It's giving radiologists AI tools that catch pancreatic cancer with treatment can actually work. Early detection saves lives. Pantas is making that possible at scale right now.",
+        "start": 0.56,
+        "duration": 132.08
+    }
+]

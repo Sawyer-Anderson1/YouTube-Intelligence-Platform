@@ -1,0 +1,7 @@
+[
+    {
+        "text": " AI models are growing in terms of size and complexity and this is creating even more demands on the AI and data center infrastructure. In order to meet those requirements, we need to innovate at every level. We've talked a lot about all the enhancements we made in our hardware platforms, but we're also doing incredible innovations on the algorithmic side. We're introducing a new FP4 format called MVFP4. While we still support MXFP4, which is the open standard, we've invented MVFP4 to drive more performance and adhere to the same level of accuracies of FPA or greater. This allows you to train models much faster using less energy and less space and transmitting less data. This has incredible impact across the entire industry. We've been working with folks like AWS, Perplexity, OpenAI, and many others. And as we continue to push forward, we'll see even more value coming forth as we roll out our GB300 platform. In fact, it will deliver 7x more performance than our current gen Hopperbased platform. This unlocks a whole new world of opportunity to drive more efficiency and performance across every scientific domain, across every AI discipline.",
+        "start": 0.24,
+        "duration": 156.161
+    }
+]

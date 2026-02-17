@@ -47,8 +47,7 @@ ai_search = search.list(
     type='video',
     videoCategoryId = '28',
     relevanceLanguage = 'en',
-    videoCaption='closedCaption',
-    q='AI',
+    q='Future of AI',
 ) 
 
 # will get a lot of videos, add them to a list, then find the most prevelant channels from there
@@ -77,8 +76,7 @@ try:
                 type='video',
                 videoCategoryId = '28',
                 relevanceLanguage = 'en',
-                videoCaption='closedCaption',
-                q='AI',
+                q='Future of AI',
             )
         else:
             break

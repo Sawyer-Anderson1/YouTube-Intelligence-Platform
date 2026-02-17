@@ -1,0 +1,7 @@
+[
+    {
+        "text": " When it comes to AI for drug discovery what used to take thousands of molecules in a design-make-test-iteration cycle can now be done in as few as hundreds of molecules. And what used to take six years might take less than a year now. A full life cycle here of the design-make-test cycle is designing molecules, medicines, proteins in a computer, being able to validate those in a wet lab and using that data that's generated to further train or fine-tune that initial model and prediction. And where we're seeing this go now is predictions being made from generative models that are then maybe orchestrated by agentic models and realized and executed in physical automation and robotics. So an example of what we're working on in our BioNeMo team is protein folding models. AlphaFold won the 2024 Nobel Prize in Chemistry last year for an in silico way of predicting a protein structure. Previously this was a very arduous task. Now it can be predicted with high accuracy in seconds. All of this is being driven by our BioNeMo platform which is a collection of blueprints, inference microservices, and libraries that are made available to researchers to help accelerate their work and their models. This allows us to embrace complexity and unlock findings that maybe were hidden to us before.",
+        "start": 0.166,
+        "duration": 94.49499999999999
+    }
+]

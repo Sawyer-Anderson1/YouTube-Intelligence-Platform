@@ -1,0 +1,7 @@
+[
+    {
+        "text": " AI has truly crossed the chasm from back office proof of concepts to full mainstream production. And the way that AI is getting deployed and used is through inference. So when we think about inference, it's actually two workloads. There's the context processing which we call prefill and then there's the generation of tokens which we call decode. In order to serve those two disparate processes more efficiently, the industry has developed disagregated serving. It's a method by which you can basically separate both the prefill and decode across your infrastructure in order to gain optimum efficiency. Most of the workloads using inference today can work well on today's infrastructure. However, there's an evolving group of very emerging advanced use cases which require millions of tokens for input sequence links. Now the reason why that's important is it requires a different type of infrastructure and that's why we created a new processor the Reuben CPX processor. It has 30 pedaflops of AI performance, 128 GB of cost effective DDR7 memory and three times the attention for that context processing. All this together with the Dynamo software orchestration layer, the MVFP4 and the Reuben MVL 144 scaleup architecture delivers unprecedented performance and cost efficiency into applications that we use today and some that we haven't even thought of.",
+        "start": 0.48,
+        "duration": 179.19899999999998
+    }
+]

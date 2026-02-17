@@ -1,0 +1,25 @@
+YouTube Intelligence Platform
+
+Week 2 Meeting Minutes:
+Team: 4
+Attendees: Selim Sarac, Pranav Rhasikbhai Devani, Paul Lee, Sawyer Anderson, Makism Zlatkin, Brice T Cooper, Lucah Lucero, Dang Nam Pham
+Sponsor: Selim Sarac
+TA/Advisor: Pranav Rasikbhai Devani
+Note Taker: Sawyer Anderson
+
+Meeting Agenda:
+	General discussion of the current progress made. Each member went through and told the professor what they had completed to prior week and what they have worked on up to the day of the meeting.
+	Things disscussed for next meeting:
+		- Have demos, code, and Figma templates ready for each member's stand-up.
+		- Complete Solution Design and touch up on Project Proposal
+		- Also have stories be individualized and prepared early in the week
+
+Date & Time of next meeting:
+	2/18/2026 @7:20-7:50pm
+
+Deadlines:
+	- Solution Design document, Meeting Minutes,and Weekly Report due monday
+	- Following week:
+		Already nearly completed the data ingestion and transcript collection, but need to do storage schema design and comment retrieval.
+		Start the embedding of chunked transcript data, and putting it into vector database for RAG with LLM
+		Continue LLM integration and API controller implementation

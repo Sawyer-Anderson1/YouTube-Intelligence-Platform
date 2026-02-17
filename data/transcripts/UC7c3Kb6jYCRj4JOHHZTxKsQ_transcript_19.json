@@ -1,0 +1,7 @@
+[
+    {
+        "text": " Google just dropped Gemini 3 Flash. It is the fastest model, the best price, and it actually beats Gemini 3 Pro at coding, which is insane. Look at these scores. First of all, the price. It is a fourth of the cost of Gemini 3 Pro. It's about a third of the price of GPT 5.2 and a sixth of the price of the Claude family of models. And not only that, it scores extremely well. Arc AGI2 33.6% 6% beating every other model except for GPT 5.2. We have Amy 2025 which is a hardcore math competition. 95 and 99% as compared to 100% nearly matching GPT5 extra high. And then the important one, look at this SWE verified which measures this model's coding ability. It got a 78% beating Gemini 3 Pros 76%. Right behind GPT 5.2's 2 is 80%. Not only is it incredibly fast, incredibly cheap, and incredibly good, but it also is very efficient. The amount of leverage you get from each individual token is much higher than other models. So, it outperforms Gemini 3 Pro, is cheaper, and has better outputs. What is going on? So, here it is side by side. 17,000 versus 24,000 tokens, flash versus pro. It also has multimodal reasoning built in. It can see video. It can see images. It can hear audio. Look at this game that uses all of those modalities. And it is now the default model in Google searches AI mode. This seems like such an obvious move. Speed is incredibly important for search. Did Google just finish off the competition?",
+        "start": 0.16,
+        "duration": 203.28099999999995
+    }
+]

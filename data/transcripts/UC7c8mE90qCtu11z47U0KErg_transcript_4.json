@@ -1,0 +1,7 @@
+[
+    {
+        "text": " how I can communicate with AI in the best way possible and that is going to happen with prompt engineering and context engineering. This is where a generalist comes into the picture. First thing that I would do for getting AI to do things like me, I would pull up all my top performing LinkedIn posts or Instagram res or whatever that is, I would make a document to it, but I'll actually upload that document into a reasoning model like 03 on Chat Gypty, okay? Or Gemini 2.5 Pro and I write a prompt. You are a expert when it comes to finding patterns in content. Go through my writings. give me a extensive content DNA analysis of how I write. So you ask AI to tell you then AI will give you a report. Then I go to a normal 4.5 or a 40 model and I say convert this into a reusable prompt so that I can use this prompt every time I give a topic and research. You will spit out a post for me by following everything that I've given on the research report. So you're using earlier context to create a prompt. Yes. For future AI purposes. I'm using your context to get a report. I'm using that report to build a prompt. I'm using that prompt inside of a GPT so that it can mimic your style of writing.",
+        "start": 0.16,
+        "duration": 135.28
+    }
+]
