@@ -9,17 +9,14 @@ from concurrent.futures import ThreadPoolExecutor
 folder_path = Path(__file__).parent.parent.parent / 'data' / 'transcripts'
 
 # function that reads content of transcript
-def read_and_chunk_transcript(filepath):
+# with filepath, chunk size, and overlap as parameters/arguments
+def read_and_chunk_transcript(filepath, max_chunk_count=500, overlap_amount=50):
     try:
         with open(filepath, 'r') as file:
             transcript = json.load(file)
 
         # combine the very small chunks (snippets) from the youtube-transcript-api into larger chuncks
         larger_chunks = []
-
-        # define the max size of the chunks and how much they'll overlap
-        overlap_amount = 50
-        max_chunk_count = 500
 
         # then create the chunks and add the metadata (start and duration)
         current_chunk = ""

@@ -1,0 +1,7 @@
+[
+    {
+        "text": " The chat GPT moment for physical AI is nearly here, but the challenge is clear. The physical world is diverse and unpredictable. Collecting real world training data is slow and costly and it's never enough. The answer is synthetic data. It starts with NVIDIA Cosmos, an open Frontier World Foundation model for physical AI. Pre-trained on internet scale video, real driving and robotics data, and 3D simulation, Cosmos [music] learned a unified representation of the world. Able to align language, images, 3D, and action. It performs physical AI skills like generation, reasoning, and trajectory prediction. From a single image, Cosmos generates realistic video. From 3D scene descriptions, physically coherent motion, from driving telemetry and sensor [music] logs, surround video from planning simulators, multi- camera environments, or from scenario prompts, it brings edge cases to life. Developers can run interactive closed loop simulations in Cosmos. When actions are made, the world responds. Cosmos reasons. It analyzes edge [music] scenarios, breaks them down into familiar physical interactions, and reasons [music] about what could happen next. Cosmos turns compute into data, training AVs for the longtail and robots [music] how to adapt for every scenario.",
+        "start": 2.879,
+        "duration": 228.64000000000001
+    }
+]
