@@ -11,11 +11,12 @@ import re
 
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
-from datetime import datetime, timezone
-from dateutil.relativedelta import relativedelta
 
-from langdetect import detect
-from langdetect.lang_detect_exception import LangDetectException
+# import external function to check for english text
+from check_for_english_text import check_english
+
+# import another external function to get time 6 months ago
+from get_time import get_time_months_ago_rfc3339
 
 # get the youtube api key and build the service object for the youtube api calls
 youtube_api_key = os.getenv('YOUTUBE_API_KEY')
@@ -25,26 +26,6 @@ youtube = build('youtube', 'v3', developerKey=youtube_api_key)
 channels = youtube.channels()
 playlist_items = youtube.playlistItems()
 videos = youtube.videos()
-
-# function to get the rfc 3339 time a certaim amount of months ago
-def get_time_months_ago_rfc3339(months_ago: int) -> str:
-    '''
-    Docstring for get_time_months_ago_rfc3339
-    
-    :param months_ago: the amount of months that we are going back to get the time for
-    :type months_ago: int
-    :return: the time a certain amount of months ago
-    :rtype: str of RFC 3339 datetime
-    '''
-    
-    current_utc = datetime.now(timezone.utc)
-    past_time = current_utc - relativedelta(months=months_ago)
-    rfc3339_utc_str = past_time.isoformat().replace('+00:00', 'Z')
-    return rfc3339_utc_str
-
-# function to chewck if an input string has letters
-def has_letters(string):
-    return bool(re.search('[a-zA-Z]', string))
 
 # function to check a video from a chennel's uploads playlist for date (within 6 months), contentc, etc.
 def check_vids(upload_items):
@@ -74,18 +55,10 @@ def check_vids(upload_items):
             title = vid['snippet'].get('title', '').lower()
             description = vid['snippet'].get('description', '').lower()
 
-            is_english_video = False
-            try:
-                # use langdetect on the titel and description
-                if has_letters(title) and has_letters(description):
-                    description_lang = detect(description)
-                    title_lang = detect(title)
-                    is_english_video = (title_lang == 'en' and description_lang == 'en')
-                elif has_letters(title):
-                    title_lang = detect(title)
-                    is_english_video = (title_lang == 'en')
-            except LangDetectException:
-                is_english_video = False
+            # call external function to check
+            is_english_title = check_english(title)
+            is_english_description = check_english(title)
+            is_english_video = (is_english_title and is_english_description)
 
             term_pattern = re.compile(r'\b(?:' + '|'.join(terms) + r')\b', re.IGNORECASE)
             if term_pattern.search(title) and term_pattern.search(description) and is_english_video:
@@ -173,17 +146,20 @@ try:
             # then extend the current list of items for the response to the collective channel_items array
             channel_items.extend(channel_item)
 
-        for item_id in range(len(channel_items)):
+        channel_map = {} # to map the item['id'] or the upload id
+        for item in channel_items:
+            channel_id = item['id']
+
             # check for the snippet.defaultLanguage is english and (maybe) snippet.country
-            default_language = channel_items[item_id]['snippet'].get('defaultLanguage', '')
+            default_language = item['snippet'].get('defaultLanguage', '')
             if default_language == 'en':
                 # get the uploads playlist id
-                uploads_id = channel_items[item_id]['contentDetails']['relatedPlaylists']['uploads']
-                channel_uploads[channel_ids[item_id]] = uploads_id
+                uploads_id = item['contentDetails']['relatedPlaylists']['uploads']
+                channel_uploads[channel_id] = uploads_id
             elif default_language == '':
                 # get the uploads playlist id
-                uploads_id = channel_items[item_id]['contentDetails']['relatedPlaylists']['uploads']
-                channel_uploads[channel_ids[item_id]] = uploads_id
+                uploads_id = item['contentDetails']['relatedPlaylists']['uploads']
+                channel_uploads[channel_id] = uploads_id
     except HttpError as e:
             print(f'Error response status code : {e.status_code}, reason : {e.error_details}')
 
