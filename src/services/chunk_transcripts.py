@@ -28,11 +28,12 @@ def read_and_chunk_transcript(filepath, max_chunk_count=500, overlap_amount=50):
                 current_duration += snippet['duration']
             else:
                 larger_chunks.append({"text": current_chunk, "start": current_start, "duration": current_duration})
-                current_start = snippet['start']
-
+ 
                 # have current_chunk include past text for overlap
                 current_chunk = " ".join((current_chunk.split())[-overlap_amount:])
 
+                current_start = snippet['start']
+                current_duration = snippet['duration']
         if current_chunk:
             larger_chunks.append({"text": current_chunk, "start": current_start, "duration": current_duration})
 

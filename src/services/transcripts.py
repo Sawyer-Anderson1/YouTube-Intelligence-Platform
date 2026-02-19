@@ -94,8 +94,8 @@ def fetch_transript(channel_id, vidx, vid_id):
     }
 
     # create the json file for the transcript
-    filename = f"{folder_path_pathlib}/{channel_id}_transcript_{vidx + 1}.json"
-    result[filename] = str(filename)
+    filename = folder_path_pathlib /f"{channel_id}_transcript_{vidx + 1}.json"
+    result["filename"] = str(filename)
 
     # implement jitter to stagger the threads so they won't all fire at once (triggering YouTube blocking/soft bans)
     time.sleep(random.uniform(0, JITTER_MAX))
