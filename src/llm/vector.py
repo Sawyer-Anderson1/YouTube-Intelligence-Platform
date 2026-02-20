@@ -6,11 +6,19 @@ from langchain_ollama import OllamaEmbeddings
 from langchain_chroma import Chroma
 from langchain_core.documents import Document
 
+# ----------------------------------------------
+#  Setup for Retrieval of Transcripts
+# ----------------------------------------------
+
 path_to_transcripts = Path(__file__).parent.parent.parent / 'data' / 'transcripts'
 
 transcripts_files = [pos_transcript for pos_transcript in os.listdir(path_to_transcripts) if pos_transcript.endswith('.json')]
 
-# fast (low parameter) embedding model
+# ----------------------------------------------
+#  Setup for Embeddings and VectorDB
+# ----------------------------------------------
+
+# fast (low parameter) embedding model from Ollama
 embeddings = OllamaEmbeddings(model = "all-minilm")
 
 # the instantiation of the vector store and db location
@@ -22,6 +30,10 @@ vector_store = Chroma(
     embedding_function = embeddings
 )
 
+# ----------------------------------------------
+#  Get Logging
+# ----------------------------------------------
+
 # create a log path to save files that have been embedded already
 embedded_log_path = Path("./embedded_files.json")
 already_embedded = set()
@@ -32,6 +44,10 @@ if embedded_log_path.exists():
         already_embedded = set(json.loads(embedded_log_path.read_text()))
     except (json.JSONDecodeError, IOError) as e:
         print(f"Warning: count not read embedded log, starting fresh: {e}")
+
+# ----------------------------------------------
+#  Get New Files/Documents and Parse and Embed
+# ----------------------------------------------
 
 # check for new files
 new_files = [file for file in transcripts_files if file not in already_embedded]
@@ -95,7 +111,7 @@ else:
                     "video_index": video_index,
 
                     # -----------------------
-                    #  Additional metadata
+                    #  Additional metadata...
                     # -----------------------
 
                     "source_file": js
@@ -122,6 +138,10 @@ else:
             print(f"Warning: could not update embedded log: {e}")
     else:
         print("No valid chunks found in new files")
+
+# -----------------------------------------
+#  K chunk retrieval for RAG
+# -----------------------------------------
 
 retriever = vector_store.as_retriever(
     # How many docs to look up
