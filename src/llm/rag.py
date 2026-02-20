@@ -93,9 +93,9 @@ def run_query(question, query_type):
     insert_result = results_collection.insert_one(document)
 
     return {
-        'id': str(insert_result.insert_id()),
-        'query_type': insert_result.query_type,
-        'result_text': insert_result.result_text,
+        'id': str(insert_result.inserted_id()),
+        'query_type': query_type,
+        'result_text': result,
         'source_chunks': source_chunks
     }
 

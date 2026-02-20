@@ -23,7 +23,10 @@ def scheduled_job_sequence():
         # then run the script to get the transcripts from the channels
         run_script('/services/transcripts.py')
 
-        #...
+        # then run the vector.py and rag.py (run_scheduled_queries())
+        run_script('/llm/vector.py')
+
+        run_script('/llm/rag.py')
     except Exception as e:
         print(f"Transcript retrieval scripts failed to run: {e}")
 
