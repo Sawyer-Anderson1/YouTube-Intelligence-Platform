@@ -1,0 +1,27 @@
+YouTube Intelligence Platform
+
+Week 3 Meeting Minutes:
+Team: 4
+Attendees: Selim Sarac, Paul Lee, Sawyer Anderson, Makism Zlatkin, Brice T Cooper, Lucah Lucero, Dang Nam Pham
+Sponsor: Selim Sarac
+TA/Advisor: Pranav Rasikbhai Devani
+Note Taker: Sawyer Anderson
+
+Meeting Agenda:
+	Discussion of what has been done, especially with coding. Each member went through and told the professor what they had completed the prior week and what they have worked on up to the day of the meeting. Paul showed his current implementation of the RAG system. I (Sawyer Anderson) showed my work with the transcript retrieval. Lucah Lucero showed the code he's been working with from a Figma template, and Dang Nam Pham showed his work with the Figma UI cards. Brice T Cooper still was working on researching OpenRouter. Maksim Zlatkin showed his work with MongoDB.
+	Things disscussed for next meeting:
+		- Need to be more organized and share load of work better.
+		- Continue to work well, but can do even better!
+
+Date & Time of next meeting:
+	2/25/2026 @7:20-7:50pm
+
+Deadlines:
+	- Meeting Minutes,and Weekly Report due monday
+	- Complete database schemas before meeting. 
+	- Already completed the transcript retrieval and started with extra data extraction of video metrics and comments.
+	- Have more refined prompt for RAG LLM, maybe do some few-shot and add template for answer.
+		- Work on bugs of vector db and implement MongoDB for results
+	- Have some testing for the transcripts
+	- Start considering deployment servers (Azure)
+	- Additionally, have UIs development progress with fake data if necessary.

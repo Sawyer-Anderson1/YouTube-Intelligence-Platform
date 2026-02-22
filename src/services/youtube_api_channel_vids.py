@@ -18,6 +18,11 @@ from check_for_english_text import check_english
 # import another external function to get time 6 months ago
 from get_time import get_time_months_ago_rfc3339
 
+# --------------------------------------
+#  Get YouTubeAPI API, Build, and
+#  Collections
+# --------------------------------------
+
 # get the youtube api key and build the service object for the youtube api calls
 youtube_api_key = os.getenv('YOUTUBE_API_KEY')
 youtube = build('youtube', 'v3', developerKey=youtube_api_key)
@@ -26,6 +31,11 @@ youtube = build('youtube', 'v3', developerKey=youtube_api_key)
 channels = youtube.channels()
 playlist_items = youtube.playlistItems()
 videos = youtube.videos()
+
+# ---------------------------------------------
+#  Function to Check For Relevant Videos,
+#  and Save MetaData
+# ---------------------------------------------
 
 # function to check a video from a chennel's uploads playlist for date (within 6 months), contentc, etc.
 def check_vids(upload_items):
@@ -82,6 +92,20 @@ def check_vids(upload_items):
         for item_id in range(len(video_items)):
             view_count = int(video_items[item_id]['statistics']['viewCount'])
 
+            # ------------------------------------------
+            #  Save Video Metrics for Metadata
+            # ------------------------------------------
+
+            video_metrics[video_items[item_id]['id']] = {
+                "channel_id": channel,
+                "title": video_items[item_id]['snippet']['title'],
+                "published_at": video_items[item_id]["snippet"]["publishedAt"],
+                "view_count": view_count,
+                "like_count": int(video_items[item_id]['statistics'].get('likeCount', 0)),
+                "comment_count": int(video_items[item_id]['statistics'].get('commentCount', 0)),
+                "duration": video_items[item_id]['contentDetails']['duration']
+            }
+
             # check if video is in English using defaultLanguage or defaultAudioLanguage
             default_language = video_items[item_id]['snippet'].get('defaultLanguage', '')
             default_audio_language = video_items[item_id]['snippet'].get('defaultAudioLanguage', '')
@@ -107,6 +131,10 @@ def check_vids(upload_items):
     # return the final filtered list
     return vids_filtered, hit_6_month_limit
 
+# ------------------------------------------------------------------------------------
+#  Read the Channels, Get Channel Uploads Playlist, and Check Vids from Playlists
+# ------------------------------------------------------------------------------------
+
 # read in the list of important channels on the topic of AI
 try:
     file_path_pathlib = Path(__file__).parent.parent.parent / 'data' / 'channels.json'
@@ -117,6 +145,13 @@ try:
     # Call the request for channel list
     # save a dictionary for each channel's uploads playlist
     channel_uploads = {}
+
+    # save a dictionary for the video metrics
+    video_metrics = {}
+
+    # -----------------------------------------------------
+    #  Retrieve Channel Info and Retrieve Uploads Playlist
+    # -----------------------------------------------------
 
     # have entire channel_ids in singular channels.list call to make it much more efficient
     # but since there is a limit of 50 ids per .list request create a list of them in a for statement
@@ -162,6 +197,11 @@ try:
                 channel_uploads[channel_id] = uploads_id
     except HttpError as e:
             print(f'Error response status code : {e.status_code}, reason : {e.error_details}')
+
+    # ---------------------------------------------------
+    #  Go Through Uploads Playlist for Each Channel,
+    #  Check the Vids and Save Relevant Vids
+    # ---------------------------------------------------
 
     # using the uploads playlist, get the videos from the playlist
     for channel, upload_id in channel_uploads.items():
@@ -217,6 +257,11 @@ try:
     # then choose the top channels from there
     channel_uploads = dict(sorted(channel_uploads.items(), key=lambda x: len(x[1]), reverse=True))
 
+    # ------------------------------------------
+    #  Keep up to 20 Most Relevant Channels,
+    #  with Most Vids on Topic
+    # ------------------------------------------
+
     # get up to 1500 videos or up to 20 channels
     MAX_VIDS = 1500
     MAX_CHANNELS = 20
@@ -231,13 +276,27 @@ try:
             vids_count += len(channel_uploads[channel_key_index[curr_index]])
         curr_index += 1
 
+    # -------------------------------------
+    #  Save to JSON (channel_vids.json)
+    # -------------------------------------
+
     # then export to json
     filename = "data/channel_vids.json"
     try:
         with open(filename, 'w') as json_file:
             json.dump(selected_channels_vids, json_file, indent=4)
     except IOError as e:
-        print(f"Error with writing to json file: {e}")
+        print(f"Error with writing selected channel vids to json file: {e}")
+
+    # --------------------------------------
+    #  Save MetaData/Video Metrics to JSON
+    # --------------------------------------
+
+    try:
+        with open('data/video_metrices.json', 'w') as file:
+            json.dump(video_metrics, file, indent=4)
+    except IOError as e:
+        print(f"Error with writing video metrics to json file: {e}")
 
 except FileNotFoundError:
     print("Json file for channels not found")
