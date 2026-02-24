@@ -9,6 +9,9 @@ import json
 from pathlib import Path
 import re
 
+import isodate
+from datetime import timedelta
+
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 
@@ -111,7 +114,18 @@ def check_vids(upload_items):
             default_audio_language = video_items[item_id]['snippet'].get('defaultAudioLanguage', '')
             is_english_video_or_not_set = (default_language == 'en' or default_audio_language == 'en-US' or default_language == '' or default_audio_language == '')
 
-            if view_count > 5000 and is_english_video_or_not_set:
+            # -------------------------------------------
+            # Check if Duration is Over 5 Minutes
+            # -------------------------------------------
+
+            duration = isodate.parse_duration(video_metrics[item_id]["duration"])
+            min_video_duration = (duration.total_seconds() >= 300.0)
+
+            # --------------------------------------------------
+            #  Check View Count, Video Duration, English Video
+            # --------------------------------------------------
+
+            if view_count > 5000 and is_english_video_or_not_set and min_video_duration:
                 # get the region restriction dict if available
                 region_restriction = video_items[item_id]['contentDetails'].get('regionRestriction', {})
 
@@ -293,7 +307,7 @@ try:
     # --------------------------------------
 
     try:
-        with open('data/video_metrices.json', 'w') as file:
+        with open('data/video_metrics.json', 'w') as file:
             json.dump(video_metrics, file, indent=4)
     except IOError as e:
         print(f"Error with writing video metrics to json file: {e}")

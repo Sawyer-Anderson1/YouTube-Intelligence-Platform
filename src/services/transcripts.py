@@ -30,7 +30,10 @@ from youtube_transcript_api._errors import (
     YouTubeRequestFailed
 )
 
-# config 
+# ---------------------
+#  Config
+# ---------------------
+
 MAX_WORKERS = 5 # kept low to avoid YouTube rate limiting
 MAX_RETRIES = 3 # retry some errors this much
 BASE_DELAY = 2.0 # seconds - base for exponential backoff
@@ -65,7 +68,10 @@ FILLER_WORDS = re.compile(
 
 CHEVRONS = re.compile(r'>+\s*')
 
-# function to clean the transcripts
+# --------------------------------------------
+# Function to Clean the Transcripts
+# --------------------------------------------
+
 def clean_transcript(text):
     # remove speaker chevrons
     text = CHEVRONS.sub('', text)
@@ -82,7 +88,10 @@ def clean_transcript(text):
 
     return text.strip()
 
-# function to asynchronously get trnascripts and clean
+# --------------------------------------------------------
+# Function to Asynchronously get Transcripts and Clean
+# --------------------------------------------------------
+
 def fetch_transript(channel_id, vidx, vid_id):
     result = {
         'channel_id': channel_id,
@@ -115,6 +124,10 @@ def fetch_transript(channel_id, vidx, vid_id):
                 result['message'] = f"No transcript content found for video {vid_id}"
                 return result
 
+            # -----------------------------
+            #  Clean Transcript
+            # -----------------------------
+
             # for each snippet of text in the transcript clean the text and, with the start and duration, to a cleaned_transcript_snippets array
             cleaned_transcript_snippets = []
             for snippet in raw_snippets:
@@ -131,9 +144,17 @@ def fetch_transript(channel_id, vidx, vid_id):
                 with open(filename, 'w') as json_file:
                     json.dump(cleaned_transcript_snippets, json_file, indent=4)
 
-                # call the function to chunk the transcript
+                # ---------------------------------
+                #  Get Video Metrics for Video Id
+                # ---------------------------------
+                metrics = video_metrics[vid_id]
+
+                # ---------------------------------------------
+                # Call the Function to Chunk the Transcript
+                # ---------------------------------------------
+
                 # by default is 500 tokens and 50 token overlaps
-                chunk_result = read_and_chunk_transcript(filename)
+                chunk_result = read_and_chunk_transcript(filename, metrics)
 
                 result['status'] = 'success'
                 result['message'] = f'Successfully wrote transcript and chunked to {filename}. {chunk_result}'
@@ -204,21 +225,43 @@ def fetch_transript(channel_id, vidx, vid_id):
                 result['message'] = f"Unexpected error processing video {vid_id}: {type(e).__name__}: {e}"
                 return result# read in the list of important channels and their videos on the topic of AI
 
-vid_data = {}
+# ------------------------------
+#  Read in Video Ids
+# ------------------------------
+
+vid_ids = {}
 try:
     file_path_pathlib = Path(__file__).parent.parent.parent / 'data' / 'channel_vids.json'
 
     with open(file_path_pathlib, 'r') as file:
-        vid_data = json.load(file)
+        vid_ids = json.load(file)
 except FileNotFoundError:
     print("Json file for channels not found")    
     exit(1)
+
+# -------------------------------
+#  Read in Video Metrics
+# -------------------------------
+
+video_metrics = {}
+try:
+    file_path_pathlib = Path(__file__).parent.parent.parent / 'data' / 'video_metrics.json'
+
+    with open(file_path_pathlib, 'r') as file:
+        video_metrics = json.load(file)
+except FileNotFoundError:
+    print("Json file for metrics not found")    
+    exit(1)
+
+# -------------------------------
+#  Execute Fetching in Parallel
+# -------------------------------
 
 with ThreadPoolExecutor(max_workers=MAX_WORKERS) as executor:
     futures = []
 
     # for each channel and videos in the vid_data, get the transcript of the videos
-    for channel_id, vids_list in vid_data.items():
+    for channel_id, vids_list in vid_ids.items():
         for vidx, vid_id in enumerate(vids_list):
             future = executor.submit(fetch_transript, channel_id, vidx, vid_id)
             futures.append(future)

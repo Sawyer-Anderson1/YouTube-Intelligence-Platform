@@ -1,0 +1,199 @@
+<mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/29.5.2 Chrome/142.0.7444.265 Electron/39.6.1 Safari/537.36" version="29.5.2">
+  <diagram id="C5RBs43oDa-KdzZeNtuy" name="Page-1">
+    <mxGraphModel dx="798" dy="1008" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="WIyWlLk6GJQsqaUBKTNV-0" />
+        <mxCell id="WIyWlLk6GJQsqaUBKTNV-1" parent="WIyWlLk6GJQsqaUBKTNV-0" />
+        <mxCell id="3y54th1ukYP5qC4LOGAN-4" parent="WIyWlLk6GJQsqaUBKTNV-1" style="swimlane;whiteSpace=wrap;html=1;" value="MongoDB Database" vertex="1">
+          <mxGeometry height="610" width="800" x="80" y="110" as="geometry" />
+        </mxCell>
+        <mxCell id="3y54th1ukYP5qC4LOGAN-11" parent="3y54th1ukYP5qC4LOGAN-4" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" value="results" vertex="1">
+          <mxGeometry height="60" width="140" x="130" y="171" as="geometry" />
+        </mxCell>
+        <mxCell id="3y54th1ukYP5qC4LOGAN-12" parent="3y54th1ukYP5qC4LOGAN-11" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" value="Collection for results of LLM responses" vertex="1">
+          <mxGeometry height="30" width="140" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="3y54th1ukYP5qC4LOGAN-17" parent="3y54th1ukYP5qC4LOGAN-4" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" value="youtube-intelligence" vertex="1">
+          <mxGeometry height="60" width="140" x="327" y="39" as="geometry" />
+        </mxCell>
+        <mxCell id="3y54th1ukYP5qC4LOGAN-18" parent="3y54th1ukYP5qC4LOGAN-17" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" value="Mongo Client" vertex="1">
+          <mxGeometry height="30" width="140" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="3y54th1ukYP5qC4LOGAN-19" edge="1" parent="3y54th1ukYP5qC4LOGAN-4" source="3y54th1ukYP5qC4LOGAN-18" style="endArrow=classic;html=1;rounded=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;exitX=0.521;exitY=1.032;exitDx=0;exitDy=0;exitPerimeter=0;" target="3y54th1ukYP5qC4LOGAN-11" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <Array as="points">
+              <mxPoint x="400" y="130" />
+              <mxPoint x="200" y="130" />
+            </Array>
+            <mxPoint x="280" y="110" as="sourcePoint" />
+            <mxPoint x="210" y="160" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="3y54th1ukYP5qC4LOGAN-20" edge="1" parent="3y54th1ukYP5qC4LOGAN-4" style="endArrow=classic;html=1;rounded=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="3y54th1ukYP5qC4LOGAN-15" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <Array as="points">
+              <mxPoint x="600" y="130" />
+            </Array>
+            <mxPoint x="400" y="130" as="sourcePoint" />
+            <mxPoint x="320" y="150" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="3y54th1ukYP5qC4LOGAN-15" parent="3y54th1ukYP5qC4LOGAN-4" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" value="transcripts" vertex="1">
+          <mxGeometry height="60" width="140" x="530" y="171" as="geometry" />
+        </mxCell>
+        <mxCell id="3y54th1ukYP5qC4LOGAN-16" parent="3y54th1ukYP5qC4LOGAN-15" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" value="Collection for transcripts" vertex="1">
+          <mxGeometry height="30" width="140" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="3y54th1ukYP5qC4LOGAN-22" parent="3y54th1ukYP5qC4LOGAN-4" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" value="result1" vertex="1">
+          <mxGeometry height="290" width="120" x="10" y="310" as="geometry" />
+        </mxCell>
+        <mxCell id="3y54th1ukYP5qC4LOGAN-23" parent="3y54th1ukYP5qC4LOGAN-22" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" value="run_data: datetime" vertex="1">
+          <mxGeometry height="30" width="120" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="3y54th1ukYP5qC4LOGAN-24" parent="3y54th1ukYP5qC4LOGAN-22" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" value="query_type: claims, trends, narratives, or risk_factors" vertex="1">
+          <mxGeometry height="60" width="120" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="3y54th1ukYP5qC4LOGAN-25" parent="3y54th1ukYP5qC4LOGAN-22" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" value="question" vertex="1">
+          <mxGeometry height="30" width="120" y="120" as="geometry" />
+        </mxCell>
+        <mxCell id="3y54th1ukYP5qC4LOGAN-34" parent="3y54th1ukYP5qC4LOGAN-22" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" value="result_text" vertex="1">
+          <mxGeometry height="30" width="120" y="150" as="geometry" />
+        </mxCell>
+        <mxCell id="3y54th1ukYP5qC4LOGAN-35" parent="3y54th1ukYP5qC4LOGAN-22" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" value="source_chunks: the metadata from transcripts" vertex="1">
+          <mxGeometry height="50" width="120" y="180" as="geometry" />
+        </mxCell>
+        <mxCell id="3y54th1ukYP5qC4LOGAN-36" parent="3y54th1ukYP5qC4LOGAN-22" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" value="model: llama3.2" vertex="1">
+          <mxGeometry height="30" width="120" y="230" as="geometry" />
+        </mxCell>
+        <mxCell id="3y54th1ukYP5qC4LOGAN-37" parent="3y54th1ukYP5qC4LOGAN-22" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" value="retrieval_k" vertex="1">
+          <mxGeometry height="30" width="120" y="260" as="geometry" />
+        </mxCell>
+        <mxCell id="3y54th1ukYP5qC4LOGAN-46" parent="3y54th1ukYP5qC4LOGAN-4" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" value="result..." vertex="1">
+          <mxGeometry height="290" width="120" x="270" y="310" as="geometry" />
+        </mxCell>
+        <mxCell id="3y54th1ukYP5qC4LOGAN-47" parent="3y54th1ukYP5qC4LOGAN-46" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" value="run_data: datetime" vertex="1">
+          <mxGeometry height="30" width="120" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="3y54th1ukYP5qC4LOGAN-48" parent="3y54th1ukYP5qC4LOGAN-46" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" value="query_type: claims, trends, narratives, or risk_factors" vertex="1">
+          <mxGeometry height="60" width="120" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="3y54th1ukYP5qC4LOGAN-49" parent="3y54th1ukYP5qC4LOGAN-46" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" value="question" vertex="1">
+          <mxGeometry height="30" width="120" y="120" as="geometry" />
+        </mxCell>
+        <mxCell id="3y54th1ukYP5qC4LOGAN-50" parent="3y54th1ukYP5qC4LOGAN-46" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" value="result_text" vertex="1">
+          <mxGeometry height="30" width="120" y="150" as="geometry" />
+        </mxCell>
+        <mxCell id="3y54th1ukYP5qC4LOGAN-51" parent="3y54th1ukYP5qC4LOGAN-46" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" value="source_chunks: the metadata from transcripts" vertex="1">
+          <mxGeometry height="50" width="120" y="180" as="geometry" />
+        </mxCell>
+        <mxCell id="3y54th1ukYP5qC4LOGAN-52" parent="3y54th1ukYP5qC4LOGAN-46" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" value="model: llama3.2" vertex="1">
+          <mxGeometry height="30" width="120" y="230" as="geometry" />
+        </mxCell>
+        <mxCell id="3y54th1ukYP5qC4LOGAN-53" parent="3y54th1ukYP5qC4LOGAN-46" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" value="retrieval_k" vertex="1">
+          <mxGeometry height="30" width="120" y="260" as="geometry" />
+        </mxCell>
+        <mxCell id="3y54th1ukYP5qC4LOGAN-54" edge="1" parent="3y54th1ukYP5qC4LOGAN-4" style="endArrow=classic;html=1;rounded=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="3y54th1ukYP5qC4LOGAN-22" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <Array as="points">
+              <mxPoint x="200" y="270" />
+              <mxPoint x="70" y="270" />
+            </Array>
+            <mxPoint x="200" y="230" as="sourcePoint" />
+            <mxPoint x="120" y="280" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="3y54th1ukYP5qC4LOGAN-55" edge="1" parent="3y54th1ukYP5qC4LOGAN-4" style="endArrow=classic;html=1;rounded=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="3y54th1ukYP5qC4LOGAN-38" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="200" y="270" as="sourcePoint" />
+            <mxPoint x="280" y="240" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="3y54th1ukYP5qC4LOGAN-56" edge="1" parent="3y54th1ukYP5qC4LOGAN-4" style="endArrow=classic;html=1;rounded=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="3y54th1ukYP5qC4LOGAN-46" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <Array as="points">
+              <mxPoint x="330" y="270" />
+            </Array>
+            <mxPoint x="200" y="270" as="sourcePoint" />
+            <mxPoint x="380" y="210" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="3y54th1ukYP5qC4LOGAN-38" parent="WIyWlLk6GJQsqaUBKTNV-1" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" value="result2" vertex="1">
+          <mxGeometry height="290" width="120" x="220" y="420" as="geometry" />
+        </mxCell>
+        <mxCell id="3y54th1ukYP5qC4LOGAN-39" parent="3y54th1ukYP5qC4LOGAN-38" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" value="run_data: datetime" vertex="1">
+          <mxGeometry height="30" width="120" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="3y54th1ukYP5qC4LOGAN-40" parent="3y54th1ukYP5qC4LOGAN-38" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" value="query_type: claims, trends, narratives, or risk_factors" vertex="1">
+          <mxGeometry height="60" width="120" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="3y54th1ukYP5qC4LOGAN-41" parent="3y54th1ukYP5qC4LOGAN-38" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" value="question" vertex="1">
+          <mxGeometry height="30" width="120" y="120" as="geometry" />
+        </mxCell>
+        <mxCell id="3y54th1ukYP5qC4LOGAN-42" parent="3y54th1ukYP5qC4LOGAN-38" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" value="result_text" vertex="1">
+          <mxGeometry height="30" width="120" y="150" as="geometry" />
+        </mxCell>
+        <mxCell id="3y54th1ukYP5qC4LOGAN-43" parent="3y54th1ukYP5qC4LOGAN-38" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" value="source_chunks: the metadata from transcripts" vertex="1">
+          <mxGeometry height="50" width="120" y="180" as="geometry" />
+        </mxCell>
+        <mxCell id="3y54th1ukYP5qC4LOGAN-44" parent="3y54th1ukYP5qC4LOGAN-38" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" value="model: llama3.2" vertex="1">
+          <mxGeometry height="30" width="120" y="230" as="geometry" />
+        </mxCell>
+        <mxCell id="3y54th1ukYP5qC4LOGAN-45" parent="3y54th1ukYP5qC4LOGAN-38" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" value="retrieval_k" vertex="1">
+          <mxGeometry height="30" width="120" y="260" as="geometry" />
+        </mxCell>
+        <mxCell id="3y54th1ukYP5qC4LOGAN-58" parent="WIyWlLk6GJQsqaUBKTNV-1" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" value="chunk1" vertex="1">
+          <mxGeometry height="260" width="120" x="490" y="420" as="geometry" />
+        </mxCell>
+        <mxCell id="3y54th1ukYP5qC4LOGAN-62" parent="3y54th1ukYP5qC4LOGAN-58" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" value="chunk text" vertex="1">
+          <mxGeometry height="30" width="120" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="3y54th1ukYP5qC4LOGAN-63" parent="3y54th1ukYP5qC4LOGAN-58" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" value="metadata: start, duration, channel_id, video_index, title, published_at, view_count, like_count, comment_count, duration code for chunk&#39;s video transcript source, source file" vertex="1">
+          <mxGeometry height="200" width="120" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="3y54th1ukYP5qC4LOGAN-66" parent="WIyWlLk6GJQsqaUBKTNV-1" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" value="transcript..." vertex="1">
+          <mxGeometry height="260" width="120" x="750" y="420" as="geometry" />
+        </mxCell>
+        <mxCell id="3y54th1ukYP5qC4LOGAN-87" parent="3y54th1ukYP5qC4LOGAN-66" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" value="chunk text" vertex="1">
+          <mxGeometry height="30" width="120" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="3y54th1ukYP5qC4LOGAN-88" parent="3y54th1ukYP5qC4LOGAN-66" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" value="metadata: start, duration, channel_id, video_index, title, published_at, view_count, like_count, comment_count, duration code for chunk&#39;s video transcript source, source file" vertex="1">
+          <mxGeometry height="200" width="120" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="3y54th1ukYP5qC4LOGAN-74" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" style="endArrow=classic;html=1;rounded=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="3y54th1ukYP5qC4LOGAN-58" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <Array as="points">
+              <mxPoint x="680" y="380" />
+              <mxPoint x="550" y="380" />
+            </Array>
+            <mxPoint x="680" y="340" as="sourcePoint" />
+            <mxPoint x="600" y="390" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="3y54th1ukYP5qC4LOGAN-75" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" style="endArrow=classic;html=1;rounded=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="3y54th1ukYP5qC4LOGAN-77" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="680" y="380" as="sourcePoint" />
+            <mxPoint x="760" y="350" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="3y54th1ukYP5qC4LOGAN-76" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" style="endArrow=classic;html=1;rounded=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="3y54th1ukYP5qC4LOGAN-66" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <Array as="points">
+              <mxPoint x="810" y="380" />
+            </Array>
+            <mxPoint x="680" y="380" as="sourcePoint" />
+            <mxPoint x="860" y="320" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="3y54th1ukYP5qC4LOGAN-77" parent="WIyWlLk6GJQsqaUBKTNV-1" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" value="transcript2" vertex="1">
+          <mxGeometry height="260" width="120" x="620" y="420" as="geometry" />
+        </mxCell>
+        <mxCell id="3y54th1ukYP5qC4LOGAN-85" parent="3y54th1ukYP5qC4LOGAN-77" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" value="chunk text" vertex="1">
+          <mxGeometry height="30" width="120" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="3y54th1ukYP5qC4LOGAN-86" parent="3y54th1ukYP5qC4LOGAN-77" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" value="metadata: start, duration, channel_id, video_index, title, published_at, view_count, like_count, comment_count, duration code for chunk&#39;s video transcript source, source file" vertex="1">
+          <mxGeometry height="200" width="120" y="60" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
