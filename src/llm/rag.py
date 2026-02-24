@@ -68,6 +68,7 @@ Question: {question}
 
 Identify trends that are clearly present across multiple transcript chunks.
 
+### Output Format
 Return a valid JSON object:
 {{
     "Trend title": "Description of the trend and evidence from the transcripts",
@@ -89,6 +90,7 @@ Question: {question}
 
 A narrative is a recurring framing or story being told about AI. Identify narratives present in the transcripts.
 
+### Output Format
 Return a valid JSON object:
 {{
     "Narrative title": "Description of the narrative and how it appears in the transcripts",
@@ -110,6 +112,7 @@ Question: {question}
 
 Identify specific risks or concerns explicitly raised in the transcripts.
 
+### Output Format
 Return a valid JSON object:
 {{
     "Risk title": "Description of the risk as discussed in the transcripts",
@@ -125,7 +128,7 @@ Return a valid JSON object:
 # Weelky scheduled prompts - add to main.py scheduled_job_sequence()
 SCHEDULED_QUERIES = {
     "claims": "What specific claims are being made about AI?",
-    "trends": "What trneds are emerging in AI discussions?",
+    "trends": "What trends are emerging in AI discussions?",
     "narratives": "What dominant narratives exist around AI right now?",
     "risk_factors": "What risks or concerns about AI are being raised?",
 }
