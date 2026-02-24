@@ -1,0 +1,16 @@
+[
+    {
+        "text": " For decades, fusion energy, the process that [music] powers the sun, has been one of science's greatest opportunities. Cracking it would give us a safe, clean, and virtually unlimited source of power. Controlling plasma hotter than the sun's core means solving physics so complex that even the fastest supercomputers struggle to simulate it. At the forefront of this effort, General Atomics researchers [music] and international partners at the D3D National Fusion Facility are using [music] AI to push fusion research forward. The team is building a fully interactive digital twin of the D3D tokamac inside Nvidia Omniverse. It fuses sensor data, physics simulations, engineering, [music] and AI models, creating a virtual reactor that can quickly inform decisions. Key controls can be explored in the digital twin to refine the science before [music] running real experiments. These surrogate models trained on decades of realworld data sets and running on NVIDIA GPUs deliver accurate predictions at unprecedented speed. This is a platform to optimize reactor designs, accelerate commercial fusion, and make the sun's power programmable.",
+        "start": 1.439,
+        "duration": 175.0
+    },
+    {
+        "channel_id": "UCHuiy8bXnmK5nisYHUd1J5g",
+        "title": "World's First Interactive AI-Enabled Fusion Reactor Digital Twin",
+        "published_at": "2025-10-28T22:07:20Z",
+        "view_count": 102731,
+        "like_count": 3573,
+        "comment_count": 0,
+        "duration": "PT1M44S"
+    }
+]
