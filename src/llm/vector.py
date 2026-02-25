@@ -14,11 +14,11 @@ from langchain_core.documents import Document
 embeddings = OllamaEmbeddings(model = "mxbai-embed-large")
 
 # the instantiation of the vector store and db location
-db_location = "./chroma_langchain_db"
+db_location = Path(__file__).parent.parent.parent / "chroma_langchain_db"
 
 vector_store = Chroma(
     collection_name = "transcripts",
-    persist_directory = db_location,
+    persist_directory = str(db_location),
     embedding_function = embeddings
 )
 
@@ -50,7 +50,7 @@ if __name__ == '__main__':
     # ----------------------------------------------
 
     # create a log path to save files that have been embedded already
-    embedded_log_path = Path("./embedded_files.json")
+    embedded_log_path = Path(__file__).parent.parent.parent / "embedded_files.json"
     already_embedded = set()
 
     # load teh alread_embedded set with the information from the log file
@@ -72,12 +72,11 @@ if __name__ == '__main__':
     else:
         print(f"Embedding {len(new_files)} new transcript file(s)...")
 
-        # initialize the new documents and their ids to add
-        documents, ids = [], []
+        total_chunks_embedded = 0
 
         # go through each file in new files
         for file_num, js in enumerate(new_files):
-            print(f"[{file_num + 1}/{len(new_files)}] Embedding {js}...")
+            print(f"[{file_num + 1}/{len(new_files)}] Embedding {js}...", flush=True)
 
             filepath = os.path.join(path_to_transcripts, js)
 
@@ -115,6 +114,8 @@ if __name__ == '__main__':
             comment_count = video_metrics["comment_count"]
             total_duration = video_metrics["duration"]
 
+            file_docs = []
+            file_ids = []
             # then iterate through the pandas dataframe made from the trnascript file
             for i, chunk in enumerate(chunks):
                 # ignore final chunk (i.e. the metadata dictionary from video metrics)
@@ -150,21 +151,30 @@ if __name__ == '__main__':
                     # id for transcript chunk
                     id = f"{js}_{i}"
                 )
-                # add to ids and documents
-                ids.append(f"{js}_{i}")
-                documents.append(doc)
+                file_ids.append(f"{js}_{i}")
+                file_docs.append(doc)
 
-        # if chunks were found and written to documents
-        if documents:
-            # then add the documents and ids to vector db
-            vector_store.add_documents(documents=documents, ids=ids)
+            # -------------------------
+            #  Embed and Save Per File
+            # -------------------------
 
-            # add the files to already embedded set and then save to log file
-            already_embedded.update(new_files)
+            if not file_docs:
+                print(f"No valid chunks found in {js}, skipping.", flush=True)
+                continue
 
             try:
+                print(f" Built {len(file_docs)} docs, starting embed...", flush=True)
+                # embed this file's chunks immediatley - do not batch across files
+                vector_store.add_documents(documents=file_docs, ids=file_ids)
+                print(f"Add documents returned", flush=True)
+
+                # update sidecar log
+                already_embedded.add(js)
                 embedded_log_path.write_text(json.dumps(list(already_embedded)))
-            except IOError as e:
-                print(f"Warning: could not update embedded log: {e}")
-        else:
-            print("No valid chunks found in new files")
+
+                total_chunks_embedded += len(file_docs)
+                print(f"Embedded {len(file_docs)} chunks", flush=True)
+
+            except Exception as e:
+                print(f" Failed to embed {js}: {e}", flush=True)
+                continue
