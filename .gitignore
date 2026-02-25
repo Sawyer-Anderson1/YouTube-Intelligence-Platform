@@ -1,5 +1,4 @@
 # ignore the files for experimentation scripts and component tests, etc.
 # if necessary to share the tests then we may push through add
 src/experimentation-and-component-testing
-/chroma_langchain_db
-chroma_langchain_db
+chroma_langchain_db/
