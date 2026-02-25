@@ -1,5 +1,7 @@
 # imports:
 import os
+import json
+import re
 from datetime import datetime, timezone
 
 # import Ollama and Langchain (prompting)
@@ -44,14 +46,16 @@ Here are some relevant transcript chunks:
 
 Question: {question}
 
-Extract distinct claims actually present in the transcripts above. Do not invent claims not supported by the text.
+Extract distinct claims actually present in the transcripts above. Do not invent claims not stated in the text.
+
+### RULES:
+- Respond with ONLY a JSON object, nothing else
+- No markdown, no code blocks, no backticks
+- No introduction, no explanation, no notes after the JSON
+- Use this exact structure where each key is the claim title and each value is the description:
 
 ### Output Format
-Return the response as a valid JSON object:
-{{
-    "Claim Title": "Direct description of the claim as made in the transcripts",
-    "Another Claim Title": "Description..."
-}}
+{{"Claim title here": "Description of the claim here", "Another claim title": "Description here"}}
 """,
 
     # --------------
@@ -66,13 +70,16 @@ Here are relevant transcript chunks:
 
 Question: {question}
 
-Identify trends that are clearly present across multiple transcript chunks.
+Identify trends (i.e. shared claims) that are clearly present across multiple transcript chunks.
 
-Return a valid JSON object:
-{{
-    "Trend title": "Description of the trend and evidence from the transcripts",
-    "Another trend": "Description..."
-}}
+### RULES:
+- Respond with ONLY a JSON object, nothing else
+- No markdown, no code blocks, no backticks
+- No introduction, no explanation, no notes after the JSON
+- Use this exact structure where each key is the trend title and each value is the description:
+
+### Output Format
+{{"Trend title here": "Description of the trend here", "Another trend title": "Description here"}}
 """,
 
     # -----------------
@@ -89,11 +96,14 @@ Question: {question}
 
 A narrative is a recurring framing or story being told about AI. Identify narratives present in the transcripts.
 
-Return a valid JSON object:
-{{
-    "Narrative title": "Description of the narrative and how it appears in the transcripts",
-    "Another narrative": "Description..."
-}}
+### RULES:
+- Respond with ONLY a JSON object, nothing else
+- No markdown, no code blocks, no backticks
+- No introduction, no explanation, no notes after the JSON
+- Use this exact structure where each key is the narrative title and each value is the description:
+
+### Output Format
+{{"Narrative title here": "Description of the narrative here", "Another narrative title": "Description here"}}
 """,
 
     # --------------------
@@ -110,11 +120,14 @@ Question: {question}
 
 Identify specific risks or concerns explicitly raised in the transcripts.
 
-Return a valid JSON object:
-{{
-    "Risk title": "Description of the risk as discussed in the transcripts",
-    "Another risk": "Description..."
-}}
+### RULES:
+- Respond with ONLY a JSON object, nothing else
+- No markdown, no code blocks, no backticks
+- No introduction, no explanation, no notes after the JSON
+- Use this exact structure where each key is the risk factor title and each value is the description:
+
+### Output Format
+{{"Risk factor title here": "Description of the risk factor here", "Another risk factor title": "Description here"}}
 """
 }
 
@@ -125,16 +138,83 @@ Return a valid JSON object:
 # Weelky scheduled prompts - add to main.py scheduled_job_sequence()
 SCHEDULED_QUERIES = {
     "claims": "What specific claims are being made about AI?",
-    "trends": "What trneds are emerging in AI discussions?",
+    "trends": "What trends are emerging in AI discussions?",
     "narratives": "What dominant narratives exist around AI right now?",
     "risk_factors": "What risks or concerns about AI are being raised?",
 }
 
 # -----------------------------------
+#  Function to Extract JSON
+# -----------------------------------
+
+def extract_json_from_response(text: str, query_type: str) -> dict:
+    # strip any trailing text after } (or ] in the case where its a list)
+    last_brace = max(text.rfind('}'), text.rfind(']'))
+    if last_brace != -1: # the case where ther is trailing text
+        text = text[:last_brace + 1]
+
+    # direct parse
+    try:
+        parsed = json.loads(text)
+
+        # if an array is returned (not the dict), then convert to dict
+        if isinstance(parsed, list):
+            return {
+                    item.get(f'{query_type[:-1]} Title') or item.get(f'{query_type[:-1]} title') or item.get('title') or f"{query_type[:-1]} {i+1}": 
+                    item.get('Description') or item.get('description') or item.get('text') or str(item)
+                    for i, item in enumerate(parsed)
+                    if isinstance(item, dict)
+            }
+        return parsed
+    except json.JSONDecodeError:
+        pass
+
+    # if we get codeblocks
+    code_block = re.search(r'```(?:json)?\s*([\s\S]*?)\s*```', text)
+    if code_block:
+        try:
+            parsed = json.loads(code_block.group(1))
+            if isinstance(parsed, list):
+                return {
+                    item.get(f'{query_type[:-1]} Title') or item.get(f'{query_type[:-1]} title') or item.get('title') or f"{query_type[:-1]} {i+1}": 
+                    item.get('Description') or item.get('description') or item.get('text') or str(item)
+                    for i, item in enumerate(parsed)
+                    if isinstance(item, dict)                }
+            return parsed
+        except json.JSONDecodeError:
+            pass
+
+    # then try finding a JSON object
+    json_obj = re.search(r'\{[\s\S]*\}', text)
+    if json_obj:
+        try:
+            return json.loads(json_obj.group())
+        except json.JSONDecodeError:
+            pass
+
+    # try finding a JSON array
+    json_arr = re.search(r'\[[\s\S]*\]', text)
+    if json_arr:
+        try:
+            parsed = json.loads(json_arr.group())
+            if isinstance(parsed, list):
+                return {
+                    item.get(f'{query_type[:-1]} Title') or item.get(f'{query_type[:-1]} title') or item.get('title') or f"{query_type[:-1]} {i+1}": 
+                    item.get('Description') or item.get('description') or item.get('text') or str(item)
+                    for i, item in enumerate(parsed)
+                    if isinstance(item, dict)                }
+            return parsed
+        except json.JSONDecodeError:
+            pass
+
+    # last resort return raw text
+    return {"raw_response": text}
+
+# -----------------------------------
 #  Core Query Function
 # -----------------------------------
 
-MAX_CONTEXT_CHARS = 6000
+MAX_CONTEXT_CHARS = 3000
 
 # args:
 #       - Takes question, which is static for SCHEDULED_QUERIES, but dynamic in testing or if users query themselves
@@ -143,6 +223,8 @@ def run_query(query_type, question):
     # get the template from the TEMPLATES dictionary and then create the prompt model chain
     template = TEMPLATES.get(query_type, TEMPLATES['claims'])
     prompt = ChatPromptTemplate.from_template(template)
+
+    # inject the format instructions from the parser into the prompt
     chain = prompt | model
 
     # get relevant transcript chunks from ChromaDB
@@ -150,10 +232,13 @@ def run_query(query_type, question):
 
     # build context string from retrieved chunks
     transcripts = "\n\n".join([chunk.page_content for chunk in transcript_chunks])
-    # transcripts = transcripts[:MAX_CONTEXT_CHARS]
+    transcripts = transcripts[:MAX_CONTEXT_CHARS]
 
     # invoke the LLM chain
     result = chain.invoke({"transcripts": transcripts, "question": question})
+
+    # put the result through a parser to extract the json from the resonse
+    parsed_result = extract_json_from_response(result, query_type)
 
     # Build source chunk references from metadatas
     source_chunks = [
@@ -179,7 +264,7 @@ def run_query(query_type, question):
             'run_data': datetime.now(timezone.utc),
             'query_type': query_type,
             'question': question,
-            'result_text': result,
+            'result_text': parsed_result,
             'source_chunks': source_chunks,
             'model': 'llama3.2',
             'retrieval_k': len(transcript_chunks)
