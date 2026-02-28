@@ -72,7 +72,7 @@ const ProfileInformation = ({
                 color='teal.300'
                 fontSize='lg'
                 me='10px'
-                _hover={{ color: "teal.300" }}>
+                _hover={{ color: "blue.300" }}>
                 <Icon as={FaFacebook} />
               </Link>
               <Link
@@ -80,7 +80,7 @@ const ProfileInformation = ({
                 color='teal.300'
                 fontSize='lg'
                 me='10px'
-                _hover={{ color: "teal.300" }}>
+                _hover={{ color: "blue.300" }}>
                 <Icon as={FaInstagram} />
               </Link>
               <Link
@@ -88,7 +88,7 @@ const ProfileInformation = ({
                 color='teal.300'
                 fontSize='lg'
                 me='10px'
-                _hover={{ color: "teal.300" }}>
+                _hover={{ color: "blue.300" }}>
                 <Icon as={FaTwitter} />
               </Link>
             </Flex>

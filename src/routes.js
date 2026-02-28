@@ -1,5 +1,9 @@
 // import
 import Dashboard from "views/Dashboard/Dashboard";
+import Claims from "views/Dashboard/Claims";
+import Trends from "views/Dashboard/Trends";
+import Narratives from "views/Dashboard/Narratives";
+import Risk from "views/Dashboard/Risk";
 import Tables from "views/Dashboard/Tables";
 import Billing from "views/Dashboard/Billing";
 import RTLPage from "views/Dashboard/RTL";
@@ -16,6 +20,7 @@ import {
   RocketIcon,
   SupportIcon,
 } from "components/Icons/Icons";
+import { AddIcon, StarIcon, WarningIcon, WarningTwoIcon } from "@chakra-ui/icons";
 
 var dashRoutes = [
   {
@@ -26,6 +31,39 @@ var dashRoutes = [
     component: Dashboard,
     layout: "/admin",
   },
+  {
+    path: "/claims",
+    name: "Claims",
+    rtlName: "لوحة القيادة",
+    icon: <DocumentIcon color="inherit" />,
+    component: Claims,
+    layout: "/admin",
+  },
+  {
+    path: "/trends",
+    name: "Trends",
+    rtlName: "لوحة القيادة",
+    icon: <StatsIcon color="inherit" />,
+    component: Trends,
+    layout: "/admin",
+  },
+  {
+    path: "/narratives",
+    name: "Narratives",
+    rtlName: "لوحة القيادة",
+    icon: <StarIcon color="inherit" />,
+    component: Narratives,
+    layout: "/admin",
+  },
+  {
+    path: "/risk",
+    name: "Risk",
+    rtlName: "لوحة القيادة",
+    icon: <WarningIcon color="inherit" />,
+    component: Risk,
+    layout: "/admin",
+  },
+  /*
   {
     path: "/tables",
     name: "Tables",
@@ -50,6 +88,7 @@ var dashRoutes = [
     component: RTLPage,
     layout: "/rtl",
   },
+  */
   {
     name: "ACCOUNT PAGES",
     category: "account",
@@ -69,7 +108,7 @@ var dashRoutes = [
         path: "/signin",
         name: "Sign In",
         rtlName: "لوحة القيادة",
-        icon: <DocumentIcon color="inherit" />,
+        icon: <AddIcon color="inherit" />,
         component: SignIn,
         layout: "/auth",
       },

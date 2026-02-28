@@ -1,4 +1,5 @@
 // Chakra imports
+import { AddIcon } from "@chakra-ui/icons";
 import {
   Box,
   Button,
@@ -142,7 +143,7 @@ export default function AuthNavbar(props) {
           color={navbarIcon}
           variant="transparent-with-icon"
           leftIcon={
-            <DocumentIcon color={navbarIcon} w="12px" h="12px" me="0px" />
+            <AddIcon color={navbarIcon} w="12px" h="12px" me="0px" />
           }
         >
           <Text>Sign In</Text>

@@ -107,7 +107,7 @@ function SidebarResponsive(props) {
                     <Icon>{prop.icon}</Icon>
                   ) : (
                     <IconBox
-                      bg="teal.300"
+                      bg="blue.300"
                       color="white"
                       h="30px"
                       w="30px"
@@ -158,7 +158,7 @@ function SidebarResponsive(props) {
                   ) : (
                     <IconBox
                       bg={inactiveBg}
-                      color="teal.300"
+                      color="blue.300"
                       h="30px"
                       w="30px"
                       me="12px"
@@ -225,7 +225,7 @@ function SidebarResponsive(props) {
           w="18px"
           h="18px"
           ref={btnRef}
-          colorScheme="teal"
+          colorScheme="blue"
           onClick={onOpen}
         />
         <Drawer

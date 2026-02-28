@@ -12,8 +12,16 @@ import { MainPanelComponent } from './additions/layout/MainPanel';
 import { PanelContentComponent } from './additions/layout/PanelContent';
 import { PanelContainerComponent } from './additions/layout/PanelContainer';
 // import { mode } from "@chakra-ui/theme-tools";
+
+const colors = {
+	brand: {
+		900: '#024fc9'
+	}
+}
+
 export default extendTheme(
-	{ breakpoints }, // Breakpoints
+	{}, // Breakpoints
+	colors,
 	globalStyles,
 	buttonStyles, // Button styles
 	badgeStyles, // Badge styles
@@ -26,3 +34,5 @@ export default extendTheme(
 	PanelContentComponent, // Panel Content component
 	PanelContainerComponent // Panel Container component
 );
+
+

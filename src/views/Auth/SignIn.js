@@ -18,7 +18,7 @@ import signInImage from "assets/img/signInImage.png";
 
 function SignIn() {
   // Chakra color mode
-  const titleColor = useColorModeValue("teal.300", "teal.200");
+  const titleColor = useColorModeValue("blue.300", "blue.200");
   const textColor = useColorModeValue("gray.400", "white");
   return (
     <Flex position='relative' mb='40px'>
@@ -95,10 +95,10 @@ function SignIn() {
                 color='white'
                 mt='20px'
                 _hover={{
-                  bg: "teal.200",
+                  bg: "blue.200",
                 }}
                 _active={{
-                  bg: "teal.400",
+                  bg: "blue.400",
                 }}>
                 SIGN IN
               </Button>

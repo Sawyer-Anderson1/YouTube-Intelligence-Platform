@@ -4,7 +4,7 @@ import { Flex, Link, List, ListItem, Text } from "@chakra-ui/react";
 import PropTypes from "prop-types";
 
 export default function Footer(props) {
-  // const linkTeal = useColorModeValue("teal.400", "red.200");=
+  // const linkTeal = useColorModeValue("blue.400", "red.200");=
   return (
     <Flex
       flexDirection={{
@@ -35,7 +35,7 @@ export default function Footer(props) {
         </Text>
         <Link
           // color={linkTeal}
-          color="teal.400"
+          color="blue.400"
           href="https://www.creative-tim.com"
           target="_blank"
         >
@@ -46,7 +46,7 @@ export default function Footer(props) {
         &
         <Link
           // color={linkTeal}
-          color="teal.400"
+          color="blue.400"
           href="https://www.simmmple.com"
           target="_blank"
         >

@@ -9,7 +9,6 @@ import {
 // assets
 import peopleImage from "assets/img/people-image.png";
 import logoChakra from "assets/svg/logo-white.svg";
-import testAI from "assets/svg/thetest.png";
 import BarChart from "components/Charts/BarChart";
 import LineChart from "components/Charts/LineChart";
 // Custom icons
@@ -36,22 +35,28 @@ export default function Dashboard() {
     <Flex flexDirection='column' pt={{ base: "120px", md: "75px" }}>
       <SimpleGrid columns={{ sm: 1, md: 2, xl: 4 }} spacing='24px'>
         <MiniStatistics
-          title={"AI Users"}
-          amount={"222,345"}
-          percentage={11}
+          title={"Today's Moneys"}
+          amount={"$53,000"}
+          percentage={55}
+          icon={<WalletIcon h={"24px"} w={"24px"} color={iconBoxInside} />}
+        /> 
+        <MiniStatistics
+          title={"Confidence in AI "}
+          amount={"2,300"}
+          percentage={5}
           icon={<GlobeIcon h={"24px"} w={"24px"} color={iconBoxInside} />}
         />
         <MiniStatistics
-          title={"AI Documents"}
-          amount={"3,020"}
+          title={"New Clients"}
+          amount={"+3,020"}
           percentage={-14}
           icon={<DocumentIcon h={"24px"} w={"24px"} color={iconBoxInside} />}
         />
         <MiniStatistics
-          title={"Money in AI"}
+          title={"Total Sales"}
           amount={"$173,000"}
           percentage={8}
-          icon={<WalletIcon h={"24px"} w={"24px"} color={iconBoxInside} />}
+          icon={<CartIcon h={"24px"} w={"24px"} color={iconBoxInside} />}
         />
       </SimpleGrid>
       <Grid
@@ -60,17 +65,24 @@ export default function Dashboard() {
         my='26px'
         gap='24px'>
         <BuiltByDevelopers
-          title={"New Insight"}
-          name={"GPT-5 Can Generate Production Ready Code"}
+          title={"Built by Developers"}
+          name={"Purity UI Dashboard"}
           description={
-            "From \"Testing GPT-5 on Real Backend Projects\" | TechBuilders Hub"
+            "From colors, cards, typography to complex elements, you will find the full documentation."
           }
           image={
             <Image
-              //src={}
-              alt='[image]'
+              src={logoChakra}
+              alt='chakra image'
               minWidth={{ md: "300px", lg: "auto" }}
             />
+          }
+        />
+        <WorkWithTheRockets
+          backgroundImage={peopleImage}
+          title={"Work with the rockets"}
+          description={
+            "Wealth creation is a revolutionary recent positive-sum game. It is all about who takes the opportunity first."
           }
         />
       </Grid>
@@ -85,8 +97,8 @@ export default function Dashboard() {
           chart={<BarChart />}
         />
         <SalesOverview
-          title={"AI Overview"}
-          percentage={19}
+          title={"Sales Overview"}
+          percentage={5}
           chart={<LineChart />}
         />
       </Grid>

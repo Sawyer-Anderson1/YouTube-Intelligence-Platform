@@ -14,18 +14,29 @@ import React from "react";
 // react icons
 import { BsArrowRight } from "react-icons/bs";
 
-const BuiltByDevelopers = ({ title, name, description, image }) => {
+const ClaimCard = ({ title, name, description, image }) => {
   const textColor = useColorModeValue("gray.700", "white");
 
   return (
-    <Card minHeight='290.5px' p='1.2rem'>
+    <Card minHeight='290.5px' p='0.85rem' maxWidth='350px'>
       <CardBody w='100%'>
-        <Flex flexDirection={{ sm: "column", lg: "row" }} w='100%'>
+        <Flex flexDirection={{ sm: "row", lg: "column" }} w='100%'>
+          <Flex
+            bg='blue.300'
+            align='center'
+            justify='center'
+            borderRadius='15px'
+            width={{ lg: "100%" }}
+            minHeight={{ sm: "250px" }}>
+            {image}
+          </Flex>
+          <Spacer />
           <Flex
             flexDirection='column'
             h='100%'
             lineHeight='1.6'
-            width={{ lg: "45%" }}>
+            my='1'
+            width={{ lg: "100%" }}>
             <Text fontSize='sm' color='gray.400' fontWeight='bold'>
               {title}
             </Text>
@@ -36,7 +47,7 @@ const BuiltByDevelopers = ({ title, name, description, image }) => {
               {description}
             </Text>
             <Spacer />
-            <Flex align='center'>
+            <Flex align='center' my='5'>
               <Button
                 p='0px'
                 variant='no-hover'
@@ -66,20 +77,10 @@ const BuiltByDevelopers = ({ title, name, description, image }) => {
               </Button>
             </Flex>
           </Flex>
-          <Spacer />
-          <Flex
-            bg='blue.300'
-            align='center'
-            justify='center'
-            borderRadius='15px'
-            width={{ lg: "40%" }}
-            minHeight={{ sm: "250px" }}>
-            {image}
-          </Flex>
         </Flex>
       </CardBody>
     </Card>
   );
 };
 
-export default BuiltByDevelopers;
+export default ClaimCard;
