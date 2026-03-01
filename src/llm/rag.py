@@ -30,14 +30,25 @@ results_collection = db['results']
 
 model = OllamaLLM(model = "llama3.2")
 
+#----------------------------------
+#  Load Example Output Files for Few-Shot Prompting
+#----------------------------------
+
+try:
+    claims_file = json.load(open(Path(__file__).parent.parent.parent / "data" / "example_output" / "claims.json", "r"))[0]
+    narratives_file = json.load(open(Path(__file__).parent.parent.parent / "data" / "example_output" / "narratives.json", "r"))[0]
+    trends_file = json.load(open(Path(__file__).parent.parent.parent / "data" / "example_output" / "trends.json", "r"))[0]
+    risk_factors_file = json.load(open(Path(__file__).parent.parent.parent / "data" / "example_output" / "risk_factors.json", "r"))[0]
+except Exception as e:
+    print(f"Error loading example output files: {e}")
+    claims_file = "Error loading claims examples"
+    narratives_file = "Error loading narratives examples"
+    trends_file = "Error loading trends examples"
+    risk_factors_file = "Error loading risk factors examples"
+
 # --------------------------------
 #  Templates for each Query type
 # --------------------------------
-
-claims_file = json.load(open(Path(__file__).parent.parent.parent / "example_output" / "claims.json", "r"))[0]
-narratives_file = json.load(open(Path(__file__).parent.parent.parent / "example_output" / "narratives.json", "r"))[0]
-trends_file = json.load(open(Path(__file__).parent.parent.parent / "example_output" / "trends.json", "r"))[0]
-risk_factors_file = json.load(open(Path(__file__).parent.parent.parent / "example_output" / "risk_factors.json", "r"))[0]
 
 TEMPLATES = {
     # --------------
@@ -325,9 +336,6 @@ def run_scheduled_queries():
 
 # main function for testing
 if __name__ == '__main__':
-    print(claims_file)
-    print(narratives_file)
-    print(risk_factors_file)
 
     print("RAG interactive mode (local testing)")
     while True:
