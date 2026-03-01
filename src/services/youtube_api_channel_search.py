@@ -8,8 +8,14 @@ import os
 import json
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
-from datetime import datetime, timezone
-from dateutil.relativedelta import relativedelta
+
+# import external function to get time six months ago
+from get_time import get_time_months_ago_rfc3339
+
+# --------------------------------------
+#  Get YouTubeAPI API, Build, and
+#  Collections
+# --------------------------------------
 
 # Get the api key and build the service object for YouTube API
 youtube_api_key = os.getenv('YOUTUBE_API_KEY')
@@ -20,21 +26,10 @@ youtube = build('youtube', 'v3', developerKey=youtube_api_key)
 search = youtube.search()
 channels = youtube.channels()
 
-# function to get teh rfc 3339 time a certaim amount of months ago
-def get_time_months_ago_rfc3339(months_ago: int) -> str:
-    '''
-    Docstring for get_time_months_ago_rfc3339
-    
-    :param months_ago: the amount of months that we are going back to get the time for
-    :type months_ago: int
-    :return: the time a certain amount of months ago
-    :rtype: str of RFC 3339 datetime
-    '''
-    
-    current_utc = datetime.now(timezone.utc)
-    past_time = current_utc - relativedelta(months=months_ago)
-    rfc3339_utc_str = past_time.isoformat().replace('+00:00', 'Z')
-    return rfc3339_utc_str
+# ---------------------------------------------------
+#  Perform Search with Query of Future of AI,
+#  to get Channel Ids of Channels with Relevant Vids
+# ---------------------------------------------------
 
 # On the topic of AI
 # Call the request for search
@@ -84,10 +79,14 @@ try:
         search_response = ai_search.execute()
         nextPageToken = search_response.get('nextPageToken')   
         vids.extend(search_response.get('items', []))
-        
+
         curr_page += 1
 except HttpError as e:
     print(f'Error response status code : {e.status_code}, reason : {e.error_details}')
+
+# ------------------------------------------------------
+#  Get Channel Ids of Publisher of Vids Found in Search
+# ------------------------------------------------------
 
 # Remove duplicate channels (get unique channels)
 # from there will find the prolific channels
@@ -96,6 +95,10 @@ for vid in vids:
     channelId = vid['snippet']['channelId']
     if channelId not in channel:
         channel.append(channelId)
+
+# ------------------------------------------
+#  Save to JSON (channels.json)
+# ------------------------------------------
 
 # put then put channels into json dict ordered by video count (will narrow down to 10-20 channels after getting the video ids after filtering)
 filename = 'data/channels.json'

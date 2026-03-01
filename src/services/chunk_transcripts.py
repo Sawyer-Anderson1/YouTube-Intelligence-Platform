@@ -8,9 +8,12 @@ from concurrent.futures import ThreadPoolExecutor
 # define the path to the folder with the transcripts
 folder_path = Path(__file__).parent.parent.parent / 'data' / 'transcripts'
 
-# function that reads content of transcript
-# with filepath, chunk size, and overlap as parameters/arguments
-def read_and_chunk_transcript(filepath, max_chunk_count=500, overlap_amount=50):
+# --------------------------------------------
+#  Function that Reads Content of Transcript
+# --------------------------------------------
+
+# with filepath, video_metrics, chunk size, and overlap as parameters/arguments
+def read_and_chunk_transcript(filepath, video_metrics, max_chunk_count=500, overlap_amount=50):
     try:
         with open(filepath, 'r') as file:
             transcript = json.load(file)
@@ -28,13 +31,19 @@ def read_and_chunk_transcript(filepath, max_chunk_count=500, overlap_amount=50):
                 current_duration += snippet['duration']
             else:
                 larger_chunks.append({"text": current_chunk, "start": current_start, "duration": current_duration})
-                current_start = snippet['start']
-
+ 
                 # have current_chunk include past text for overlap
                 current_chunk = " ".join((current_chunk.split())[-overlap_amount:])
 
+                current_start = snippet['start']
+                current_duration = snippet['duration']
         if current_chunk:
             larger_chunks.append({"text": current_chunk, "start": current_start, "duration": current_duration})
+
+        # --------------------------------------
+        #  Add the Video Metrics to End of List
+        # --------------------------------------
+        larger_chunks.append(video_metrics)
 
         # then write the new transcript back
         try:
