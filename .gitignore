@@ -1,3 +1,19 @@
 # ignore the files for experimentation scripts and component tests, etc.
 # if necessary to share the tests then we may push through add
 src/experimentation-and-component-testing
+
+#Environment variables like the API key :P
+.env
+
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+
+# Virtual environments
+.venv
+
+
