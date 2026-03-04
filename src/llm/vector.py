@@ -106,8 +106,8 @@ def embed_transcripts():
             # replace nonmetadata info with pipe |, then split around it
             parts = js.replace("_transcript_", "|").replace(".json", "").split("|")
 
-            channel_id = parts[0] if len(parts) == 2 else "unkown"
-            video_index = parts[1] if len(parts) == 2 else "unkown"
+            channel_id = parts[0] if len(parts) == 2 else "unknown"
+            video_index = parts[1] if len(parts) == 2 else "unknown"
 
             # video metrics are in a dictionary at the end of the list of transcripts
             video_metrics = chunks[-1]
