@@ -15,7 +15,7 @@ from langdetect.lang_detect_exception import LangDetectException
 TRANSCRIPTS_DIR = Path(__file__).parent.parent / "data" / "transcripts"
 
 # Path to transcripts directory
-# TRANSCRIPTS_DIR = Path(__file__).parent.parent / "data" / "transcripts"
+# TRANSCRIPTS_DIR = Path(__file__).parent.parent / "tests" / "test_data"
 
 # Thresholds
 MIN_WORD_COUNT = 20
@@ -100,7 +100,6 @@ def test_has_terms(transcript: list[dict[str, Any]]) -> tuple[bool, str]:
     if not found_terms:
         return False, f"No required terms found in transcript."
     
-    print(f"Found terms: {found_terms}")
     return True, f"Found terms: {found_terms}"
 
 
