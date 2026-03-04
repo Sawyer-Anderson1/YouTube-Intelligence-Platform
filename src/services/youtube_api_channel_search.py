@@ -10,7 +10,7 @@ from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 
 # import external function to get time six months ago
-from get_time import get_time_months_ago_rfc3339
+from .get_time import get_time_months_ago_rfc3339
 
 # --------------------------------------
 #  Get YouTubeAPI API, Build, and

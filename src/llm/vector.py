@@ -30,13 +30,17 @@ retriever = vector_store.as_retriever(
     search_type="mmr", # favors diversity over purely similarity
     # How many docs to look up
     search_kwargs = {
-        "k": 20, # the number of chunks to return
-        "fetch_k": 50, # the candidate pool to select from
-        "lambda_mult": 0.7 # 0 = max diversity, 1 = max similarity
+        "k": 15, # the number of chunks to return
+        "fetch_k": 100, # the candidate pool to select from
+        "lambda_mult": 0.3 # 0 = max diversity, 1 = max similarity
     }
 )
 
-if __name__ == '__main__':
+# -----------------------------------------
+#  Embed Transcripts
+# -----------------------------------------
+
+def embed_transcripts():
     # ----------------------------------------------
     #  Setup for Retrieval of Transcripts
     # ----------------------------------------------
@@ -178,3 +182,6 @@ if __name__ == '__main__':
             except Exception as e:
                 print(f" Failed to embed {js}: {e}", flush=True)
                 continue
+
+if __name__ == '__main__':
+    embed_transcripts()
