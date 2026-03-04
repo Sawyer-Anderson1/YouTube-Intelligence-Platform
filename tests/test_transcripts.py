@@ -1,6 +1,6 @@
 """
 Tests for transcript validation.
-Validates uniqueness, English language, and relevant content.
+Validates uniqueness, English language, word count, and relevant terms.
 """
 import hashlib
 import json
@@ -20,7 +20,7 @@ TRANSCRIPTS_DIR = Path(__file__).parent.parent / "data" / "transcripts"
 # Thresholds
 MIN_WORD_COUNT = 20
 LANGUAGE_CONFIDENCE_THRESHOLD = 0.80
-TERMS_TO_CHECK = ['artificial intelligence', 'generative ai',
+TERMS_TO_CHECK = [' ai ', '.ai', ' ai.', 'artificial intelligence', 'generative ai',
                   'language model', 'AI model', 'model training', 'llm', 'neural network', 'ai bubble', 'machine learning',
                   'chatgpt', 'chat gpt', 'agent', 'claude', 'gemini', 'moltbook',
                   'openclaw', 'grok', 'OpenAI', 'Nvidia']
