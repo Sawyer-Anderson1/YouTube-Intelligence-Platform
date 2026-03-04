@@ -15,7 +15,7 @@ import concurrent.futures
 from concurrent.futures import ThreadPoolExecutor
 
 # import the function to chunk the transcripts
-from chunk_transcripts import read_and_chunk_transcript
+from .chunk_transcripts import read_and_chunk_transcript
 
 from youtube_transcript_api import YouTubeTranscriptApi
 from youtube_transcript_api.proxies import WebshareProxyConfig
@@ -144,10 +144,13 @@ def fetch_transript(channel_id, vidx, vid_id):
                 with open(filename, 'w') as json_file:
                     json.dump(cleaned_transcript_snippets, json_file, indent=4)
 
-                # ---------------------------------
-                #  Get Video Metrics for Video Id
-                # ---------------------------------
+                # -----------------------------------------------
+                #  Get Video Metrics for Video Id,
+                #   also add the Video Id to Trancript Metadata
+                # -----------------------------------------------
+
                 metrics = video_metrics[vid_id]
+                metrics["video_id"] = vid_id
 
                 # ---------------------------------------------
                 # Call the Function to Chunk the Transcript
