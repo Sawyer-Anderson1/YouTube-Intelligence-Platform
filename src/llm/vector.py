@@ -31,7 +31,7 @@ retriever = vector_store.as_retriever(
     # How many docs to look up
     search_kwargs = {
         "k": 15, # the number of chunks to return
-        "fetch_k": 100, # the candidate pool to select from
+        "fetch_k": 300, # the candidate pool to select from
         "lambda_mult": 0.3 # 0 = max diversity, 1 = max similarity
     }
 )
@@ -54,10 +54,10 @@ def embed_transcripts():
     # ----------------------------------------------
 
     # create a log path to save files that have been embedded already
-    embedded_log_path = Path(__file__).parent.parent.parent / "embedded_files.json"
+    embedded_log_path = Path(__file__).parent.parent.parent / 'data' / "embedded_files.json"
     already_embedded = set()
 
-    # load teh alread_embedded set with the information from the log file
+    # load the already_embedded set with the information from the log file
     if embedded_log_path.exists():
         try:
             already_embedded = set(json.loads(embedded_log_path.read_text()))
@@ -68,9 +68,27 @@ def embed_transcripts():
     #  Get New Files/Documents and Parse and Embed
     # ----------------------------------------------
 
-    # check for new files
-    new_files = [file for file in transcripts_files if file not in already_embedded]
+    new_files = []
+    for file in transcripts_files:
+        filepath = os.path.join(path_to_transcripts, file)
 
+        # get chunks from filepath
+        try:
+            with open(filepath, 'r') as file:
+                chunks = json.load(file)
+        except (json.JSONDecodeError, IOError) as e:
+            print(f"Skipping {file} - could not read file: {e}")
+            continue
+
+        # get video id
+        video_metrics = chunks[-1]
+        video_id = video_metrics['video_id']
+
+        # check if this video has already been embedded
+        if video_id not in already_embedded:
+            new_files.append(os.path.basename(filepath))
+
+    print(new_files)
     if not new_files:
         print("No new transcript files to embed.")
     else:
@@ -112,6 +130,7 @@ def embed_transcripts():
             # video metrics are in a dictionary at the end of the list of transcripts
             video_metrics = chunks[-1]
             title = video_metrics['title']
+            video_id = video_metrics['video_id']
             published_at = video_metrics['published_at']
             view_count = video_metrics['view_count']
             like_count = video_metrics["like_count"]
@@ -142,6 +161,7 @@ def embed_transcripts():
                         "start": chunk.get("start", 0.0),
                         "duration": chunk.get("duration", 0.0),
                         "channel_id": channel_id,
+                        "video_id": video_id,
                         "video_index": video_index,
                         "title": title,
                         "published_at": published_at,
@@ -158,9 +178,9 @@ def embed_transcripts():
                 file_ids.append(f"{js}_{i}")
                 file_docs.append(doc)
 
-            # -------------------------
-            #  Embed and Save Per File
-            # -------------------------
+            # ----------------------------------------
+            #  Embed and Save Video Ids into Log File
+            # ----------------------------------------
 
             if not file_docs:
                 print(f"No valid chunks found in {js}, skipping.", flush=True)
@@ -173,7 +193,9 @@ def embed_transcripts():
                 print(f"Add documents returned", flush=True)
 
                 # update sidecar log
-                already_embedded.add(js)
+                already_embedded.add(video_id)
+
+                # if this is the first run and the embedded_log_path doesn't exist yet, then it is created here
                 embedded_log_path.write_text(json.dumps(list(already_embedded)))
 
                 total_chunks_embedded += len(file_docs)

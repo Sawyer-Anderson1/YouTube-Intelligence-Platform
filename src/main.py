@@ -10,7 +10,7 @@ from apscheduler.schedulers.background import BackgroundScheduler
 from pymongo import MongoClient
 
 # import scheduled RAG query runner
-from llm.rag import run_scheduled_queries
+from .llm.rag import run_scheduled_queries
 
 # ----------------------------------
 #  Setup MongoDB

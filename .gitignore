@@ -2,3 +2,6 @@
 # if necessary to share the tests then we may push through add
 src/experimentation-and-component-testing
 chroma_langchain_db/
+
+# ignore local virtual environments
+.venv/
