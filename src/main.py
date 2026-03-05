@@ -10,7 +10,8 @@ from apscheduler.schedulers.background import BackgroundScheduler
 from pymongo import MongoClient
 
 # import scheduled RAG query runner
-from llm.rag import run_scheduled_queries
+from src.llm.rag import run_scheduled_queries
+from src.routers.router import router
 
 # ----------------------------------
 #  Setup MongoDB
@@ -79,71 +80,4 @@ app = FastAPI(lifespan=weeklylifespan)
 #  API routes
 # ----------------------
 
-# default app route
-@app.get("/")
-def placeholder():
-    pass
-
-# get all results or by query_type
-@app.get("/results")
-def get_results(query_type: Optional[str] = None, limit: int = 5):
-    query_filter = {}
-    if query_type:
-        query_filter['query_type'] = query_type
-
-    results = list(
-        results_collection
-        .find(query_filter, {'_id': 0})  # exclude MongoDB's _id field
-        .sort('run_date', -1)            # most recent first
-        .limit(limit)
-    )
-
-    return results
-
-# route to get claims
-@app.get("/claims")
-def get_claims(limit: int = 20):
-    results = list(
-        results_collection
-        .find({'query_type': 'claims'}, {'_id': 0})
-        .sort('run_date', -1)
-        .limit(limit)
-    )
-
-    return results
-
-# route to get trends
-@app.get("/trends")
-def get_trends(limit: int = 7):
-    results = list(
-        results_collection
-        .find({'query_type': 'trends'}, {'_id': 0})
-        .sort('run_date', -1)
-        .limit(limit)
-    )
-
-    return results
-
-# route to get narratives
-@app.get("/narratives")
-def get_narratives(limit: int = 3):
-    results = list(
-        results_collection
-        .find({'query_type': 'narratives'}, {'_id': 0})
-        .sort('run_date', -1)
-        .limit(limit)
-    )
-
-    return results
-
-# route to get risk factors
-@app.get("/risk_factors")
-def get_risk_factors(limit: int = 5):
-    results = list(
-        results_collection
-        .find({'query_type': 'risk_factors'}, {'_id': 0})
-        .sort('run_date', -1)
-        .limit(limit)
-    )
-
-    return results
+app.include_router(router)

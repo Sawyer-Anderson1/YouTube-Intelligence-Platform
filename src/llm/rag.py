@@ -10,18 +10,21 @@ from langchain_core.prompts import ChatPromptTemplate
 
 # import MongoDB
 from pymongo import MongoClient
+from pymongo.server_api import ServerApi
 
 # import retriever from vector.py
-from vector import retriever
+from src.llm.vector import retriever
+
 
 # ----------------------------------
 #  MongoDB Setup
 # ----------------------------------
 
-MONGO_URI = os.getenv('MONGO_URI', 'mongodb://localhost:27017')
-mongo_client = MongoClient(MONGO_URI)
+MONGO_URI = "mongodb+srv://maksimzlatkin_db_user:xDUhhcga2GaAQ6N4@vector-transcripts.ftu4ykq.mongodb.net/?appName=vector-transcripts"
+mongo_client = MongoClient(MONGO_URI, server_api=ServerApi('1'))
 db = mongo_client['youtube_intelligence']
 results_collection = db['results']
+
 
 # ----------------------------------
 #  Ollama LLM setup
@@ -251,7 +254,7 @@ def run_query(query_type, question):
             "published_at": chunk.metadata.get('published_at', 0.0),
             "view_count": chunk.metadata.get('view_count', 0),
             "like_count": chunk.metadata.get('like_count', 0),
-            "comment_count": chunk.metadata.get('comment_coun', 0),
+            "comment_count": chunk.metadata.get('comment_count', 0),
             "total_duration": chunk.metadata.get('total_duration', ''),
             'source_file': chunk.metadata.get('source_file', 'unkown')
         }
@@ -272,6 +275,7 @@ def run_query(query_type, question):
 
     # then insert new result
     insert_result = results_collection.insert_one(document)
+    print("Inserted document ID:", insert_result.inserted_id)
 
     return {
         'id': str(insert_result.inserted_id),
@@ -298,25 +302,25 @@ def run_scheduled_queries():
 
     print("Scheduled Queries Run")
 
-# main function for testing
-if __name__ == '__main__':
-    print("RAG interactive mode (local testing)")
-    while True:
-        print("\n\n-----------------------------")
-        question = input("Ask your question (q to quit): ")
-        print("\n\n")
-        if question.lower() == "q":
-            break
+# # main function for testing
+# if __name__ == '__main__':
+#     print("RAG interactive mode (local testing)")
+#     while True:
+#         print("\n\n-----------------------------")
+#         question = input("Ask your question (q to quit): ")
+#         print("\n\n")
+#         if question.lower() == "q":
+#             break
 
-        # get the query type (specified by user/tester)
-        query_type = input("Query type (claims/trends/narratives/risk_factors): ")
+#         # get the query type (specified by user/tester)
+#         query_type = input("Query type (claims/trends/narratives/risk_factors): ")
 
-        # then run query
-        try:
-            result = run_query(query_type, question)
+#         # then run query
+#         try:
+#             result = run_query(query_type, question)
 
-            print(f"{query_type} query stored with id: {result['id']}")
-            print(f"\nResults: {result['result_text']}")
-            print(f"\nSources: {len(result['source_chunks'])} chunks retrieved")
-        except Exception as e:
-            print(f"Error with running query of type:{query_type} and question: {question}: {e}")
+#             print(f"{query_type} query stored with id: {result['id']}")
+#             print(f"\nResults: {result['result_text']}")
+#             print(f"\nSources: {len(result['source_chunks'])} chunks retrieved")
+#         except Exception as e:
+#             print(f"Error with running query of type:{query_type} and question: {question}: {e}")
