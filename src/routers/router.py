@@ -46,19 +46,11 @@ def get_results(
 ):
     return repo.get_results(query_type, limit)
 
-# @router.get("/claims")
-# def get_claims(
-#     limit: int = 20,
-#     repo = Depends(ResultsRepository)
-# ):
-#     return repo.get_by_type("claims", limit)
 
-# @router.get("/trends")
-# def get_trends(
-#     limit: int = 7,
-#     repo = Depends(ResultsRepository)
-# ):
-#     return repo.get_by_type("trends", limit)
+
+
+
+#IGNORE:
 
 # route to get narratives
 @router.get("/narratives")
