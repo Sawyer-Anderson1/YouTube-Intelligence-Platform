@@ -1,80 +1,47 @@
-// Chakra imports
-import {
-  Flex,
-  Grid,
-  Image,
-  SimpleGrid,
-  useColorModeValue,
-} from "@chakra-ui/react";
-import React from "react";
+import { Flex, Image, Spinner } from "@chakra-ui/react";
+import React, { useState, useEffect } from "react";
 import TrendCard from "./components/TrendCard";
+import getTrends from "../../../API/getTrends";
 
 function TrendCards() {
+  const [trends, setTrends] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    const fetchTrends = async () => {
+      try {
+        const res = await getTrends();
+        if (!cancelled) setTrends(res.data);
+      } catch (error) {
+        console.error("Failed to fetch trends:", error);
+      } finally {
+        if (!cancelled) setLoading(false);
+      }
+    };
+
+    fetchTrends();
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  if (loading) return <Spinner />;
+
   return (
-    <Flex direction='column'>
-      <Grid templateColumns={{ sm: "1fr", xl: "repeat(4, 1fr)" }} my='60px' gap='22px'>
+    <Flex direction="row" flexWrap="wrap" gap="22px" my="60px">
+      {trends.map((trend, index) => (
         <TrendCard
-          title={"New Trend"}
-          name={"Rise of New Business Models and Services"}
-          description={
-            "As agents become more prevalent, companies are exploring new ways to monetize their capabilities, including offering solutions for tasks like data management and problem-solving"
-          }
-          image={
-            <Image
-              //src={}
-              alt='[image]'
-              minWidth={{ md: "300px", lg: "auto" }}
-            />
-          }
+          key={index}
+          title={trend.title}
+          name={trend.name}
+          description={trend.description}
+          image={<Image alt="[image]" minWidth={{ md: "300px", lg: "auto" }} />}
         />
-        <TrendCard
-          title={"New Trend"}
-          name={"Growing Excitement and Optimism about AI"}
-          description={
-            "The speakers express enthusiasm for the potential benefits of AI, including increased productivity, creativity, and accessibility"
-          }
-          image={
-            <Image
-              //src={}
-              alt='[image]'
-              minWidth={{ md: "300px", lg: "auto" }}
-            />
-          }
-        />
-        <TrendCard
-          title={"New Trend"}
-          name={"Shift from Human-Centric to Agent-Centric Interactions"}
-          description={
-            "The transcripts highlight the increasing use of agents in everyday life, such as accessing websites, sending messages, and completing tasks"
-          }
-          image={
-            <Image
-              //src={}
-              alt='[image]'
-              minWidth={{ md: "300px", lg: "auto" }}
-            />
-          }
-        />
-      </Grid>
+      ))}
     </Flex>
   );
 }
 
 export default TrendCards;
-
-/*
-<TrendCard
-          title={"New Trend"}
-          name={"This is the Placeholder Name of the Trend"}
-          description={
-            "This is the Placeholder Description of the Given Trend | [source]"
-          }
-          image={
-            <Image
-              //src={}
-              alt='[image]'
-              minWidth={{ md: "300px", lg: "auto" }}
-            />
-          }
-        />
-*/

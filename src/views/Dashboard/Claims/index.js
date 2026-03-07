@@ -5,76 +5,57 @@ import {
   Image,
   SimpleGrid,
   useColorModeValue,
+  Spinner,
 } from "@chakra-ui/react";
 import React from "react";
 import ClaimCard from "./components/ClaimCard";
-
+import getClaims from "../../../API/getClaims";
+import { useState, useEffect } from "react";
 function ClaimCards() {
+  const [claims, setClaims] = useState([]);
+  const [loading, setLoading] = useState(true);
+  useEffect(() => {
+    let cancelled = false;
+
+    const fetchClaims = async () => {
+      try {
+        const res = await getClaims();
+        if (!cancelled) setClaims(res.data);
+      } catch (error) {
+        console.error("Failed to fetch claims:", error);
+      } finally {
+        if (!cancelled) setLoading(false);
+      }
+    };
+
+    fetchClaims();
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  if (loading) return <Spinner />;
   return (
-    <Flex direction='column'>
-      <Grid templateColumns={{ sm: "1fr", xl: "repeat(4, 1fr)" }} my='60px' gap='22px'>
+    <Grid
+      templateColumns={{
+        sm: "1fr",
+        md: "repeat(2, 1fr)",
+        xl: "repeat(4, 1fr)",
+      }}
+      my="60px"
+      gap="22px"
+    >
+      {claims.map((claim, index) => (
         <ClaimCard
-          title={"New Claim"}
-          name={"AI Will Replace Human Workers"}
-          description={
-            "The speaker suggests that agents can do tasks more efficiently and accurately than humans, potentially leading to job displacement"
-          }
-          image={
-            <Image
-              //src={}
-              alt='[image]'
-              minWidth={{ md: "300px", lg: "auto" }}
-            />
-          }
+          key={index}
+          title={claim.title}
+          name={claim.name}
+          description={claim.description}
+          image={<Image alt="[image]" minWidth={{ md: "300px", lg: "auto" }} />}
         />
-        <ClaimCard
-          title={"New Claim"}
-          name={"80% of Ape Developers May Disappear"}
-          description={
-            "Another speaker mentions that the rise of agents could lead to the obsolescence of apes in software development, with only a small percentage adapting to become API-focused"
-          }
-          image={
-            <Image
-              //src={}
-              alt='[image]'
-              minWidth={{ md: "300px", lg: "auto" }}
-            />
-          }
-        />
-      </Grid>
-    </Flex>
+      ))}
+    </Grid>
   );
 }
 
 export default ClaimCards;
-
-/*
-<ClaimCard
-          title={"New Claim"}
-          name={"This is the Placeholder Name of the Claim"}
-          description={
-            "This is the Placeholder Description of the Given Claim | [source]"
-          }
-          image={
-            <Image
-              //src={}
-              alt='[image]'
-              minWidth={{ md: "300px", lg: "auto" }}
-            />
-          }
-        />
-        <ClaimCard
-          title={"New Claim"}
-          name={"This is the Placeholder Name of the Claim"}
-          description={
-            "This is the Placeholder Description of the Given Claim | [source]"
-          }
-          image={
-            <Image
-              //src={}
-              alt='[image]'
-              minWidth={{ md: "300px", lg: "auto" }}
-            />
-          }
-        />
-*/

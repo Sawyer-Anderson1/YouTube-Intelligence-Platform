@@ -1,75 +1,45 @@
-// Chakra imports
-import {
-  Flex,
-  Grid,
-  Image,
-  SimpleGrid,
-  useColorModeValue,
-} from "@chakra-ui/react";
-import React from "react";
+import { Flex, Image, Spinner } from "@chakra-ui/react";
+import React, { useState, useEffect } from "react";
 import RiskCard from "./components/RiskCard";
+import getRiskFactors from "../../../API/getRiskFactors";
 
 function RiskCards() {
+  const [risks, setRisks] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    const fetchRisks = async () => {
+      try {
+        const res = await getRiskFactors();
+        if (!cancelled) setRisks(res.data);
+      } catch (error) {
+        console.error("Failed to fetch risk factors:", error);
+      } finally {
+        if (!cancelled) setLoading(false);
+      }
+    };
+
+    fetchRisks();
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  if (loading) return <Spinner />;
+
   return (
-    <Flex direction='column'>
-      <Grid templateColumns={{ sm: "1fr", xl: "repeat(4, 1fr)" }} my='60px' gap='22px'>
+    <Flex direction="row" flexWrap="wrap" gap="22px" my="60px">
+      {risks.map((risk, index) => (
         <RiskCard
-          title={"New Risk"}
-          name={"This is the Placeholder Name of the Risk"}
-          description={
-            "This is the Placeholder Description of the Given Risk | [source]"
-          }
-          image={
-            <Image
-              //src={}
-              alt='[image]'
-              minWidth={{ md: "300px", lg: "auto" }}
-            />
-          }
+          key={index}
+          title={risk.title}
+          name={risk.name}
+          description={risk.description}
+          image={<Image alt="[image]" minWidth={{ md: "300px", lg: "auto" }} />}
         />
-        <RiskCard
-          title={"New Risk"}
-          name={"This is the Placeholder Name of the Risk"}
-          description={
-            "This is the Placeholder Description of the Given Risk | [source]"
-          }
-          image={
-            <Image
-              //src={}
-              alt='[image]'
-              minWidth={{ md: "300px", lg: "auto" }}
-            />
-          }
-        />
-        <RiskCard
-          title={"New Risk"}
-          name={"This is the Placeholder Name of the Risk"}
-          description={
-            "This is the Placeholder Description of the Given Risk | [source]"
-          }
-          image={
-            <Image
-              //src={}
-              alt='[image]'
-              minWidth={{ md: "300px", lg: "auto" }}
-            />
-          }
-        />
-        <RiskCard
-          title={"New Risk"}
-          name={"This is the Placeholder Name of the Risk"}
-          description={
-            "This is the Placeholder Description of the Given Risk | [source]"
-          }
-          image={
-            <Image
-              //src={}
-              alt='[image]'
-              minWidth={{ md: "300px", lg: "auto" }}
-            />
-          }
-        />
-      </Grid>
+      ))}
     </Flex>
   );
 }

@@ -1,80 +1,47 @@
-// Chakra imports
-import {
-  Flex,
-  Grid,
-  Image,
-  SimpleGrid,
-  useColorModeValue,
-} from "@chakra-ui/react";
-import React from "react";
+import { Flex, Image, Spinner } from "@chakra-ui/react";
+import React, { useState, useEffect } from "react";
 import NarrativeCard from "./components/NarrativeCard";
+import getNarratives from "../../../API/getNarratives";
 
 function NarrativeCards() {
+  const [narratives, setNarratives] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    const fetchNarratives = async () => {
+      try {
+        const res = await getNarratives();
+        if (!cancelled) setNarratives(res.data);
+      } catch (error) {
+        console.error("Failed to fetch narratives:", error);
+      } finally {
+        if (!cancelled) setLoading(false);
+      }
+    };
+
+    fetchNarratives();
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  if (loading) return <Spinner />;
+
   return (
-    <Flex direction='column'>
-      <Grid templateColumns={{ sm: "1fr", xl: "repeat(4, 1fr)" }} my='60px' gap='22px'>
+    <Flex direction="row" flexWrap="wrap" gap="22px" my="60px">
+      {narratives.map((narrative, index) => (
         <NarrativeCard
-          title={"New Narrative"}
-          name={"The 'Agent-First' Revolution"}
-          description={
-            "The speakers describe the emergence of a new paradigm where agents are increasingly used as the primary interface between humans and software systems"
-          }
-          image={
-            <Image
-              //src={}
-              alt='[image]'
-              minWidth={{ md: "300px", lg: "auto" }}
-            />
-          }
+          key={index}
+          title={narrative.title}
+          name={narrative.name}
+          description={narrative.description}
+          image={<Image alt="[image]" minWidth={{ md: "300px", lg: "auto" }} />}
         />
-        <NarrativeCard
-          title={"New Narrative"}
-          name={"Fears About Job Displacement and Social Change"}
-          description={
-            "The transcripts touch on concerns about the potential impact of AI on employment, particularly in industries where human workers have traditionally been the norm"
-          }
-          image={
-            <Image
-              //src={}
-              alt='[image]'
-              minWidth={{ md: "300px", lg: "auto" }}
-            />
-          }
-        />
-        <NarrativeCard
-          title={"New Narrative"}
-          name={"The 'Post-Human' Era"}
-          description={
-            "Some speakers hint at a future where humans are no longer the primary focus of software development, instead working closely with agents to achieve greater productivity and efficiency"
-          }
-          image={
-            <Image
-              //src={}
-              alt='[image]'
-              minWidth={{ md: "300px", lg: "auto" }}
-            />
-          }
-        />
-      </Grid>
+      ))}
     </Flex>
   );
 }
 
 export default NarrativeCards;
-
-/*
-<NarrativeCard
-          title={"New Narrative"}
-          name={"This is the Placeholder Name of the Narrative"}
-          description={
-            "This is the Placeholder Description of the Given Narrative | [source]"
-          }
-          image={
-            <Image
-              //src={}
-              alt='[image]'
-              minWidth={{ md: "300px", lg: "auto" }}
-            />
-          }
-        />
-*/
