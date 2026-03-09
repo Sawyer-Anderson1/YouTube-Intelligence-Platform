@@ -2,14 +2,16 @@
 import os
 import json
 import re
+import time
 from pathlib import Path
 from datetime import datetime, timezone
+from typing import Optional, Dict, List
 
 # import MongoDB
 from pymongo import MongoClient
 
 # import retriever from vector.py
-from .vector import retriever
+from .vector import retrieval
 
 # import AI terms from constants file
 from ..constants import AI_TERMS
@@ -87,16 +89,17 @@ Use the examples below as a reference as to what the analysis should look like. 
 {claims_examples}
 
 ### RULES:
-- Extract distinct claims actually present in the transcripts above. Do not invent claims not stated in the text.
-- Respond with ONLY a JSON object, nothing else
-- No markdown, no code blocks, no backticks
-- No introduction, no explanation, no notes after the JSON
-- Aim for 10-20 findings maximum — do not generate more entries than you can complete
-- Always close the JSON object with }} before stopping
+- Extract distinct claims actually present in the transcripts above. DO NOT invent claims not stated in the text.
+- Use EVERY video/transcript chunk to form you responses.
+- Respond with ONLY a JSON object, nothing else.
+- No markdown, no code blocks, no backticks.
+- No introduction, no explanation, no notes after the JSON.
+- Aim for 1 claim per transcript chunks minimum — do not generate more entries than you can complete.
+- Always close the JSON object with }} before stopping.
 - Use this exact structure where each KEY is the claim TITLE and each VALUE is the dictionary of DESCRIPTION or QUOTE, video_id, view_count, like_count, and comment_count.
 - Following description or quote of the claim, provide the video id where the claim comes from.
 - From the video id(s) provide the the video's view_count, like_count, comment_count.
-- Do not have newlines or other tags in the response
+- Do not have newlines or other tags in the response.
 
 ### Output Format
 {{"Claim title here": {{"Quote": "quote of the claim here", "video_id": "video_id here", "view_count": "view_count here", "like_count": "like_count here", "comment_count": "comment_count here"}}, "Another claim title": {{"Quote": "quote here", "video_id": "video_id here", "view_count": "view_count here", "like_count": "like_count here", "comment_count": "comment_count here"}}}}
@@ -118,6 +121,9 @@ Use view and like counts as a signal of how widely a trend is being circulated.
 Here are relevant transcript chunks:
 {transcripts}
 
+Here are claims:
+{claims}
+
 Question: {question}
 
 Use the examples below as a reference as to what the analysis should look like. But do not use these examples as part of your answer - they are only for reference to understand how to word the trends.
@@ -126,15 +132,16 @@ Use the examples below as a reference as to what the analysis should look like. 
 
 ### RULES:
 - Identify trends (i.e. shared claims) that are clearly present across multiple transcript chunks.
-- Respond with ONLY a JSON object, nothing else
-- No markdown, no code blocks, no backticks
-- No introduction, no explanation, no notes after the JSON
-- Aim for 5-8 findings maximum — do not generate more entries than you can complete
-- Always close the JSON object with }} before stopping
+- Use EVERY video/transcript chunk to form your responses.
+- Respond with ONLY a JSON object, nothing else.
+- No markdown, no code blocks, no backticks.
+- No introduction, no explanation, no notes after the JSON.
+- Aim for 5-8 findings maximum — do not generate more entries than you can complete.
+- Always close the JSON object with }} before stopping.
 - Use this exact structure where each KEY is the trend TITLE and each VALUE is the dictionary of DESCRIPTION, video_ids, total view_count, total like_count, and total comment_count.
 - Following description or quote of the trend, provide the video id(s) where the trend comes from.
 - From the video id(s) provide all the video's total view_count, total like_count, total comment_count.
-- Do not have newlines or other tags in the response
+- Do not have newlines or other tags in the response.
 
 ### Output Format
 {{"Trend title here": {{"Description: "description of trend here", "video_ids": ["video_id here", "another video_id"], "total_view_count": "total view_count here", "total_like_count": "total like_count here", "total_comment_count": "total comment_count here"}}, "Another trend title": {{"Description: "description here", "video_ids": ["video_id here", "another video_id"], "total_view_count": "total view_count here", "total_like_count": "total like_count here", "total_comment_count": "total comment_count here"}}}}
@@ -156,6 +163,12 @@ Use view and like counts as a signal of how widely a narrative is being circulat
 Here are relevant transcript chunks:
 {transcripts}
 
+Here are claims:
+{claims}
+
+Here are trends:
+{trends}
+
 Question: {question}
 
 Use the examples below as a reference as to what the analysis should look like. But do not use these examples as part of your answer - they are only for reference to understand how to word the narratives.
@@ -164,15 +177,16 @@ Use the examples below as a reference as to what the analysis should look like. 
 
 ### RULES:
 - A narrative is a recurring framing or story being told about AI. Identify narratives present in the transcripts.
-- Respond with ONLY a JSON object, nothing else
-- No markdown, no code blocks, no backticks
-- No introduction, no explanation, no notes after the JSON
-- Aim for 5-8 findings maximum — do not generate more entries than you can complete
+- Use EVERY video/transcript chunk to form your responses.
+- Respond with ONLY a JSON object, nothing else.
+- No markdown, no code blocks, no backticks.
+- No introduction, no explanation, no notes after the JSON.
+- Aim for 5-8 findings maximum — do not generate more entries than you can complete.
 - Always close the JSON object with }} before stopping
 - Use this exact structure where each KEY is the narrative TITLE and each VALUE is the dictionary of DESCRIPTION, video_ids, total view_count, total like_count, and total comment_count.
 - Following description or quote of the narrative, provide the video id(s) where the narrative comes from.
 - From the video id(s) provide all the video's total view_count, total like_count, total comment_count.
-- Do not have newlines or other tags in the response
+- Do not have newlines or other tags in the response.
 
 ### Output Format
 {{"Narrative title here": {{"Description: "description of narrative here", "video_ids": ["video_id here", "another video_id"], "total_view_count": "total view_count here", "total_like_count": "total like_count here", "total_comment_count": "total comment_count here"}}, "Another narrative title": {{"Description: "description here", "video_ids": ["video_id here", "another video_id"], "total_view_count": "total view_count here", "total_like_count": "total like_count here", "total_comment_count": "total comment_count here"}}}}
@@ -202,15 +216,16 @@ Use the examples below as a reference as to what the analysis should look like. 
 
 ### RULES:
 - Identify specific risks or concerns explicitly raised in the transcripts.
-- Respond with ONLY a JSON object, nothing else
-- No markdown, no code blocks, no backticks
-- No introduction, no explanation, no notes after the JSON
-- Aim for 5-8 findings maximum — do not generate more entries than you can complete
-- Always close the JSON object with }} before stopping
+- Use EVERY video/transcrip chunk to form you responses.
+- Respond with ONLY a JSON object, nothing else.
+- No markdown, no code blocks, no backticks.
+- No introduction, no explanation, no notes after the JSON.
+- Aim for 5-8 findings maximum — do not generate more entries than you can complete.
+- Always close the JSON object with }} before stopping.
 - Use this exact structure where each KEY is the risk factor TITLE and each VALUE is the DESCRIPTION of risk factor.
 - In description of the risk factors, provide the video id(s) where the risk factors comes from.
 - From the video id(s) provide the the video's view_count, like_count, comment_count.
-- Do not have newlines or other tags in the response
+- Do not have newlines or other tags in the response.
 
 ### Output Format
 {{"Risk factor title here": "Description of the risk factor here", "Another risk factor title": "Description here"}}
@@ -389,7 +404,11 @@ def format_chunk_with_metadata(doc):
 # args:
 #       - Takes question, which is static for SCHEDULED_QUERIES, but dynamic in testing or if users query themselves
 #       - Takes query type, given in SCEDULED_QUERIES, but stated in user query (testing)
-def run_query(query_type, question):
+#       - Takes K chunks to be retrieved, default value of 15
+#       - Takes claims, optional dict with claims from claim query
+#       - Takes trends, optional dict with trends from trend query
+#       - Takes previously used transcript chunks, option list with transcripts chunks used in claims query for trends query then chunks used in claims and trends query for narratives query
+def run_query(query_type, question, claims: Optional[Dict] = None, trends: Optional[Dict] = None, previous_chunks: Optional[List] = None, k_chunks = 15):
     # get the template from the TEMPLATES dictionary and then create the prompt model chain
     template = TEMPLATES.get(query_type, TEMPLATES['claims'])
     prompt = ChatPromptTemplate.from_template(template)
@@ -397,38 +416,163 @@ def run_query(query_type, question):
     # inject the format instructions from the parser into the prompt
     chain = prompt | model
 
-    # get relevant transcript chunks from ChromaDB
-
     # -----------------------------------
     #  Use Enriched Query with Key Terms
     # -----------------------------------
     enriched_query = f"{question} {QUERY_ENRICHMENT.get(query_type, '')}"
-    transcript_chunks = retriever.invoke(enriched_query)
 
-    # build context string from retrieved chunks
-    # added a delimiter since the model will need to distinguish between them now that theres metadata
-    transcripts = "\n\n###\n\n".join([
-        format_chunk_with_metadata(chunk) for chunk in transcript_chunks
-    ])
+    # get relevant transcript chunks from ChromaDB
+    transcript_chunks = retrieval(enriched_query, k_chunks)
+
+    # create of list of the concatenated chunks to later be iterated through to call the llm
+    concatenated_chunks = []
+
+    # -----------------------------------
+    #  If Previous Chunks Exist then Add
+    # -----------------------------------
+
+    if previous_chunks != None:
+        chunk_counter = 1
+
+        curr_chunks = []
+        for chunk in previous_chunks:
+            if chunk_counter <= 15:
+                # build context string from retrieved chunks
+                # added a delimiter since the model will need to distinguish between them now that theres metadata
+                curr_chunks.append(format_chunk_with_metadata(chunk))
+                chunk_counter += 1
+
+            else: # the current chunk is a 16th one, so start a new curr_chunks cancatenated string and set chunk_counter back to 1
+                # add to the concatenated chunks list
+                concatenated_chunks.append("\n\n###\n\n".join(curr_chunks))
+
+                curr_chunks = [format_chunk_with_metadata(chunk)]
+                chunk_counter = 1
+    else:
+        previous_chunks = []
+
+    # ------------------------------------------------
+    #  Add new chunks fetched, not in Previous Chunks
+    # ------------------------------------------------
+
+    # every 15 chunks we get a new create start with on a new concatenated string of chunks (so the request won't be blocked for exceeding the TPM of Groq's llama-3.3-70b-versatile model)
+    chunk_counter = 1
+
+    curr_chunks = []
+    for chunk in transcript_chunks:
+        if chunk not in previous_chunks:
+            if chunk_counter <= 15:
+                # build context string from retrieved chunks
+                # added a delimiter since the model will need to distinguish between them now that theres metadata
+                formatted_chunk = format_chunk_with_metadata(chunk)
+                curr_chunks.append(formatted_chunk)
+
+                chunk_counter += 1
+
+            else: # the current chunk is a 16th one, so start a new curr_chunks cancatenated string and set chunk_counter back to 1
+                # add to the concatenated chunks list
+                concatenated_chunks.append("\n\n###\n\n".join(curr_chunks))
+
+                curr_chunks = [format_chunk_with_metadata(chunk)]
+                chunk_counter = 1
+
+            # add the current chunk to previous chunks to provide the source chunks in mongodb with the chunks and the next queries (trends and narratives after claims)
+            previous_chunks.append(chunk)
+    concatenated_chunks.append("\n\n###\n\n".join(curr_chunks))
 
     # --------------------------------------------
     #  Invoke based off query_type, for few-shot
     # --------------------------------------------
 
+    # then for each concatenated transcripts in the list (maximum of 15 chunks + their metadata each) iterate and invoke the llm query
+    # store results in this dictionary
+    results = {}
+
+    # --------------------------------------------------------------------------------------------------------------------------
+    #  Between each Query we Need to wait a Minute, since there is a TPM (Tokens per Minute) limit/rate in Groq for this model
+    # --------------------------------------------------------------------------------------------------------------------------
+
     match query_type:
         case 'claims':
-            result = chain.invoke({"transcripts": transcripts, "question": question, 'claims_examples': claims_file})
-        case 'trends':
-            result = chain.invoke({"transcripts": transcripts, "question": question, 'trends_examples': trends_file})
-        case 'narratives':
-            result = chain.invoke({"transcripts": transcripts, "question": question, 'narratives_examples': narratives_file})
-        case 'risk_factors':
-           result = chain.invoke({"transcripts": transcripts, "question": question, 'risks_examples': risk_factors_file})
-        case _:
-            result = chain.invoke({"transcripts": transcripts, "question": question, 'claims_examples': claims_file})
+            for transcripts in concatenated_chunks:
+                result = chain.invoke({"transcripts": transcripts, "question": question, 'claims_examples': claims_file})
 
-    # put the result through a parser to extract the json from the resonse
-    parsed_result = extract_json_from_response(result.text, query_type)
+                # put the result through a parser to extract the json from the resonse
+                parsed_result = extract_json_from_response(result.text, query_type)
+
+                results.update(parsed_result)
+
+                # wait 60 seconds between queries to avoid the TPM
+                time.sleep(60)
+
+        case 'trends':
+            for transcripts in concatenated_chunks:
+                # Check if there are claims (from the prior scheduled queries) to provide context, with the transcripts from the claims query and additional transcripts
+                if claims != None:
+                    result = chain.invoke({"transcripts": transcripts, "claims": claims, "question": question, 'trends_examples': trends_file})
+
+                    # put the result through a parser to extract the json from the resonse
+                    parsed_result = extract_json_from_response(result.text, query_type)
+
+                    results.update(parsed_result)
+
+                else:
+                    # else just run generic trends query
+                    result = chain.invoke({"transcripts": transcripts, "claims": None, "question": question, 'trends_examples': trends_file})
+
+                    # put the result through a parser to extract the json from the resonse
+                    parsed_result = extract_json_from_response(result.text, query_type)
+
+                    results.update(parsed_result)
+
+                # wait 60 seconds between queries to avoid the TPM
+                time.sleep(60)
+
+        case 'narratives':
+            for transcripts in concatenated_chunks:
+                # Check if there are claims and trends (from the prior scheduled queries) to provide context, with the transcripts from the claims query, trends query, and additional transcripts
+                if claims != None and trends != None:
+                    result = chain.invoke({"transcripts": transcripts, "claims": claims, "trends": trends, "question": question, 'narratives_examples': narratives_file})
+
+                    # put the result through a parser to extract the json from the resonse
+                    parsed_result = extract_json_from_response(result.text, query_type)
+
+                    results.update(parsed_result)
+
+                else:
+                    # else just run generic narratives query
+                    result = chain.invoke({"transcripts": transcripts, "claims": None, "trends": None, "question": question, 'narratives_examples': narratives_file})
+
+                    # put the result through a parser to extract the json from the resonse
+                    parsed_result = extract_json_from_response(result.text, query_type)
+
+                    results.update(parsed_result)
+
+                # wait 60 seconds between queries to avoid the TPM
+                time.sleep(60)
+
+        case 'risk_factors':
+            for transcripts in concatenated_chunks:
+                result = chain.invoke({"transcripts": transcripts, "question": question, 'risks_examples': risk_factors_file})
+
+                # put the result through a parser to extract the json from the resonse
+                parsed_result = extract_json_from_response(result.text, query_type)
+
+                results.update(parsed_result)
+
+                # wait 60 seconds between queries to avoid the TPM
+                time.sleep(60)
+
+        case _:
+            for transcripts in concatenated_chunks:
+                result = chain.invoke({"transcripts": transcripts, "question": question, 'claims_examples': claims_file})
+
+                parsed_result = extract_json_from_response(result.text, query_type)
+
+                results.update(parsed_result)
+
+                # wait 60 seconds between queries to avoid the TPM
+                time.sleep(60)
 
     # Build source chunk references from metadatas
     source_chunks = [
@@ -444,9 +588,10 @@ def run_query(query_type, question):
             "like_count": chunk.metadata.get('like_count', 0),
             "comment_count": chunk.metadata.get('comment_count', 0),
             "total_duration": chunk.metadata.get('total_duration', ''),
-            'source_file': chunk.metadata.get('source_file', 'unknown')
+            "source_file": chunk.metadata.get('source_file', 'unknown'),
+            "chunk_content": chunk.page_content
         }
-        for chunk in transcript_chunks
+        for chunk in previous_chunks
     ]
 
     #  Insert the result into MongoDB
@@ -455,10 +600,10 @@ def run_query(query_type, question):
             'run_data': datetime.now(timezone.utc),
             'query_type': query_type,
             'question': question,
-            'result_text': parsed_result,
+            'result_text': results,
             'source_chunks': source_chunks,
             'model': 'llama-3.3-70b-versatile',
-            'retrieval_k': len(transcript_chunks)
+            'retrieval_k': len(previous_chunks)
     }
 
     # then insert new result
@@ -467,25 +612,45 @@ def run_query(query_type, question):
     return {
         'id': str(insert_result.inserted_id),
         'query_type': query_type,
-        'result_text': result,
-        'source_chunks': source_chunks
+        'result_text': results,
+        'source_chunks': previous_chunks
     }
 
 # ----------------------------------
 #  Weekly Scheduled Queries
 # ----------------------------------
 
-def run_scheduled_queries():
+def run_scheduled_queries(k_c = 15, k_t = 15, k_n = 15):
     # get the query type and query for each of the weekly queries
-    for query_type, question in SCHEDULED_QUERIES.items():
-        try:
-            # run query through LLM (using RAG)
-            result = run_query(query_type, question)
 
-            # print results
-            print(f"{query_type} query stored with id: {result['id']}")
-        except Exception as e:
-            print(f"Error with running query of type:{query_type} and question: {question}: {e}")
+    # ---------------------------------------------------------
+    #  Store the Claims and Use to Build Trends and Narratives
+    # ---------------------------------------------------------
+
+    try:
+        # run claim query through LLM (using RAG) and keep results for the trends and narratives
+        claims = run_query('claims', SCHEDULED_QUERIES['claims'], k_chunks = k_c)
+
+        # print results
+        print(f"claims query stored with id: {claims['id']}")
+
+        # then run the trend query using the claims, and prior transcripts
+        prev_chunks = claims['source_chunks']
+        print(prev_chunks)
+        trends = run_query('trends', SCHEDULED_QUERIES['trends'], claims = claims['result_text'], previous_chunks = prev_chunks, k_chunks = k_t)
+
+        # print results
+        print(f"trends query stored with id: {trends['id']}")
+
+        # then run the narratives query using the claims, trends, and prioor transcripts
+        prev_chunks = trends['source_chunks']
+        narratives = run_query('narratives', SCHEDULED_QUERIES['narratives'], claims = claims['result_text'], trends = trends['result_text'], previous_chunks = prev_chunks, k_chunks = k_n)
+
+        # print results
+        print(f"narratives query stored with id: {narratives['id']}")
+
+    except Exception as e:
+        print(f"Error with running query of types claims/trends/narratives: {e}")
 
     print("Scheduled Queries Run")
 

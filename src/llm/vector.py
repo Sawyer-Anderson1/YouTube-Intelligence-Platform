@@ -26,15 +26,21 @@ vector_store = Chroma(
 #  K chunk retrieval for RAG
 # -----------------------------------------
 
-retriever = vector_store.as_retriever(
-    search_type="mmr", # favors diversity over purely similarity
-    # How many docs to look up
-    search_kwargs = {
-        "k": 15, # the number of chunks to return
-        "fetch_k": 300, # the candidate pool to select from
-        "lambda_mult": 0.3 # 0 = max diversity, 1 = max similarity
-    }
-)
+def retrieval(query, k_chunks = 15):
+    if k_chunks > 300:
+        k_chunks = 300
+
+    retrieved = vector_store.as_retriever(
+        search_type="mmr", # favors diversity over purely similarity
+        # How many docs to look up
+        search_kwargs = {
+            "k": k_chunks, # the number of chunks to return
+            "fetch_k": 300, # the candidate pool to select from
+            "lambda_mult": 0.3 # 0 = max diversity, 1 = max similarity
+        }
+    ).invoke(query)
+
+    return retrieved
 
 # -----------------------------------------
 #  Embed Transcripts
