@@ -2,6 +2,7 @@
 import os
 import datetime
 import subprocess
+from typing import Optional
 from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from apscheduler.schedulers.background import BackgroundScheduler
@@ -27,23 +28,34 @@ results_collection = db['results']
 # implementing the cron jobs
 # the function that runs scripts passed to it
 def run_script(script_name):
-    result = subprocess.run(['python3', script_name], capture_output=True, text=True)
+    # ----------------------------
+    #  Run the Scripts as Modules
+    # ----------------------------
+
+    result = subprocess.run(['python3 -m', script_name], capture_output=True, text=True)
     result.check_returncode()
 
 # the function that defines the scripts that will be run once a week
 def scheduled_job_sequence():
     try:
+        # ------------------------------
+        #  Give Module Path of Scripts
+        # ------------------------------
+
         # run the script to get the channels that have videos relevant to the category
-        run_script('/services/youtube_api_channel_search.py')
+        run_script('services.youtube_api_channel_search')
 
         # run the script to get the videos from the channels that have to do with the category
-        run_script('/services/youtube_api_channel_vids.py')
+        run_script('services.youtube_api_channel_vids')
 
         # then run the script to get the transcripts from the channels
-        run_script('/services/transcripts.py')
+        run_script('services.transcripts')
+
+        # add the comments retrieval here
+        # ...
 
         # then run the vector.py and rag.py (run_scheduled_queries())
-        run_script('/llm/vector.py')
+        run_script('llm.vector')
 
         run_scheduled_queries()
     except Exception as e:
@@ -55,7 +67,15 @@ async def weeklylifespan(app: FastAPI):
     scheduler = BackgroundScheduler()
 
     # have the scripts that take the data from the YouTube API to run once every week
-    scheduler.add_job(scheduled_job_sequence, "interval", weeks=1)
+    scheduler.add_job(
+            scheduled_job_sequence, 
+            trigger="cron", 
+            day_of_week='mon',
+            hour=0, # run at midnight
+            minute=0,
+            timezone='US/Central', # run on UTC timezone (would run 6pm in CST), or run in central time (so 6am UTC)
+            next_run_time=datetime.datetime.now() # run once on startup, then follow the cron job schedule
+    )
     scheduler.start()
 
     yield
@@ -72,9 +92,9 @@ app = FastAPI(lifespan=weeklylifespan)
 def placeholder():
     pass
 
-# get all results
+# get all results or by query_type
 @app.get("/results")
-def get_results(query_type=None, limit=5):
+def get_results(query_type: Optional[str] = None, limit: int = 5):
     query_filter = {}
     if query_type:
         query_filter['query_type'] = query_type
@@ -90,10 +110,10 @@ def get_results(query_type=None, limit=5):
 
 # route to get claims
 @app.get("/claims")
-def get_claims(limit=20):
+def get_claims(limit: int = 20):
     results = list(
         results_collection
-        .find('claims', {'_id': 0})
+        .find({'query_type': 'claims'}, {'_id': 0})
         .sort('run_date', -1)
         .limit(limit)
     )
@@ -102,10 +122,10 @@ def get_claims(limit=20):
 
 # route to get trends
 @app.get("/trends")
-def get_trends(limit=7):
+def get_trends(limit: int = 7):
     results = list(
         results_collection
-        .find('trends', {'_id': 0})
+        .find({'query_type': 'trends'}, {'_id': 0})
         .sort('run_date', -1)
         .limit(limit)
     )
@@ -114,10 +134,10 @@ def get_trends(limit=7):
 
 # route to get narratives
 @app.get("/narratives")
-def get_narratives(limit=3):
+def get_narratives(limit: int = 3):
     results = list(
         results_collection
-        .find('narratives', {'_id': 0})
+        .find({'query_type': 'narratives'}, {'_id': 0})
         .sort('run_date', -1)
         .limit(limit)
     )
@@ -126,10 +146,10 @@ def get_narratives(limit=3):
 
 # route to get risk factors
 @app.get("/risk_factors")
-def get_risk_factors(limit=5):
+def get_risk_factors(limit: int = 5):
     results = list(
         results_collection
-        .find('risk_factors', {'_id': 0})
+        .find({'query_type': 'risk_factors'}, {'_id': 0})
         .sort('run_date', -1)
         .limit(limit)
     )

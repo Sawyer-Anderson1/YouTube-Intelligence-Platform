@@ -10,16 +10,18 @@ from pathlib import Path
 import re
 
 import isodate
-from datetime import timedelta
 
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 
 # import external function to check for english text
-from check_for_english_text import check_english
+from .check_for_english_text import check_english
 
 # import another external function to get time 6 months ago
-from get_time import get_time_months_ago_rfc3339
+from .get_time import get_time_months_ago_rfc3339
+
+# import external constants (AI terms)
+from ..constants import AI_TERMS
 
 # --------------------------------------
 #  Get YouTubeAPI API, Build, and
@@ -46,9 +48,6 @@ TERM_PATTERN = re.compile(r'\b(?:' + '|'.join(AI_TERMS) + r')\b', re.IGNORECASE)
 def check_vids(upload_items, channel_id):
     # get the month time 6 months ago
     time_6_months_ago = get_time_months_ago_rfc3339(6)
-
-    # list with acceptable terms on the topic of AI
-    terms = ['ai', 'artificial intelligence', 'generative ai', 'large language models', 'llms', 'neural networds', 'ai bubble', 'machine learning', 'ml', 'chatgpt', 'agents', 'agentic ai', 'claude', 'gemini', 'moltbook', 'openclaw', 'grok']
 
     # the final array of fully filtered/checked vids
     vids_filtered = []
@@ -122,7 +121,7 @@ def check_vids(upload_items, channel_id):
             if video_metrics[video_items[item_id]['id']]["duration"] == 'unknown':
                 continue # do not add the current video to vids_filtered
 
-            duration = isodate.parse_duration(video_metrics[item_id]["duration"])
+            duration = isodate.parse_duration(video_metrics[video_items[item_id]['id']]["duration"])
             min_video_duration = (duration.total_seconds() >= 300.0)
 
             # --------------------------------------------------
