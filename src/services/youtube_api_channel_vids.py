@@ -40,8 +40,10 @@ videos = youtube.videos()
 #  and Save MetaData
 # ---------------------------------------------
 
+TERM_PATTERN = re.compile(r'\b(?:' + '|'.join(AI_TERMS) + r')\b', re.IGNORECASE)
+
 # function to check a video from a chennel's uploads playlist for date (within 6 months), contentc, etc.
-def check_vids(upload_items):
+def check_vids(upload_items, channel_id):
     # get the month time 6 months ago
     time_6_months_ago = get_time_months_ago_rfc3339(6)
 
@@ -70,11 +72,10 @@ def check_vids(upload_items):
 
             # call external function to check
             is_english_title = check_english(title)
-            is_english_description = check_english(title)
+            is_english_description = check_english(description)
             is_english_video = (is_english_title and is_english_description)
 
-            term_pattern = re.compile(r'\b(?:' + '|'.join(terms) + r')\b', re.IGNORECASE)
-            if term_pattern.search(title) and term_pattern.search(description) and is_english_video:
+            if TERM_PATTERN.search(title) and TERM_PATTERN.search(description) and is_english_video:
                 prefiltered_vid_ids.append(vid['contentDetails']['videoId'])
 
     # make the videos list request much more efficient by adding a list of video ids
@@ -94,6 +95,7 @@ def check_vids(upload_items):
         # iterate through the video ids and do the rest of the checks
         for item_id in range(len(video_items)):
             view_count = int(video_items[item_id]['statistics']['viewCount'])
+            channel = video_items[item_id]['snippet']['channelId']
 
             # ------------------------------------------
             #  Save Video Metrics for Metadata
@@ -106,7 +108,7 @@ def check_vids(upload_items):
                 "view_count": view_count,
                 "like_count": int(video_items[item_id]['statistics'].get('likeCount', 0)),
                 "comment_count": int(video_items[item_id]['statistics'].get('commentCount', 0)),
-                "duration": video_items[item_id]['contentDetails']['duration']
+                "duration": video_items[item_id]['contentDetails'].get('duration', 'unknown')
             }
 
             # check if video is in English using defaultLanguage or defaultAudioLanguage
@@ -117,6 +119,8 @@ def check_vids(upload_items):
             # -------------------------------------------
             # Check if Duration is Over 5 Minutes
             # -------------------------------------------
+            if video_metrics[video_items[item_id]['id']]["duration"] == 'unknown':
+                continue # do not add the current video to vids_filtered
 
             duration = isodate.parse_duration(video_metrics[item_id]["duration"])
             min_video_duration = (duration.total_seconds() >= 300.0)

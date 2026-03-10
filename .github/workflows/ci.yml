@@ -1,5 +1,8 @@
 # .github/workflows/ci.yml
-# on: [push]
+# name: CI
+# on:
+#   push:
+#     branches: [main]
 #
 # jobs:
 #   build:
@@ -14,8 +17,9 @@
 #         python-version: '3.x'
 #
 #       - name: Run Python script
-#       env: 
+#       env:
 #         YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
 #         WEBSHARE_PROXY_USER: ${{ secrets.WEBSHARE_PROXY_USER }}
-#         WEBSHARE_PROXY_PASSWORD: ${{ sercrets.WEBSHARE_PROXY_PASSWORD }}
+#         WEBSHARE_PROXY_PASSWORD: ${{ secrets.WEBSHARE_PROXY_PASSWORD }}
+#         GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
 #       run: python src\main.py
