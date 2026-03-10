@@ -47,7 +47,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "cross-env CI=false cross-env PUBLIC_URL=/ react-scripts build && gulp licenses",
-    "test": "react-scripts test --env=jsdom",
+    "test": "react-scripts test --env=jsdom --passWithNoTests",
     "eject": "react-scripts eject",
     "deploy": "npm run build",
     "lint:check": "eslint . --ext=js,jsx;  exit 0",
