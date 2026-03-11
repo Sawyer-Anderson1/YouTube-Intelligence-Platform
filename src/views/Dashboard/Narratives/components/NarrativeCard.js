@@ -22,10 +22,11 @@ const NarrativeCard = ({ title, name, description, image }) => {
       <CardBody w='100%'>
         <Flex flexDirection={{ sm: "row", lg: "column" }} w='100%'>
           <Flex
-            bg='blue.300'
+            //bg='blue.300'
             align='center'
             justify='center'
             borderRadius='15px'
+            overflow='hidden'
             width={{ lg: "100%" }}
             minHeight={{ sm: "250px" }}>
             {image}
