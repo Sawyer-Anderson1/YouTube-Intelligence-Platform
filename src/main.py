@@ -57,7 +57,7 @@ def scheduled_job_sequence():
         # then run the vector.py and rag.py (run_scheduled_queries())
         run_script('llm.vector')
 
-        run_scheduled_queries()
+        run_scheduled_queries(k_c = 40, k_t = 5, k_n = 5)
     except Exception as e:
         print(f"Transcript retrieval scripts failed to run: {e}")
 
