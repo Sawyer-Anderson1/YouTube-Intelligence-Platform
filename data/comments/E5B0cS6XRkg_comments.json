@@ -1,0 +1,37 @@
+[
+    {
+        "commentId": "UgwKduPkeezdP4gqt2x4AaABAg",
+        "author": "@SoCalGuitarist",
+        "text": "Hey Matt - more interviews please! News is great, but interviews with the movers and shakers in the AI industry is excellent",
+        "likes": 0,
+        "published_at": "2026-03-11T18:46:37Z"
+    },
+    {
+        "commentId": "UgwviR0DkipcQ1HH3dZ4AaABAg",
+        "author": "@trokk24",
+        "text": "Local is a joke until you realize that these consumer grade gpus can run these newer small models that beat the SOTA models the year prior. I think that the gains are marginal enough that local isnt just a hobby. As robotics grows, so too will local. Were at agents now but actual robots are in the near future.",
+        "likes": 4,
+        "published_at": "2026-03-09T20:44:36Z"
+    },
+    {
+        "commentId": "Ugx3QYH680I5NAQ3q0J4AaABAg",
+        "author": "@markg5891",
+        "text": "Interesting interview, well done! I'm really looking forward to seeing your OpenClaw get hacked by pliny :) That's going to be mightily educational for everyone! A note on the last part of this interview though. I don't quite like how Dylan answered your question about algorithmic compute cost. You clearly meant the hypothesized scenario that makes the transformer architecture an order of magnitude faster (or a new architecture altogether). I think that will happen soon for the simple fact that AI is getting used by so many people these days that surely there will be someone soon (this year) with a bright idea that makes it a lot faster. Todays AI models are insanely memory constrained (bandwidth), they would be much faster (in tokens per second) if they were compute constrained which already tells you that from a compute point of view we can already do much better. The memory is the problem. And you can already see a glimpse of a potential future in the dllm world (diffusion llm) where it's still the same painfully slow transformer architecture but done in a much more compute efficient way and with that being much faster already. Just context is a problem there. Then again, we did just a few days ago have MIT research came out that has compressed context to 1/50th (without loss!) with linear algebra math (fast math) where it compresses in seconds. And I'm sure more groundbreaking research is going to make LLMs much more efficient this year alone.",
+        "likes": 4,
+        "published_at": "2026-03-09T21:41:46Z"
+    },
+    {
+        "commentId": "UgziVxQrminpCWqI_mR4AaABAg",
+        "author": "@suzie1073",
+        "text": "Such an excellent discussion, thank you.  I'm just learning now about ai and it's a lot but your explaination of weights vs. harness really opened up a level of understanding for me.  All the tech folks are laughing at me right now but I don't care it was meaningful for me so thank you again.",
+        "likes": 0,
+        "published_at": "2026-03-11T14:23:31Z"
+    },
+    {
+        "commentId": "UgxLt-YIiMlwAd0utTt4AaABAg",
+        "author": "@partythenwork",
+        "text": "i think dylan is wrong on the future of inference.  i believe that once we have a \"good\" enough model we will go to the model lock method of taalas and have super fast and super cheap inference.",
+        "likes": 1,
+        "published_at": "2026-03-10T03:38:53Z"
+    }
+]
