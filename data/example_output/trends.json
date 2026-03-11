@@ -1,5 +1,73 @@
 {
-        "Rapid evolution of AI": "AI is rapidly evolving and becoming more capable of performing complex tasks, such as solving problems or completing tasks.",
-        "Decline of human personal assistants": "Human personal assistants are being replaced by AI assistants with some experts predicting an 80% reduction in human personal assistant jobs.",
-        "Growing ethical concerns": "There is a growing concern about the impact of agent technology on software companies, employment, and society as a whole"
+    "AI Adoption in Various Industries": {
+      "Description": "AI is being adopted in various industries such as power sector, healthcare, and education, to automate tasks, enhance productivity, and generate tangible ROI",
+      "video_ids": [
+        "UXeXcFTtGIk",
+        "v_8Ke2DwtyY",
+        "biwwQw0248w"
+      ],
+      "total_view_count": "368113",
+      "total_like_count": "984",
+      "total_comment_count": "0"
+    },
+    "Rise of AI-Powered Personal Assistants": {
+      "Description": "AI-powered personal assistants are becoming more prevalent, with the ability to remember users across sessions and adapt to their needs",
+      "video_ids": [
+        "tJS_ycc2lNs",
+        "JfE1Wun9xkk"
+      ],
+      "total_view_count": "293763",
+      "total_like_count": "245",
+      "total_comment_count": "693"
+    },
+    "Growing Importance of AI Safety": {
+      "Description": "AI safety is becoming a growing concern, with experts discussing the need for safe and responsible AI development",
+      "video_ids": [
+        "bLETmbi1WTA",
+        "9vnBn_G0xz4"
+      ],
+      "total_view_count": "235803",
+      "total_like_count": "615",
+      "total_comment_count": "88"
+    },
+    "Increased Focus on AI for Development": {
+      "Description": "There is an increased focus on using AI for development, particularly in the Global South, to address specific cultural, linguistic, and security needs",
+      "video_ids": [
+        "UXeXcFTtGIk",
+        "v_8Ke2DwtyY"
+      ],
+      "total_view_count": "286705",
+      "total_like_count": "647",
+      "total_comment_count": "0"
+    },
+    "Emergence of New AI Technologies": {
+      "Description": "New AI technologies such as embodied intelligence, service robotics, and visual language models are emerging, with potential applications in various industries",
+      "video_ids": [
+        "5aEbh4raa24",
+        "9vnBn_G0xz4"
+      ],
+      "total_view_count": "1751127",
+      "total_like_count": "352",
+      "total_comment_count": "10"
+    },
+    "Geopolitical Implications of AI": {
+      "Description": "AI is becoming a geopolitical priority, with countries investing heavily in AI research and development to gain a competitive edge",
+      "video_ids": [
+        "v_8Ke2DwtyY",
+        "NWAVsGEaKz8"
+      ],
+      "total_view_count": "1574417",
+      "total_like_count": "264",
+      "total_comment_count": "0"
+    },
+    "AI and Human Collaboration": {
+      "Description": "AI is being designed to collaborate with humans, with a focus on augmenting human capabilities rather than replacing them",
+      "video_ids": [
+        "biwwQw0248w",
+        "JfE1Wun9xkk"
+      ],
+      "total_view_count": "179440",
+      "total_like_count": "1647",
+      "total_comment_count": "668"
+    }
 }
