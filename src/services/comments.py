@@ -3,6 +3,7 @@
 # Google API client's build is imported to build the service object, for YouTube API
 # HttpError is imported
 # concurrent.futures for concurrency
+
 import os
 import re
 from pathlib import Path
@@ -41,7 +42,10 @@ except FileNotFoundError:
     print("Json file for channels not found")
 
 # terms that should be mentioned in the comments
-terms = ['ai', 'artificial intelligence', 'generative ai', 'large language models', 'llms', 'neural networds', 'ai bubble', 'machine learning', 'ml', 'chatgpt', 'agents', 'agentic ai', 'claude', 'gemini', 'moltbook', 'openclaw', 'grok']
+terms = ['ai', 'artificial intelligence', 'generative ai', 'large language models', 'llms', 'neural networks', 'ai bubble', 
+         'machine learning', 'ml', 'chatgpt', 'agents', 'agentic ai', 'claude', 'gemini', 'moltbook', 'openclaw', 'grok',
+         'model', 'deep learning', 'transformer', 'diffusion', 'latent space', 'microsoft', 'google', 'meta', 'tesla',
+         'nvidia', 'anthropic', 'openai']
 
 # function to perform the comment retrieval
 def comment_retrieve(vid_id):
@@ -49,7 +53,8 @@ def comment_retrieve(vid_id):
     comments = comment_threads.list(
         part="snippet",
         videoId=vid_id,
-        maxResults=5,
+        order='relevance',      # Gets the most relevant comments for the video
+        maxResults=20,          # Fetch top 20 comments (before filtering for english, min comment length, terms we want, etc.)
         textFormat='plainText'
     )
 
@@ -72,6 +77,10 @@ def comment_retrieve(vid_id):
 
             # get data
             comment_text = top_comment['snippet']['textDisplay']
+
+            # Remove emojis/unnecessary characters from comment text
+            comment_text = re.sub(r'[\U0001F1E0-\U0001F1FF]|[\U0001F300-\U0001F9FF]|[\U0001FA00-\U0001FA6F]|[\U0001FA70-\U0001FAFF]|[\u200d\u200c\ufe0f\u2640-\u2642\u2600-\u26FF\u2700-\u27BF]|\n|\u2019', '', comment_text)
+
             comment_author = top_comment['snippet']['authorDisplayName']
             comment_likes = top_comment['snippet']['likeCount']
             comment_publishedAt = top_comment['snippet']['publishedAt']
@@ -79,9 +88,10 @@ def comment_retrieve(vid_id):
             # check if the comment is english and if it contains the category related terms (not off topic)
             # call the external function
             is_english_comment = check_english(comment_text)
+            min_length = 100  # Minimum character length for comments
 
             term_pattern = re.compile(r'\b(?:' + '|'.join(terms) + r')\b', re.IGNORECASE)
-            if term_pattern.search(comment_text) and is_english_comment:
+            if term_pattern.search(comment_text) and is_english_comment and len(comment_text) >= min_length:
                 # format data in dictionary
                 comment_data = {
                     'commentId': top_comment_id,
@@ -96,6 +106,7 @@ def comment_retrieve(vid_id):
 
         # then write to comment folder
         try:
+            relevant_comments = relevant_comments[:5]   # Keep only top n comments that pass filters
             with open(vid_comments_pathlib, 'w') as json_file:
                 json.dump(relevant_comments, json_file, indent=4)
 
