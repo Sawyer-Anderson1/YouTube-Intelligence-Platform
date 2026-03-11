@@ -1,5 +1,128 @@
 {
-        "AI will replace humans": "As AI improves, it will become more capable of performing tasks typically done by humans, such as answering questions or completing tasks with tools like Google Assistant.",
-        "AI will revolutionize software development": "AI will enable new services and companies to emerge, making traditional software development models obsolete",
-        "Reduced environmental impact": "Data centers using AI will reduce their environmental impact, making them more sustainable."
+    "AGI Asymmetry Discovered": {
+      "Quote": "All papers disappoint me",
+      "video_id": "1nd2oAt2rEU",
+      "view_count": "5242",
+      "like_count": "176",
+      "comment_count": "14"
+    },
+    "AI Models Lack Understanding": {
+      "Quote": "They predict patterns based on training data",
+      "video_id": "EuRcthbcPho",
+      "view_count": "7303",
+      "like_count": "289",
+      "comment_count": "24"
+    },
+    "AI's Energy and Water Demands": {
+      "Quote": "The media is covering the general data center buildout a lot and there's a huge amount of uncertainty and concern",
+      "video_id": "zth0v4KVgr0",
+      "view_count": "59852",
+      "like_count": "35",
+      "comment_count": "9"
+    },
+    "Autonomous Agents": {
+      "Quote": "These systems don't just answer prompts, they plan, decide, and execute tasks across multiple steps",
+      "video_id": "EuRcthbcPho",
+      "view_count": "7303",
+      "like_count": "289",
+      "comment_count": "24"
+    },
+    "Neurosymbolic AI": {
+      "Quote": "Neurosymbolic AI is the path to superintelligence",
+      "video_id": "CAAE8c-_JK4",
+      "view_count": "21113",
+      "like_count": "300",
+      "comment_count": "54"
+    },
+    "AI Eats the World": {
+      "Quote": "AI is a change that will affect many industries",
+      "video_id": "RH9vJNxFKDA",
+      "view_count": "47117",
+      "like_count": "0",
+      "comment_count": "68"
+    },
+    "AI for Development": {
+      "Quote": "AI can be leveraged for long-form content or telling personal stories",
+      "video_id": "UXeXcFTtGIk",
+      "view_count": "21884",
+      "like_count": "347",
+      "comment_count": "0"
+    },
+    "AI in Defense": {
+      "Quote": "AI will play a greater role in defense and the strategy toward the defense",
+      "video_id": "UXeXcFTtGIk",
+      "view_count": "21884",
+      "like_count": "347",
+      "comment_count": "0"
+    },
+    "Trusted AI at Scale": {
+      "Quote": "The risk with AI is AI is going to take the wrong action",
+      "video_id": "SvhY0PuxoTk",
+      "view_count": "9827",
+      "like_count": "132",
+      "comment_count": "0"
+    },
+    "AI Research Symposium": {
+      "Quote": "We're trying to explain why a human would say that thing",
+      "video_id": "XvnJq0nttCs",
+      "view_count": "21458",
+      "like_count": "346",
+      "comment_count": "0"
+    },
+    "AI Translation": {
+      "Quote": "AI translation is behind many applications",
+      "video_id": "AIJ 2025",
+      "view_count": "811678",
+      "like_count": "270",
+      "comment_count": "0"
+    },
+    "Synthetic Reality": {
+      "Quote": "Synthetic reality is when people fabricate new species",
+      "video_id": "AIJ 2025",
+      "view_count": "811678",
+      "like_count": "270",
+      "comment_count": "0"
+    },
+    "New AI Robots": {
+      "Quote": "New AI robots just broke the skill barrier and now learn faster than humans",
+      "video_id": "m_TZ05y8XAs",
+      "view_count": "6154",
+      "like_count": "218",
+      "comment_count": "11"
+    },
+    "AI and Formal Methods": {
+      "Quote": "Formal methods paired with AI can potentially help with many aspects of the system",
+      "video_id": "Dm3DHPUFNwU",
+      "view_count": "94118",
+      "like_count": "24",
+      "comment_count": "0"
+    },
+    "AI and Human Behavior": {
+      "Quote": "AI is only successful if you are able to connect with human soul and algorithm",
+      "video_id": "UXeXcFTtGIk",
+      "view_count": "21884",
+      "like_count": "347",
+      "comment_count": "0"
+    },
+    "Building a Sovereign AI-Enabled Public Health Surveillance Grid": {
+      "Quote": "A sovereign AI-enabled public health surveillance grid can help with disease detection and prevention",
+      "video_id": "EMABNFilOQQ",
+      "view_count": "6536",
+      "like_count": "64",
+      "comment_count": "0"
+    },
+    "AI by Her": {
+      "Quote": "AI can be used to detect fake images and prevent misinformation",
+      "video_id": "todiG9MOtbI",
+      "view_count": "5531",
+      "like_count": "47",
+      "comment_count": "0"
+    },
+    "Curtain Raiser Event of India - AI Impact Summit 2026": {
+      "Quote": "India is launching several AI initiatives, including a 7 billion parameter foundation model for material discovery",
+      "video_id": "-reN8olEDSU",
+      "view_count": "6398",
+      "like_count": "104",
+      "comment_count": "7"
+    }
 }
