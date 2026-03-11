@@ -3,8 +3,6 @@
 # Google API client's build is imported to build the service object, for YouTube API
 # HttpError is imported
 # concurrent.futures for concurrency
-from dotenv import load_dotenv
-load_dotenv()
 
 import os
 import re
@@ -119,7 +117,7 @@ def comment_retrieve(vid_id):
        print(f'Error response status code : {e.status_code}, reason : {e.error_details}')
 
 # run the retrieval concurrently
-with ThreadPoolExecutor(max_workers=1) as executor:
+with ThreadPoolExecutor(max_workers=5) as executor:
     futures = []
 
     # for each of the video ids for each channel get comment threads
