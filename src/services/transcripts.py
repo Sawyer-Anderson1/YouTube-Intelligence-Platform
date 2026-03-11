@@ -15,7 +15,7 @@ import concurrent.futures
 from concurrent.futures import ThreadPoolExecutor
 
 # import the function to chunk the transcripts
-from chunk_transcripts import read_and_chunk_transcript
+from .chunk_transcripts import read_and_chunk_transcript
 
 from youtube_transcript_api import YouTubeTranscriptApi
 from youtube_transcript_api.proxies import WebshareProxyConfig
@@ -92,6 +92,17 @@ def clean_transcript(text):
 # Function to Asynchronously get Transcripts and Clean
 # --------------------------------------------------------
 
+# bring in the embedded log file so we will not fetch transcripts that it already has
+embedded_log_path = Path(__file__).parent.parent.parent / 'data' / "embedded_files.json"
+already_fetched = set()
+
+# load the already_embedded set with the information from the log file
+if embedded_log_path.exists():
+    try:
+        already_embedded = set(json.loads(embedded_log_path.read_text()))
+    except (json.JSONDecodeError, IOError) as e:
+        print(f"Warning: count not read embedded log, starting fresh: {e}")
+
 def fetch_transript(channel_id, vidx, vid_id):
     result = {
         'channel_id': channel_id,
@@ -144,10 +155,13 @@ def fetch_transript(channel_id, vidx, vid_id):
                 with open(filename, 'w') as json_file:
                     json.dump(cleaned_transcript_snippets, json_file, indent=4)
 
-                # ---------------------------------
-                #  Get Video Metrics for Video Id
-                # ---------------------------------
+                # -----------------------------------------------
+                #  Get Video Metrics for Video Id,
+                #   also add the Video Id to Trancript Metadata
+                # -----------------------------------------------
+
                 metrics = video_metrics[vid_id]
+                metrics["video_id"] = vid_id
 
                 # ---------------------------------------------
                 # Call the Function to Chunk the Transcript
@@ -263,8 +277,19 @@ with ThreadPoolExecutor(max_workers=MAX_WORKERS) as executor:
     # for each channel and videos in the vid_data, get the transcript of the videos
     for channel_id, vids_list in vid_ids.items():
         for vidx, vid_id in enumerate(vids_list):
-            future = executor.submit(fetch_transript, channel_id, vidx, vid_id)
-            futures.append(future)
+            # -----------------------------------------------
+            #  Check if Video has Already Been Fetched,
+            #  by Video Id, and Only Fetch Ones that Haven't
+            # -----------------------------------------------
+
+            if already_fetched:
+                if vid_id not in already_fetched:
+                    future = executor.submit(fetch_transript, channel_id, vidx, vid_id)
+                    futures.append(future)
+            else:
+                # else start fresh
+                future = executor.submit(fetch_transript, channel_id, vidx, vid_id)
+                futures.append(future)
 
     for future in concurrent.futures.as_completed(futures):
         try:

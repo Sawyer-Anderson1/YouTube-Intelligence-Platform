@@ -2,18 +2,39 @@
 import os
 import json
 import re
-from datetime import datetime, timezone
 from pathlib import Path
-
-# import Ollama and Langchain (prompting)
-from langchain_ollama.llms import OllamaLLM
-from langchain_core.prompts import ChatPromptTemplate
+from datetime import datetime, timezone
 
 # import MongoDB
 from pymongo import MongoClient
 
 # import retriever from vector.py
-from vector import retriever
+from .vector import retriever
+
+# import AI terms from constants file
+from ..constants import AI_TERMS
+
+# import Groq  and Langchain (prompting)
+from langchain_core.prompts import ChatPromptTemplate
+
+# import groq
+from langchain_groq import ChatGroq
+
+# -------------------------
+#  Import the Groq Api Key
+# -------------------------
+
+GROQ_API_KEY = os.getenv('GROQ_API_KEY')
+
+# ---------------------------------
+#  ChatGroq with Lamma Setup
+# ---------------------------------
+
+model = ChatGroq(
+    model = "llama-3.3-70b-versatile",
+    temperature = 0.7,
+    max_tokens=2048
+)
 
 # ----------------------------------
 #  MongoDB Setup
@@ -24,21 +45,15 @@ mongo_client = MongoClient(MONGO_URI)
 db = mongo_client['youtube_intelligence']
 results_collection = db['results']
 
-# ----------------------------------
-#  Ollama LLM setup
-# ----------------------------------
-
-model = OllamaLLM(model = "llama3.2")
-
 #----------------------------------
 #  Load Example Output Files for Few-Shot Prompting
 #----------------------------------
 
 try:
-    claims_file = json.load(open(Path(__file__).parent.parent.parent / "data" / "example_output" / "claims.json", "r"))[0]
-    narratives_file = json.load(open(Path(__file__).parent.parent.parent / "data" / "example_output" / "narratives.json", "r"))[0]
-    trends_file = json.load(open(Path(__file__).parent.parent.parent / "data" / "example_output" / "trends.json", "r"))[0]
-    risk_factors_file = json.load(open(Path(__file__).parent.parent.parent / "data" / "example_output" / "risk_factors.json", "r"))[0]
+    claims_file = json.load(open(Path(__file__).parent.parent.parent / "data" / "example_output" / "claims.json", "r"))
+    narratives_file = json.load(open(Path(__file__).parent.parent.parent / "data" / "example_output" / "narratives.json", "r"))
+    trends_file = json.load(open(Path(__file__).parent.parent.parent / "data" / "example_output" / "trends.json", "r"))
+    risk_factors_file = json.load(open(Path(__file__).parent.parent.parent / "data" / "example_output" / "risk_factors.json", "r"))
 except Exception as e:
     print(f"Error loading example output files: {e}")
     claims_file = "Error loading claims examples"
@@ -57,9 +72,12 @@ TEMPLATES = {
 
     'claims': """
 You are an expert in finding claims in the AI field from transcripts from YouTube transcripts.
-A claim is a specific factual or opinion statement made in a video transcript. Claims are granular, concrete, and often verifiable.
 
-Here are some relevant transcript chunks: 
+Each transcript chunk below includes some metadata, such as title, video id, publish date, engagement metrics, and content.
+Use the publish date to note whether claims are recent or older.
+Use view and like counts as a signal of how widely a claim is being circulated.
+
+Here are some relevant transcript chunks:
 {transcripts}
 
 Question: {question}
@@ -68,16 +86,22 @@ Use the examples below as a reference as to what the analysis should look like. 
 ### Examples of Claims:
 {claims_examples}
 
-Extract distinct claims actually present in the transcripts above. Do not invent claims not stated in the text.
-
 ### RULES:
+- Extract distinct claims actually present in the transcripts above. Do not invent claims not stated in the text.
 - Respond with ONLY a JSON object, nothing else
 - No markdown, no code blocks, no backticks
 - No introduction, no explanation, no notes after the JSON
-- Use this exact structure where each key is the claim title and each value is the description:
+- Aim for 10-20 findings maximum — do not generate more entries than you can complete
+- Always close the JSON object with }} before stopping
+- Use this exact structure where each KEY is the claim TITLE and each VALUE is the dictionary of DESCRIPTION or QUOTE, video_id, view_count, like_count, and comment_count.
+- Following description or quote of the claim, provide the video id where the claim comes from.
+- From the video id(s) provide the the video's view_count, like_count, comment_count.
+- Do not have newlines or other tags in the response
 
 ### Output Format
-{{"Claim title here": "Description of the claim here", "Another claim title": "Description here"}}
+{{"Claim title here": {{"Quote": "quote of the claim here", "video_id": "video_id here", "view_count": "view_count here", "like_count": "like_count here", "comment_count": "comment_count here"}}, "Another claim title": {{"Quote": "quote here", "video_id": "video_id here", "view_count": "view_count here", "like_count": "like_count here", "comment_count": "comment_count here"}}}}
+
+Do not reference speaker in description/quote.
 """,
 
     # --------------
@@ -86,27 +110,36 @@ Extract distinct claims actually present in the transcripts above. Do not invent
 
     'trends': """
 You are an expert in finding emerging trends in AI discussions from YouTube transcripts.
-Trends are the temporal pattern of activity around a narrative — how discussion grows, peaks, or declines over time.
+
+Each transcript chunk below includes some metadata, such as title, video id, publish date, engagement metrics, and content.
+Use the publish date to identify trends, and note whether trends are recent or older.
+Use view and like counts as a signal of how widely a trend is being circulated.
 
 Here are relevant transcript chunks:
 {transcripts}
 
 Question: {question}
 
-Use the examples below as a reference as to what the analysis should look like. But do not use these examples as part of your answer - they are only for reference to understand how to word the claims.
+Use the examples below as a reference as to what the analysis should look like. But do not use these examples as part of your answer - they are only for reference to understand how to word the trends.
 ### Examples of Trends:
 {trends_examples}
 
-Identify trends (i.e. shared claims) that are clearly present across multiple transcript chunks.
-
 ### RULES:
+- Identify trends (i.e. shared claims) that are clearly present across multiple transcript chunks.
 - Respond with ONLY a JSON object, nothing else
 - No markdown, no code blocks, no backticks
 - No introduction, no explanation, no notes after the JSON
-- Use this exact structure where each key is the trend title and each value is the description:
+- Aim for 5-8 findings maximum — do not generate more entries than you can complete
+- Always close the JSON object with }} before stopping
+- Use this exact structure where each KEY is the trend TITLE and each VALUE is the dictionary of DESCRIPTION, video_ids, total view_count, total like_count, and total comment_count.
+- Following description or quote of the trend, provide the video id(s) where the trend comes from.
+- From the video id(s) provide all the video's total view_count, total like_count, total comment_count.
+- Do not have newlines or other tags in the response
 
 ### Output Format
-{{"Trend title here": "Description of the trend here", "Another trend title": "Description here"}}
+{{"Trend title here": {{"Description: "description of trend here", "video_ids": ["video_id here", "another video_id"], "total_view_count": "total view_count here", "total_like_count": "total like_count here", "total_comment_count": "total comment_count here"}}, "Another trend title": {{"Description: "description here", "video_ids": ["video_id here", "another video_id"], "total_view_count": "total view_count here", "total_like_count": "total like_count here", "total_comment_count": "total comment_count here"}}}}
+
+Do not reference speaker in description.
 """,
 
     # -----------------
@@ -115,25 +148,36 @@ Identify trends (i.e. shared claims) that are clearly present across multiple tr
 
     'narratives': """
 You are an expert in finding dominant narratives around AI in YouTube video transcripts.
-A narrative is a high-level story, theme, or topic that connects multiple claims across videos. Narratives summarize the semantic meaning of clustered claims.
+
+Each transcript chunk below includes some metadata, such as title, video id, publish date, engagement metrics, and content.
+Use the publish date to identify, and note whether narratives are recent or older.
+Use view and like counts as a signal of how widely a narrative is being circulated.
 
 Here are relevant transcript chunks:
 {transcripts}
 
 Question: {question}
 
-Use the examples below as a reference as to what the analysis should look like. But do not use these examples as part of your answer - they are only for reference to understand how to word the claims.
+Use the examples below as a reference as to what the analysis should look like. But do not use these examples as part of your answer - they are only for reference to understand how to word the narratives.
 ### Examples of Narratives:
 {narratives_examples}
 
 ### RULES:
+- A narrative is a recurring framing or story being told about AI. Identify narratives present in the transcripts.
 - Respond with ONLY a JSON object, nothing else
 - No markdown, no code blocks, no backticks
 - No introduction, no explanation, no notes after the JSON
-- Use this exact structure where each key is the narrative title and each value is the description:
+- Aim for 5-8 findings maximum — do not generate more entries than you can complete
+- Always close the JSON object with }} before stopping
+- Use this exact structure where each KEY is the narrative TITLE and each VALUE is the dictionary of DESCRIPTION, video_ids, total view_count, total like_count, and total comment_count.
+- Following description or quote of the narrative, provide the video id(s) where the narrative comes from.
+- From the video id(s) provide all the video's total view_count, total like_count, total comment_count.
+- Do not have newlines or other tags in the response
 
 ### Output Format
-{{"Narrative title here": "Description of the narrative here", "Another narrative title": "Description here"}}
+{{"Narrative title here": {{"Description: "description of narrative here", "video_ids": ["video_id here", "another video_id"], "total_view_count": "total view_count here", "total_like_count": "total like_count here", "total_comment_count": "total comment_count here"}}, "Another narrative title": {{"Description: "description here", "video_ids": ["video_id here", "another video_id"], "total_view_count": "total view_count here", "total_like_count": "total like_count here", "total_comment_count": "total comment_count here"}}}}
+
+Do not reference speaker in description.
 """,
 
     # --------------------
@@ -143,27 +187,51 @@ Use the examples below as a reference as to what the analysis should look like. 
     'risk_factors': """
 You are an expert in finding risks and concerns about AI raised in YouTube video transcripts.
 
+Each transcript chunk below includes some metadata, such as title, video id, publish date, engagement metrics, and content.
+Use the publish date to identify, and note whether risk factors are recent or older.
+Use view and like counts as a signal of how widely a risk factor is being circulated.
+
 Here are relevant transcript chunks:
 {transcripts}
 
 Question: {question}
 
-Identify specific risks or concerns explicitly raised in the transcripts.
+Use the examples below as a reference as to what the analysis should look like. But do not use these examples as part of your answer - they are only for reference to understand how to word the risks.
+### Examples of Risk Factors:
+{risks_examples}
 
 ### RULES:
+- Identify specific risks or concerns explicitly raised in the transcripts.
 - Respond with ONLY a JSON object, nothing else
 - No markdown, no code blocks, no backticks
 - No introduction, no explanation, no notes after the JSON
-- Use this exact structure where each key is the risk factor title and each value is the description:
+- Aim for 5-8 findings maximum — do not generate more entries than you can complete
+- Always close the JSON object with }} before stopping
+- Use this exact structure where each KEY is the risk factor TITLE and each VALUE is the DESCRIPTION of risk factor.
+- In description of the risk factors, provide the video id(s) where the risk factors comes from.
+- From the video id(s) provide the the video's view_count, like_count, comment_count.
+- Do not have newlines or other tags in the response
 
 ### Output Format
 {{"Risk factor title here": "Description of the risk factor here", "Another risk factor title": "Description here"}}
+
+Do not reference speaker in description.
 """
 }
 
 # ----------------------------------
+#  Query Enrichment &
 #  Standard Weekly Queries
 # ----------------------------------
+
+BASE_TERMS = ' '.join(AI_TERMS)
+
+QUERY_ENRICHMENT = {
+    'claims': f'claims assertions arguments statements positions {BASE_TERMS}',
+    'trends': f'trends patterns emerging developments growing {BASE_TERMS}',
+    'narratives': f'narrative framing story perspective discourse {BASE_TERMS}',
+    'risk_factors': f'risk concerns dangers threats warnings safety {BASE_TERMS}'
+}
 
 # Weelky scheduled prompts - add to main.py scheduled_job_sequence()
 SCHEDULED_QUERIES = {
@@ -173,9 +241,38 @@ SCHEDULED_QUERIES = {
     "risk_factors": "What risks or concerns about AI are being raised?",
 }
 
-# -----------------------------------
-#  Function to Extract JSON
-# -----------------------------------
+# -------------------------------------
+#  Functions to Repair and Extract JSON
+# -------------------------------------
+
+def repair_json(text: str) -> str:
+    """
+    Attempt to fix common JSON truncation issues before parsing.
+    """
+    text = text.strip()
+
+    # Count opening and closing braces
+    open_braces   = text.count('{')
+    close_braces  = text.count('}')
+    open_brackets  = text.count('[')
+    close_brackets = text.count(']')
+
+    # If the last character is a comma (truncated mid-entry), remove it
+    if text.endswith(','):
+        text = text[:-1]
+
+    # If the last character is an incomplete value, remove the last entry
+    if not text.endswith(('}', ']', '"')):
+        # Find the last complete key-value pair
+        last_complete = max(text.rfind('",'), text.rfind('"}'))
+        if last_complete != -1:
+            text = text[:last_complete + 1]
+
+    # Append missing closing braces/brackets
+    text += '}' * (open_braces - close_braces)
+    text += ']' * (open_brackets - close_brackets)
+
+    return text
 
 def extract_json_from_response(text: str, query_type: str) -> dict:
     # strip any trailing text after } (or ] in the case where its a list)
@@ -199,11 +296,31 @@ def extract_json_from_response(text: str, query_type: str) -> dict:
     except json.JSONDecodeError:
         pass
 
+    # repair then parse
+    try:
+        repaired_text = repair_json(text)
+        parsed = json.loads(repaired_text)
+
+        # if an array is returned (not the dict), then convert to dict
+        if isinstance(parsed, list):
+            return {
+                    item.get(f'{query_type[:-1]} Title') or item.get(f'{query_type[:-1]} title') or item.get('title') or f"{query_type[:-1]} {i+1}": 
+                    item.get('Description') or item.get('description') or item.get('text') or str(item)
+                    for i, item in enumerate(parsed)
+                    if isinstance(item, dict)
+            }
+        return parsed
+    except json.JSONDecodeError:
+        pass
+
+    repaired_text = repair_json(text)
+
     # if we get codeblocks
-    code_block = re.search(r'```(?:json)?\s*([\s\S]*?)\s*```', text)
+    code_block = re.search(r'```(?:json)?\s*([\s\S]*?)\s*```', repaired_text)
     if code_block:
         try:
-            parsed = json.loads(code_block.group(1))
+            repaired = repair_json(code_block.group(1))
+            parsed = json.loads(repaired)
             if isinstance(parsed, list):
                 return {
                     item.get(f'{query_type[:-1]} Title') or item.get(f'{query_type[:-1]} title') or item.get('title') or f"{query_type[:-1]} {i+1}": 
@@ -215,7 +332,7 @@ def extract_json_from_response(text: str, query_type: str) -> dict:
             pass
 
     # then try finding a JSON object
-    json_obj = re.search(r'\{[\s\S]*\}', text)
+    json_obj = re.search(r'\{[\s\S]*\}', repaired_text)
     if json_obj:
         try:
             return json.loads(json_obj.group())
@@ -223,7 +340,7 @@ def extract_json_from_response(text: str, query_type: str) -> dict:
             pass
 
     # try finding a JSON array
-    json_arr = re.search(r'\[[\s\S]*\]', text)
+    json_arr = re.search(r'\[[\s\S]*\]', repaired_text)
     if json_arr:
         try:
             parsed = json.loads(json_arr.group())
@@ -241,10 +358,33 @@ def extract_json_from_response(text: str, query_type: str) -> dict:
     return {"raw_response": text}
 
 # -----------------------------------
+#  Function to Format the Trnascript
+#  Chunks with Metadata
+# -----------------------------------
+
+# originally had max chars per chunk when using ollama locally, because it would take too long but now have a better model through a cloud api so don't need it
+# MAX_CHARS_PER_CHUNK = 1500
+
+def format_chunk_with_metadata(doc):
+    m = doc.metadata
+    content = doc.page_content
+    return (
+        f"Title: {m.get('title', 'unknown')}\n"
+        f"Video Id: {m.get('video_id', 'unknown')}\n"
+        f"Published At: {m.get('published_at', 0.0)}\n"
+        f"View Count: {m.get('view_count', 0)}\n"
+        f"Like Count: {m.get('like_count', 0)}\n"
+        f"Comment Count: {m.get('comment_count', 0)}\n"
+        f"Duration: {m.get('total_duration', 'unknown')}\n"
+        f"{content}"
+    )
+
+# -----------------------------------
 #  Core Query Function
 # -----------------------------------
 
-MAX_CONTEXT_CHARS = 3000
+# changed the limit from max chars to max chars per chunk, since using max_context_chars would only leave about one transcript chunk in the actual RAG
+# MAX_CONTEXT_CHARS = 3000
 
 # args:
 #       - Takes question, which is static for SCHEDULED_QUERIES, but dynamic in testing or if users query themselves
@@ -258,38 +398,53 @@ def run_query(query_type, question):
     chain = prompt | model
 
     # get relevant transcript chunks from ChromaDB
-    transcript_chunks = retriever.invoke(question)
+
+    # -----------------------------------
+    #  Use Enriched Query with Key Terms
+    # -----------------------------------
+    enriched_query = f"{question} {QUERY_ENRICHMENT.get(query_type, '')}"
+    transcript_chunks = retriever.invoke(enriched_query)
 
     # build context string from retrieved chunks
-    transcripts = "\n\n".join([chunk.page_content for chunk in transcript_chunks])
-    transcripts = transcripts[:MAX_CONTEXT_CHARS]
+    # added a delimiter since the model will need to distinguish between them now that theres metadata
+    transcripts = "\n\n###\n\n".join([
+        format_chunk_with_metadata(chunk) for chunk in transcript_chunks
+    ])
 
-    if query_type == "claims":
-        result = chain.invoke({"transcripts": transcripts, "question": question, "claims_examples": claims_file})
-    elif query_type == "narratives":
-        result = chain.invoke({"transcripts": transcripts, "question": question, "narratives_examples": narratives_file})
-    elif query_type == "trends":
-        result = chain.invoke({"transcripts": transcripts, "question": question, "trends_examples": trends_file})
-    elif query_type == "risk_factors":
-        result = chain.invoke({"transcripts": transcripts, "question": question, "risk_factors_examples": risk_factors_file})
+    # --------------------------------------------
+    #  Invoke based off query_type, for few-shot
+    # --------------------------------------------
+
+    match query_type:
+        case 'claims':
+            result = chain.invoke({"transcripts": transcripts, "question": question, 'claims_examples': claims_file})
+        case 'trends':
+            result = chain.invoke({"transcripts": transcripts, "question": question, 'trends_examples': trends_file})
+        case 'narratives':
+            result = chain.invoke({"transcripts": transcripts, "question": question, 'narratives_examples': narratives_file})
+        case 'risk_factors':
+           result = chain.invoke({"transcripts": transcripts, "question": question, 'risks_examples': risk_factors_file})
+        case _:
+            result = chain.invoke({"transcripts": transcripts, "question": question, 'claims_examples': claims_file})
 
     # put the result through a parser to extract the json from the resonse
-    parsed_result = extract_json_from_response(result, query_type)
+    parsed_result = extract_json_from_response(result.text, query_type)
 
     # Build source chunk references from metadatas
     source_chunks = [
         {
             'channel_id': chunk.metadata.get('channel_id', 'unknown'),
-            'video_index': chunk.metadata.get('video_index', 'unkown'),
+            'video_id': chunk.metadata.get('video_id', 'unknown'),
+            'video_index': chunk.metadata.get('video_index', 'unknown'),
             'start': chunk.metadata.get('start', 0.0),
             'duration': chunk.metadata.get('duration', 0.0),
             "title": chunk.metadata.get('title', ''),
             "published_at": chunk.metadata.get('published_at', 0.0),
             "view_count": chunk.metadata.get('view_count', 0),
             "like_count": chunk.metadata.get('like_count', 0),
-            "comment_count": chunk.metadata.get('comment_coun', 0),
+            "comment_count": chunk.metadata.get('comment_count', 0),
             "total_duration": chunk.metadata.get('total_duration', ''),
-            'source_file': chunk.metadata.get('source_file', 'unkown')
+            'source_file': chunk.metadata.get('source_file', 'unknown')
         }
         for chunk in transcript_chunks
     ]
@@ -302,7 +457,7 @@ def run_query(query_type, question):
             'question': question,
             'result_text': parsed_result,
             'source_chunks': source_chunks,
-            'model': 'llama3.2',
+            'model': 'llama-3.3-70b-versatile',
             'retrieval_k': len(transcript_chunks)
     }
 
@@ -336,7 +491,6 @@ def run_scheduled_queries():
 
 # main function for testing
 if __name__ == '__main__':
-
     print("RAG interactive mode (local testing)")
     while True:
         print("\n\n-----------------------------")
@@ -356,4 +510,4 @@ if __name__ == '__main__':
             print(f"\nResults: {result['result_text']}")
             print(f"\nSources: {len(result['source_chunks'])} chunks retrieved")
         except Exception as e:
-            print(f"Error with running query of type:{query_type} and question: {question}: {e}")
+            print(f"Error with running query of type: {query_type} and question: {question}: {e}")

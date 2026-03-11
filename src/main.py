@@ -10,7 +10,7 @@ from apscheduler.schedulers.background import BackgroundScheduler
 from pymongo import MongoClient
 
 # import scheduled RAG query runner
-from llm.rag import run_scheduled_queries
+from .llm.rag import run_scheduled_queries
 
 # ----------------------------------
 #  Setup MongoDB
@@ -28,26 +28,34 @@ results_collection = db['results']
 # implementing the cron jobs
 # the function that runs scripts passed to it
 def run_script(script_name):
-    result = subprocess.run(['python3', script_name], capture_output=True, text=True)
+    # ----------------------------
+    #  Run the Scripts as Modules
+    # ----------------------------
+
+    result = subprocess.run(['python3 -m', script_name], capture_output=True, text=True)
     result.check_returncode()
 
 # the function that defines the scripts that will be run once a week
 def scheduled_job_sequence():
     try:
+        # ------------------------------
+        #  Give Module Path of Scripts
+        # ------------------------------
+
         # run the script to get the channels that have videos relevant to the category
-        run_script('/services/youtube_api_channel_search.py')
+        run_script('services.youtube_api_channel_search')
 
         # run the script to get the videos from the channels that have to do with the category
-        run_script('/services/youtube_api_channel_vids.py')
+        run_script('services.youtube_api_channel_vids')
 
         # then run the script to get the transcripts from the channels
-        run_script('/services/transcripts.py')
+        run_script('services.transcripts')
 
         # add the comments retrieval here
         # ...
 
         # then run the vector.py and rag.py (run_scheduled_queries())
-        run_script('/llm/vector.py')
+        run_script('llm.vector')
 
         run_scheduled_queries()
     except Exception as e:
