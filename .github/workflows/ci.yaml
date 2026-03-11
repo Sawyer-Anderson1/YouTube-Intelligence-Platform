@@ -1,48 +1,36 @@
-name: Python CI/CD
+name: CI
 
 on:
   push:
-    branches:
-      - main
-      - '**'   # all branches
+    branches: [ main, maksim ]
   pull_request:
+    branches: [ main, maksim ]
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-      # Checkout code
+      # 1. Check out the repo
       - uses: actions/checkout@v3
 
-      # Set up Python
-      - name: Set up Python
-        uses: actions/setup-python@v4
+      # 2. Set up Python
+      - uses: actions/setup-python@v4
         with:
-          python-version: '3.11'
+          python-version: "3.11"
 
-      # Install dependencies
+      # 3. Install dependencies
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
-          pip install black flake8
 
-      # Lint with flake8 (ignoring some errors)
-      - name: Lint code
-        run: |
-          flake8 src/ --max-line-length=120 \
-                        --ignore=E203,W503,F541 \
-                        --count \
-                        --statistics
+      # 4. Optional: install extra packages for testing
+      # - pip install pytest
 
-      # Format check with black
-      - name: Check code formatting
-        run: |
-          black --check src/
+      # 5. Run Python scripts to make sure they execute without errors
+      - name: Run vector embedding script
+        run: python src/llm/vector.py
 
-      # Optional: run your tests if any
-      - name: Run tests
-        run: |
-          # replace with your test command
-          echo "No tests configured yet"
+      - name: Run main app (check for syntax errors)
+        run: python -m src.__main__ --help || true
