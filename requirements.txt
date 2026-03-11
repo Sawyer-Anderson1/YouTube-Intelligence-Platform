@@ -103,6 +103,7 @@ keras==3.13.1
 kiwisolver==1.4.9
 kubernetes==35.0.0
 langchain==1.2.6
+langchain-ollama
 langchain-chroma==1.1.0
 langchain-classic==1.0.1
 langchain-community==0.4.1
