@@ -6,6 +6,8 @@ chroma_langchain_db/
 # ignore local virtual environments
 .venv/
 
+#ignore data
+data
 
 # ignore the pycache
 __pycache__/
