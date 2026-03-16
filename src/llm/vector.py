@@ -2,7 +2,7 @@ import os
 import json
 from pathlib import Path
 
-from langchain_ollama import OllamaEmbeddings
+from langchain_huggingface import HuggingFaceEndpointEmbeddings
 from langchain_chroma import Chroma
 from langchain_core.documents import Document
 
@@ -10,8 +10,12 @@ from langchain_core.documents import Document
 #  Setup for Embeddings and VectorDB
 # ----------------------------------------------
 
-# embedding model from Ollama
-embeddings = OllamaEmbeddings(model = "mxbai-embed-large")
+# embedding model from HuggingFace (mixedbread-ai/mxbai-embed-large-v1)
+# changed from a local embedding model through Ollama to a cloud API through HuggingFace
+embeddings = HuggingFaceEndpointEmbeddings(
+        huggingfacehub_api_token = os.getenv("HF_API_KEY"),
+        model = "mxbai-embed-large"
+    )
 
 # the instantiation of the vector store and db location
 db_location = Path(__file__).parent.parent.parent / "chroma_langchain_db"
