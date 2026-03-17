@@ -1,8 +1,9 @@
 import os
 import json
+import time
 from pathlib import Path
 
-from langchain_huggingface import HuggingFaceEndpointEmbeddings
+from langchain_cohere import CohereEmbeddings
 from langchain_chroma import Chroma
 from langchain_core.documents import Document
 
@@ -10,11 +11,12 @@ from langchain_core.documents import Document
 #  Setup for Embeddings and VectorDB
 # ----------------------------------------------
 
-# embedding model from HuggingFace (mixedbread-ai/mxbai-embed-large-v1)
-# changed from a local embedding model through Ollama to a cloud API through HuggingFace
-embeddings = HuggingFaceEndpointEmbeddings(
-        huggingfacehub_api_token = os.getenv("HF_API_KEY"),
-        model = "mxbai-embed-large"
+# embedding model from HuggingFace 
+# changed from a local embedding model through Ollama to Cohere cloud API through HuggingFace
+COHERE_BATCH_SIZE = 96
+embeddings = CohereEmbeddings(
+        model = "embed-english-v3.0",
+        cohere_api_key = os.getenv("COHERE_API_KEY")
     )
 
 # the instantiation of the vector store and db location
@@ -98,16 +100,17 @@ def embed_transcripts():
         if video_id not in already_embedded:
             new_files.append(os.path.basename(filepath))
 
-    print(new_files)
     if not new_files:
         print("No new transcript files to embed.")
     else:
         print(f"Embedding {len(new_files)} new transcript file(s)...")
 
-        total_chunks_embedded = 0
+        all_docs = []
+        all_ids = []
+        file_video_ids = []
 
         # go through each file in new files
-        for file_num, js in enumerate(new_files):
+        for file_num, js in enumerate(new_files, start=1):
             print(f"[{file_num + 1}/{len(new_files)}] Embedding {js}...", flush=True)
 
             filepath = os.path.join(path_to_transcripts, js)
@@ -147,8 +150,6 @@ def embed_transcripts():
             comment_count = video_metrics["comment_count"]
             total_duration = video_metrics["duration"]
 
-            file_docs = []
-            file_ids = []
             # then iterate through the pandas dataframe made from the trnascript file
             for i, chunk in enumerate(chunks):
                 # ignore final chunk (i.e. the metadata dictionary from video metrics)
@@ -185,35 +186,45 @@ def embed_transcripts():
                     # id for transcript chunk
                     id = f"{js}_{i}"
                 )
-                file_ids.append(f"{js}_{i}")
-                file_docs.append(doc)
+                all_ids.append(f"{js}_{i}")
+                all_docs.append(doc)
 
             # ----------------------------------------
-            #  Embed and Save Video Ids into Log File
+            #  Save Video Ids into Log File
             # ----------------------------------------
 
-            if not file_docs:
-                print(f"No valid chunks found in {js}, skipping.", flush=True)
-                continue
+            file_video_ids.append(video_id)
 
-            try:
-                print(f" Built {len(file_docs)} docs, starting embed...", flush=True)
-                # embed this file's chunks immediatley - do not batch across files
-                vector_store.add_documents(documents=file_docs, ids=file_ids)
-                print(f"Add documents returned", flush=True)
+        try:
+            print(f" Built {len(all_docs)} docs, starting embed...", flush=True)
+            # embed this file's chunks immediatley - do not batch across files
 
-                # update sidecar log
-                already_embedded.add(video_id)
+            # -----------------------
+            #  Batch Documents
+            # -----------------------
 
-                # if this is the first run and the embedded_log_path doesn't exist yet, then it is created here
-                embedded_log_path.write_text(json.dumps(list(already_embedded)))
+            for i in range(0, len(all_docs), COHERE_BATCH_SIZE):
+                batch_docs = all_docs[i: i + COHERE_BATCH_SIZE]
+                batch_ids = all_ids[i: i + COHERE_BATCH_SIZE]
+                vector_store.add_documents(documents=batch_docs, ids=batch_ids)
+                print(f"Batch: {i // COHERE_BATCH_SIZE + 1}: Embedded: {len(batch_docs)}", flush=True)
 
-                total_chunks_embedded += len(file_docs)
-                print(f"Embedded {len(file_docs)} chunks", flush=True)
+                MIN_SECONDS_PER_CALL = 0.8
 
-            except Exception as e:
-                print(f" Failed to embed {js}: {e}", flush=True)
-                continue
+                num_batches = max(1, len(all_docs) // 96 + 1)
+                sleep_time = num_batches * MIN_SECONDS_PER_CALL
+                time.sleep(sleep_time)
+
+            # update sidecar log
+            already_embedded.update(file_video_ids)
+
+            # if this is the first run and the embedded_log_path doesn't exist yet, then it is created here
+            embedded_log_path.write_text(json.dumps(list(already_embedded)))
+
+            print(f"All embedded {len(all_docs)} chunks", flush=True)
+
+        except Exception as e:
+            print(f" Failed to embed: {e}", flush=True)
 
 if __name__ == '__main__':
     embed_transcripts()
