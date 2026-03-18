@@ -44,9 +44,9 @@ jobs:
       # doesn't actually execute, to avoid needing to import the API keys here
       - name: Check Syntax on Key Files
         run: | 
-          python -m py_compile src.llm.vector
-          python -m py_complile src.llm.rag
-          python -m py_compile src.main
+          python -m py_compile src/llm/vector.py
+          python -m py_complile src/llm/rag.py
+          python -m py_compile src/main.py
           echo "All files passed syntax checking"
 
   # Deploy
