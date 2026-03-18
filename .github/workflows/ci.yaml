@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
-
+    
     steps:
       # 1. Check out the repo
       - uses: actions/checkout@v3
@@ -40,12 +40,14 @@ jobs:
       # 4. Optional: install extra packages for testing
       # - pip install pytest
 
-      # 5. Run Python scripts to make sure they execute without errors
-      - name: Run vector embedding script
-        run: python -m src.llm.vector
-
-      - name: Run main app (check for syntax errors)
-        run: python -m src.__main__ --help || true
+      # 5. Run Python scripts to check for syntax
+      # doesn't actually execute, to avoid needing to import the API keys here
+      - name: Check Syntax on Key Files
+        run: | 
+          python -m py_compile src.llm.vector
+          python -m py_complile src.llm.rag
+          python -m py_compile src.main
+          echo "All files passed syntax checking"
 
   # Deploy
   # deploy:
