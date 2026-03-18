@@ -45,7 +45,7 @@ jobs:
       - name: Check Syntax on Key Files
         run: | 
           python -m py_compile src/llm/vector.py
-          python -m py_complile src/llm/rag.py
+          python -m py_compile src/llm/rag.py
           python -m py_compile src/main.py
           echo "All files passed syntax checking"
 
