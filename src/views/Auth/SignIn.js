@@ -1,4 +1,5 @@
 import React from "react";
+import { Link as RouterLink } from "react-router-dom";
 // Chakra imports
 import {
   Box,
@@ -12,13 +13,46 @@ import {
   Switch,
   Text,
   useColorModeValue,
+  Icon,
+  HStack,
 } from "@chakra-ui/react";
 // Assets
 import signInImage from "assets/img/signInImage.png";
 import { signInWithPopup } from "firebase/auth";
 import { auth, googleProvider } from "../../firebaseConfig";
+import { useState } from "react";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { FaGoogle, FaFacebook, FaApple } from "react-icons/fa";
 
 function SignIn() {
+  const bgIcons = useColorModeValue("blue.200", "rgba(255, 255, 255, 0.5)");
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const handleSignIn = async () => {
+    try {
+      if (!email || !password) {
+        alert("Enter email and password");
+        return;
+      }
+
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        email,
+        password,
+      );
+
+      console.log("Logged in:", userCredential.user);
+    } catch (error) {
+      if (error.code === "auth/user-not-found") {
+        alert("User not found");
+      } else if (error.code === "auth/wrong-password") {
+        alert("Wrong password");
+      } else {
+        alert(error.message);
+      }
+    }
+  };
   // Chakra color mode
   const handleGoogleSignIn = async () => {
     try {
@@ -35,7 +69,7 @@ function SignIn() {
   const titleColor = useColorModeValue("blue.300", "blue.200");
   const textColor = useColorModeValue("gray.400", "white");
   return (
-    <Flex position="relative" mb="40px">
+    <Flex position="relative" mb="40px" mt="150px">
       <Flex
         h={{ sm: "initial", md: "75vh", lg: "85vh" }}
         w="100%"
@@ -55,7 +89,6 @@ function SignIn() {
             direction="column"
             w="100%"
             background="transparent"
-            p="48px"
             mt={{ md: "150px", lg: "80px" }}
           >
             <Heading color={titleColor} fontSize="32px" mb="10px">
@@ -75,6 +108,8 @@ function SignIn() {
                 Email
               </FormLabel>
               <Input
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 borderRadius="15px"
                 mb="24px"
                 fontSize="sm"
@@ -86,6 +121,8 @@ function SignIn() {
                 Password
               </FormLabel>
               <Input
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
                 borderRadius="15px"
                 mb="36px"
                 fontSize="sm"
@@ -93,18 +130,8 @@ function SignIn() {
                 placeholder="Your password"
                 size="lg"
               />
-              <FormControl display="flex" alignItems="center">
-                <Switch id="remember-login" colorScheme="teal" me="10px" />
-                <FormLabel
-                  htmlFor="remember-login"
-                  mb="0"
-                  ms="1"
-                  fontWeight="normal"
-                >
-                  Remember me
-                </FormLabel>
-              </FormControl>
               <Button
+                onClick={handleSignIn}
                 fontSize="10px"
                 type="submit"
                 bg="teal.300"
@@ -122,19 +149,77 @@ function SignIn() {
               >
                 SIGN IN
               </Button>
-              <Button
-                fontSize="10px"
-                bg="red.400"
-                w="100%"
-                h="45"
-                mb="20px"
-                color="white"
-                onClick={handleGoogleSignIn}
-                _hover={{ bg: "red.500" }}
-                _active={{ bg: "red.600" }}
+              <Text
+                fontSize="lg"
+                color="gray.400"
+                fontWeight="bold"
+                textAlign="center"
+                mb="22px"
               >
-                Sign in with Google
-              </Button>
+                or
+              </Text>
+              <HStack spacing="15px" justify="center" mb="22px">
+                <Flex
+                  justify="center"
+                  align="center"
+                  w="75px"
+                  h="75px"
+                  borderRadius="15px"
+                  border="1px solid lightgray"
+                  cursor="pointer"
+                  transition="all .25s ease"
+                  _hover={{ filter: "brightness(120%)", bg: bgIcons }}
+                >
+                  <Link href="#">
+                    <Icon
+                      as={FaFacebook}
+                      w="30px"
+                      h="30px"
+                      _hover={{ filter: "brightness(120%)" }}
+                    />
+                  </Link>
+                </Flex>
+                <Flex
+                  justify="center"
+                  align="center"
+                  w="75px"
+                  h="75px"
+                  borderRadius="15px"
+                  border="1px solid lightgray"
+                  cursor="pointer"
+                  transition="all .25s ease"
+                  _hover={{ filter: "brightness(120%)", bg: bgIcons }}
+                >
+                  <Link href="#">
+                    <Icon
+                      as={FaApple}
+                      w="30px"
+                      h="30px"
+                      _hover={{ filter: "brightness(120%)" }}
+                    />
+                  </Link>
+                </Flex>
+                <Flex
+                  justify="center"
+                  align="center"
+                  w="75px"
+                  h="75px"
+                  borderRadius="15px"
+                  border="1px solid lightgray"
+                  cursor="pointer"
+                  transition="all .25s ease"
+                  _hover={{ filter: "brightness(120%)", bg: bgIcons }}
+                >
+                  <Link href="#">
+                    <Icon
+                      as={FaGoogle}
+                      w="30px"
+                      h="30px"
+                      _hover={{ filter: "brightness(120%)" }}
+                    />
+                  </Link>
+                </Flex>
+              </HStack>
             </FormControl>
             <Flex
               flexDirection="column"
@@ -145,7 +230,13 @@ function SignIn() {
             >
               <Text color={textColor} fontWeight="medium">
                 Don't have an account?
-                <Link color={titleColor} as="span" ms="5px" fontWeight="bold">
+                <Link
+                  as={RouterLink}
+                  to="/auth/signup"
+                  color={titleColor}
+                  ms="5px"
+                  fontWeight="bold"
+                >
                   Sign Up
                 </Link>
               </Text>
