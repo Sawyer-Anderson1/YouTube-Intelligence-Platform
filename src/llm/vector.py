@@ -209,6 +209,7 @@ def embed_transcripts():
                 vector_store.add_documents(documents=batch_docs, ids=batch_ids)
                 print(f"Batch: {i // COHERE_BATCH_SIZE + 1}: Embedded: {len(batch_docs)}", flush=True)
 
+                # sleep for a dynamically determined period before embedding the next batch
                 MIN_SECONDS_PER_CALL = 0.8
 
                 num_batches = max(1, len(all_docs) // 96 + 1)

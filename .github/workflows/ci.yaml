@@ -80,6 +80,13 @@ jobs:
       # with:
       #   app-name: youtube-intelligence-platform
       #   publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+      #   general-settings-json: |
+      #     [
+      #       {
+      #         "name": "appCommandLine",
+      #         "value": "uvicorn src.main:app --host 0.0.0.0 --port 8000
+      #       }
+      #     ]
       #   app-settings-json: |
       #     [
       #       {"name": "YOUTUBE_API_KEY", "value": "${{ secrets.YOUTUBE_API_KEY }}", "slotSetting": false },
