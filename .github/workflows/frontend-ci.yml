@@ -22,6 +22,8 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: '18'  # compatible with React 16 and cross-env
+          cache: "npm"
+          cache-dependency-path: package-lock.json
 
       # Install dependencies
       - name: Install dependencies
@@ -39,6 +41,36 @@ jobs:
       - name: Run tests
         run: npm test
 
-      # Optional: deploy step
-      # - name: Deploy
-      #   run: npm run deploy
+      # Upload build artifact for deployment
+      - name: Upload frontend artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: frontend
+          path: build/
+
+  # -------------------
+  #  Deploy
+  # -------------------
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build-and-test
+    if: github.event_name == 'push' && github.ref == 'refs/heads/frontend-main'
+    permissions:
+      contents: read
+
+    steps:
+      - name: Download frontend artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: frontend
+
+      - name: Deploy to Azure Static Web Apps
+        uses: Azure/static-web-apps-deploy@v1
+        with:
+          azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_WONDERFUL_DUNE_0050C5F0F }}
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          action: upload
+          app_location: "/"
+          output_location: ""
+          skip_app_build: true # don't rebuild use the artifact
