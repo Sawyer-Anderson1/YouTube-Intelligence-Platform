@@ -128,7 +128,7 @@ export const IntelligenceUILogo = createIcon({
   displayName: "IntelligenceUILogo",
   //viewbox: "0 0 32 32",
   path: (
-    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="-4 -4 50 50"><defs><image id="a" width="32" height="32" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAMAAABEpIrGAAAAAXNSR0IB2cksfwAAADlQTFRFAAAA/////////zNc/xJB/wAz/v7+/////v7+/v7+/xlH/////ytV/xRD/0Np/////////v7+/v7+5B88iQAAABN0Uk5TABEA////UQJFW///////CBBuR0yg7lkAAAC1SURBVHicpZNhCwIhDIb3Xifal6v//yOD6EPUwS13oqUuRySC4B52z80NBMQN6hcz0wyEJ2hSwrI2Yo8J38I7wjZwGMUjgTn7OfCqmMJRAUgjKkAjaoDwMADJ4VYdCFsCGtkGkAS1bC/ZyPa/ubu8iU8g3RbZFsj2CSjED4Bn4xOe0208dUkJSKXzqdbBLNSw1OZjNXJ6Bqth1JYzm3a5F4mu3Uja/v/JOt2Gw7sgHK+D8T9fXk8dZbuGk67NAAAAAElFTkSuQmCC"/></defs><use href="#a"/></svg>
+    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="-4 -4 50 50"><defs><image id="a" width="32" height="32" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgBAMAAACBVGfHAAAAAXNSR0IB2cksfwAAACRQTFRFAAAA/zNc/xJB/wAz/wAz/wAz/zVf/zNd/wAz/////xlH/0RpjPVeVwAAAAx0Uk5TAEua0fL/K77p//9LVSyO5QAAAKVJREFUeJxjZGAQUlJkgIB39+4zMDKkv2NAAMUuRrb6C0gCzByM7H4MyECaUdQBReAPo6oBkHI4ABP4y2iqAKRc9sAE/jG6CoAE/sCU/GcMBVEuDHAlMAG4EoQA1GCEFqjBUAGgDqjBUIE9cIMhAiD9UIMhAhBzwEpwCGBowTAU01oMh2E6HcNzPBtgAhgBhBGEGIG8dQEDMviDGVEYUYkR2ejJAQCE8kqlvThtLgAAAABJRU5ErkJggg=="/></defs><use href="#a"/></svg>
   ),
 });
 
