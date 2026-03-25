@@ -78,8 +78,8 @@ def comment_retrieve(vid_id):
             # get data
             comment_text = top_comment['snippet']['textDisplay']
 
-            # Remove non-ASCII characters, timestamps, and newlines from comment text
-            comment_text = re.sub(r'[^\x00-\x7F]|\n|\d{1,2}:\d{2}(?::\d{2})?', '', comment_text)
+            # Remove emojis/unnecessary characters from comment text
+            comment_text = re.sub(r'[\U0001F1E0-\U0001F1FF]|[\U0001F300-\U0001F9FF]|[\U0001FA00-\U0001FA6F]|[\U0001FA70-\U0001FAFF]|[\u200d\u200c\ufe0f\u2640-\u2642\u2600-\u26FF\u2700-\u27BF]|\n|\u2019', '', comment_text)
 
             comment_author = top_comment['snippet']['authorDisplayName']
             comment_likes = top_comment['snippet']['likeCount']
@@ -88,11 +88,10 @@ def comment_retrieve(vid_id):
             # check if the comment is english and if it contains the category related terms (not off topic)
             # call the external function
             is_english_comment = check_english(comment_text)
-            min_length = 75  # Minimum character length for comments
-            max_length = 300  # Maximum character length for comments
+            min_length = 100  # Minimum character length for comments
 
             term_pattern = re.compile(r'\b(?:' + '|'.join(terms) + r')\b', re.IGNORECASE)
-            if term_pattern.search(comment_text) and is_english_comment and len(comment_text) >= min_length and len(comment_text) <= max_length:
+            if term_pattern.search(comment_text) and is_english_comment and len(comment_text) >= min_length:
                 # format data in dictionary
                 comment_data = {
                     'commentId': top_comment_id,
@@ -118,7 +117,7 @@ def comment_retrieve(vid_id):
        print(f'Error response status code : {e.status_code}, reason : {e.error_details}')
 
 # run the retrieval concurrently
-with ThreadPoolExecutor(max_workers=1) as executor:
+with ThreadPoolExecutor(max_workers=5) as executor:
     futures = []
 
     # for each of the video ids for each channel get comment threads
