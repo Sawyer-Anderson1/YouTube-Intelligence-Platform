@@ -75,7 +75,7 @@ TEMPLATES = {
     'claims': """
 You are an expert in finding claims in the AI field from transcripts from YouTube transcripts and comments.
 
-Each transcript chunk below includes some metadata, such as title, video id, publish date, engagement metrics, and content.
+Each transcript chunk below includes some metadata, such as title, video id, publish date, engagement metrics, comments, and content.
 Use the publish date to note whether claims are recent or older.
 Use view and like counts as a signal of how widely a claim is being circulated.
 Use comments to identify any additional claims
@@ -113,9 +113,9 @@ Do not reference speaker in description/quote.
     # --------------
 
     'trends': """
-You are an expert in finding emerging trends in AI discussions from YouTube transcripts.
+You are an expert in finding emerging trends in AI discussions from YouTube transcripts and comments.
 
-Each transcript chunk below includes some metadata, such as title, video id, publish date, engagement metrics, and content.
+Each transcript chunk below includes some metadata, such as title, video id, publish date, engagement metrics, comments, and content.
 Use the publish date to identify trends, and note whether trends are recent or older.
 Use view and like counts as a signal of how widely a trend is being circulated.
 
@@ -141,7 +141,7 @@ Use the examples below as a reference as to what the analysis should look like. 
 - Always close the JSON object with }} before stopping.
 - Use this exact structure where each KEY is the trend TITLE and each VALUE is the dictionary of DESCRIPTION, video_ids, total view_count, total like_count, and total comment_count.
 - Following description or quote of the trend, provide the video id(s) where the trend comes from.
-- From the video id(s) provide all the video's total view_count, total like_count, total comment_count.
+- From the video id(s) provide all the video's total view_count, total like_count, total comment_count, and list of comments.
 - Do not have newlines or other tags in the response.
 
 ### Output Format
@@ -157,7 +157,7 @@ Do not reference speaker in description.
     'narratives': """
 You are an expert in finding dominant narratives around AI in YouTube video transcripts.
 
-Each transcript chunk below includes some metadata, such as title, video id, publish date, engagement metrics, and content.
+Each transcript chunk below includes some metadata, such as title, video id, publish date, engagement metrics, comments, and content.
 Use the publish date to identify, and note whether narratives are recent or older.
 Use view and like counts as a signal of how widely a narrative is being circulated.
 
@@ -186,7 +186,7 @@ Use the examples below as a reference as to what the analysis should look like. 
 - Always close the JSON object with }} before stopping
 - Use this exact structure where each KEY is the narrative TITLE and each VALUE is the dictionary of DESCRIPTION, video_ids, total view_count, total like_count, and total comment_count.
 - Following description or quote of the narrative, provide the video id(s) where the narrative comes from.
-- From the video id(s) provide all the video's total view_count, total like_count, total comment_count.
+- From the video id(s) provide all the video's total view_count, total like_count, total comment_count, and list of comments.
 - Do not have newlines or other tags in the response.
 
 ### Output Format
@@ -202,7 +202,7 @@ Do not reference speaker in description.
     'risk_factors': """
 You are an expert in finding risks and concerns about AI raised in YouTube video transcripts.
 
-Each transcript chunk below includes some metadata, such as title, video id, publish date, engagement metrics, and content.
+Each transcript chunk below includes some metadata, such as title, video id, publish date, engagement metrics, comments, and content.
 Use the publish date to identify, and note whether risk factors are recent or older.
 Use view and like counts as a signal of how widely a risk factor is being circulated.
 
@@ -225,7 +225,7 @@ Use the examples below as a reference as to what the analysis should look like. 
 - Always close the JSON object with }} before stopping.
 - Use this exact structure where each KEY is the risk factor TITLE and each VALUE is the DESCRIPTION of risk factor.
 - In description of the risk factors, provide the video id(s) where the risk factors comes from.
-- From the video id(s) provide the the video's view_count, like_count, comment_count.
+- From the video id(s) provide the the video's view_count, like_count, comment_count, and list of comments.
 - Do not have newlines or other tags in the response.
 
 ### Output Format
@@ -383,10 +383,10 @@ def load_comments(video_id: str) -> List[Dict]:
     Returns an empty list if file doesn't exist or can't be read.
     """
     comments_path = Path(__file__).parent.parent.parent / "data" / "comments" / f"{video_id}_comments.json"
-    
+
     if not comments_path.exists():
         return []
-    
+
     try:
         with open(comments_path, 'r', encoding='utf-8') as f:
             comments = json.load(f)
@@ -402,17 +402,17 @@ def build_comments_dict(chunks: List) -> Dict[str, List[Dict]]:
     """
     comments_dict = {}
     unique_video_ids = set()
-    
+
     # Extract unique video IDs from chunks
     for chunk in chunks:
         video_id = chunk.metadata.get('video_id')
         if video_id and video_id not in unique_video_ids:
             unique_video_ids.add(video_id)
-    
+
     # Load comments for each unique video ID
     for video_id in unique_video_ids:
         comments_dict[video_id] = load_comments(video_id)
-    
+
     return comments_dict
 
 def format_comments(comments: List[Dict], max_comments: int = 5) -> str:
@@ -423,15 +423,15 @@ def format_comments(comments: List[Dict], max_comments: int = 5) -> str:
     """
     if not comments:
         return "No comments available."
-    
+
     # Sort by likes descending and take top N
     sorted_comments = sorted(comments, key=lambda x: x.get('likes', 0), reverse=True)[:max_comments]
-    
+
     formatted = "Comments:\n"
     for i, comment in enumerate(sorted_comments, 1):
         text = comment.get('text', '')
         formatted += f"{i}. {text}\n"
-    
+
     return formatted
 
 # -----------------------------------
@@ -446,23 +446,28 @@ def format_chunk_with_metadata(doc, comments_dict: Optional[Dict] = None):
     m = doc.metadata
     content = doc.page_content
     video_id = m.get('video_id', 'unknown')
-    
+
     # Get comments for this video if comments_dict is provided
     comments_section = ""
     if comments_dict and video_id in comments_dict:
-        formatted_comments = format_comments(comments_dict[video_id])
-        comments_section = f"{formatted_comments}"
-    
+        if comments_dict[video_id]:
+            formatted_comments = format_comments(comments_dict[video_id])
+            comments_section = f"{formatted_comments}"
+        else:
+            comments_section = "No comments available"
+    else:
+        comments_section = "No comments available"
+
     return (
-        f"Title: {m.get('title', 'unknown')}\n"
-        f"Video Id: {video_id}\n"
-        f"Published At: {m.get('published_at', 0.0)}\n"
-        f"View Count: {m.get('view_count', 0)}\n"
-        f"Like Count: {m.get('like_count', 0)}\n"
-        f"Comment Count: {m.get('comment_count', 0)}\n"
-        f"Duration: {m.get('total_duration', 'unknown')}\n"
+        f"[Title: {m.get('title', 'unknown')}]\n"
+        f"[Video Id: {video_id}]\n"
+        f"[Published At: {m.get('published_at', 'unkown')}]\n"
+        f"[View Count: {m.get('view_count', 0):,}]\n"
+        f"[Like Count: {m.get('like_count', 0):,}]\n"
+        f"[Duration: {m.get('total_duration', 'unknown')}]\n"
+        f"[Comment Count: {m.get('comment_count', 0):,}]\n"
+        f"[{comments_section}]\n"
         f"{content}\n\n"
-        f"{comments_section}"
     )
 
 # -----------------------------------
@@ -480,7 +485,7 @@ def format_chunk_with_metadata(doc, comments_dict: Optional[Dict] = None):
 #       - Takes trends, optional dict with trends from trend query
 #       - Takes previously used transcript chunks, option list with transcripts chunks used in claims query for trends query then chunks used in claims and trends query for narratives query
 #       - Takes include_comments, optional boolean to include comments from videos (default True)
-def run_query(query_type, question, claims: Optional[Dict] = None, trends: Optional[Dict] = None, previous_chunks: Optional[List] = None, k_chunks = 10, include_comments: bool = True):
+def run_query(query_type, question, claims: Optional[Dict] = None, trends: Optional[Dict] = None, previous_chunks: Optional[List] = None, k_chunks = 15, include_comments: bool = True):
     # get the template from the TEMPLATES dictionary and then create the prompt model chain
     template = TEMPLATES.get(query_type, TEMPLATES['claims'])
     prompt = ChatPromptTemplate.from_template(template)
@@ -495,12 +500,17 @@ def run_query(query_type, question, claims: Optional[Dict] = None, trends: Optio
 
     # get relevant transcript chunks from ChromaDB
     transcript_chunks = retrieval(enriched_query, k_chunks)
-    
+
     # Build comments dictionary (loads each file once)
     comments_dict = build_comments_dict(transcript_chunks) if include_comments else {}
+    print(f"Comments: {comments_dict}")
 
     # create of list of the concatenated chunks to later be iterated through to call the llm
     concatenated_chunks = []
+
+    #NOTE:
+    # Since the comments probably add rougly 75 tokens (for 300 characters with average 4 chars per token)
+    # we need to account for them in the prompt and lower the amount of chunks and comments added in curr_chunks
 
     # -----------------------------------
     #  If Previous Chunks Exist then Add
@@ -511,13 +521,13 @@ def run_query(query_type, question, claims: Optional[Dict] = None, trends: Optio
 
         curr_chunks = []
         for chunk in previous_chunks:
-            if chunk_counter <= 15:
+            if chunk_counter <= 12:
                 # build context string from retrieved chunks
                 # added a delimiter since the model will need to distinguish between them now that theres metadata
                 curr_chunks.append(format_chunk_with_metadata(chunk, comments_dict))
                 chunk_counter += 1
 
-            else: # the current chunk is a 16th one, so start a new curr_chunks cancatenated string and set chunk_counter back to 1
+            else: # the current chunk is a 13th one, so start a new curr_chunks cancatenated string and set chunk_counter back to 1
                 # add to the concatenated chunks list
                 concatenated_chunks.append("\n\n###\n\n".join(curr_chunks))
 
@@ -530,13 +540,13 @@ def run_query(query_type, question, claims: Optional[Dict] = None, trends: Optio
     #  Add new chunks fetched, not in Previous Chunks
     # ------------------------------------------------
 
-    # every 15 chunks we get a new create start with on a new concatenated string of chunks (so the request won't be blocked for exceeding the TPM of Groq's llama-3.3-70b-versatile model)
+    # every 13 chunks we get a new create start with on a new concatenated string of chunks, their top 5 comments and metadata (so the request won't be blocked for exceeding the TPM of Groq's llama-3.3-70b-versatile model)
     chunk_counter = 1
 
     curr_chunks = []
     for chunk in transcript_chunks:
         if chunk not in previous_chunks:
-            if chunk_counter <= 15:
+            if chunk_counter <= 12:
                 # build context string from retrieved chunks
                 # added a delimiter since the model will need to distinguish between them now that theres metadata
                 formatted_chunk = format_chunk_with_metadata(chunk, comments_dict)
@@ -544,7 +554,7 @@ def run_query(query_type, question, claims: Optional[Dict] = None, trends: Optio
 
                 chunk_counter += 1
 
-            else: # the current chunk is a 16th one, so start a new curr_chunks cancatenated string and set chunk_counter back to 1
+            else: # the current chunk is a 13th one, so start a new curr_chunks cancatenated string and set chunk_counter back to 1
                 # add to the concatenated chunks list
                 concatenated_chunks.append("\n\n###\n\n".join(curr_chunks))
 
@@ -563,9 +573,10 @@ def run_query(query_type, question, claims: Optional[Dict] = None, trends: Optio
     # store results in this dictionary
     results = {}
 
-    # --------------------------------------------------------------------------------------------------------------------------
-    #  Between each Query we Need to wait a Minute, since there is a TPM (Tokens per Minute) limit/rate in Groq for this model
-    # --------------------------------------------------------------------------------------------------------------------------
+    # -----------------------------------------------------------------------------
+    #  Between each query we need to wait a minute,
+    #  since there is a TPM (Tokens per Minute) limit/rate in Groq for this model
+    # -----------------------------------------------------------------------------
 
     match query_type:
         case 'claims':
@@ -650,8 +661,17 @@ def run_query(query_type, question, claims: Optional[Dict] = None, trends: Optio
                 time.sleep(60)
 
     # Build source chunk references from metadatas
-    source_chunks = [
-        {
+    source_chunks = []
+    for chunk in previous_chunks:
+        video_id = chunk.metadata.get('video_id', 'unknown')
+
+        # get comments for chunk, based off video id
+        if comments_dict and video_id in comments_dict:
+            comments_section = comments_dict[video_id]
+        else:
+            comments_section = ["No comments available"]
+
+        source_chunks.append({
             'channel_id': chunk.metadata.get('channel_id', 'unknown'),
             'video_id': chunk.metadata.get('video_id', 'unknown'),
             'video_index': chunk.metadata.get('video_index', 'unknown'),
@@ -662,12 +682,11 @@ def run_query(query_type, question, claims: Optional[Dict] = None, trends: Optio
             "view_count": chunk.metadata.get('view_count', 0),
             "like_count": chunk.metadata.get('like_count', 0),
             "comment_count": chunk.metadata.get('comment_count', 0),
+            "comments": comments_section,
             "total_duration": chunk.metadata.get('total_duration', ''),
             "source_file": chunk.metadata.get('source_file', 'unknown'),
             "chunk_content": chunk.page_content
-        }
-        for chunk in previous_chunks
-    ]
+        })
 
     #  Insert the result into MongoDB
     # format schema to MongoDB
