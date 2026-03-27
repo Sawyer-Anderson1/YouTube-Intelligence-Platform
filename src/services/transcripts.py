@@ -32,9 +32,6 @@ from youtube_transcript_api._errors import (
 
 from .transcript_validation import validate_transcript
 
-from dotenv import load_dotenv
-load_dotenv()
-
 # ---------------------
 #  Config
 # ---------------------
