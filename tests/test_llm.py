@@ -15,7 +15,7 @@ QUERY_TYPES = ['claims', 'trends', 'narratives', 'risk_factors']
 
 
 def load_response(filepath: Path) -> dict[str, Any]:
-    """Load a response JSON file."""
+    """Load a JSON file."""
     with open(filepath, "r", encoding="utf-8") as f:
         return json.load(f)
 
@@ -30,11 +30,10 @@ def test_response_format(transcript: dict[str, Any]) -> tuple[bool, str]:
     
 
 
-
 # ========== Test Runner ==========
 
 def run_all_tests() -> dict[str, dict[str, tuple[bool, str]]]:
-    """Run all tests on all transcripts."""
+    """Run all tests on all responses."""
     results = {}
     
     response_files = list(RESPONSES_DIR.glob("*.json"))
@@ -58,7 +57,7 @@ def print_summary(results: dict[str, dict[str, tuple[bool, str]]]) -> None:
     failed = 0
     
     print("\n" + "=" * 60)
-    print("TRANSCRIPT VALIDATION SUMMARY")
+    print("LLM VALIDATION SUMMARY")
     print("=" * 60)
     
     # Count by test type
