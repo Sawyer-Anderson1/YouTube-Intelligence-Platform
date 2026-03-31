@@ -1,0 +1,24 @@
+YouTube Intelligence Platform
+
+Week 6 Meeting Minutes:
+Team: 4
+Attendees: Pranav Rasikbhai Devani, Paul Lee, Sawyer Anderson, Makism Zlatkin, Brice T Cooper, Lucah Lucero, Dang Nam Pham
+Sponsor: Selim Sarac
+TA/Advisor: Pranav Rasikbhai Devani
+Note Taker: Sawyer Anderson
+
+Meeting Agenda:
+	Discussion of what has been done. Each member went through and told the professor what they had completed the prior week and what they have worked on up to the day of the meeting. I (Sawyer Anderson) showed my work with the RAG pipeline, so the additional citing of the insights retrieved and the changes to the way that narratives and trends are extracted, from the trends instead of just from the transcripts. Paul Lee showed is work with the comments, the improved retrieval. Lucah Lucero showed his recent UI work, and Dang Nam Pham showed UI work. Cooper Brice talked about his testing with the transcripts, he made scripts that test the transcripts and can be applied to retrieed transcripts. Maksim discussed his current implementation of the ci/cd pipeline.
+
+	- Date & Time of next meeting:
+	3/25/2026 @7:20-7:50pm
+
+Deadlines:
+	- Meeting Minutes,and Weekly Report due monday
+	- Integrate comments into RAG
+	- Testing llm responses.
+	- Continue to work on the app's API for the frontend
+	- Continue to work using MongoDB
+	- Refine UI design and integrate with backend data
+	- Work on the deployment or CD side of CI/CD, in Azure.
+	- Experiment with changes to embedding model to cloud API from local, to simplify the deployment requirement (getting rid of GPU) and to improve speed.

@@ -1,4 +1,124 @@
 {
-        "Disruption and transformation": "There could be a potential disruption of traditional industries and business models through agent technology, leading to significant changes in how companies operate and interact with users.",
-        "Developers need to change": "Developers need to adapt to the changing landscape and focus on building agents that can understand human needs."
-}
+    "AI as a Transformational Technology": {
+      "Description": "AI is being seen as a transformational technology that can bring about significant changes in various industries and aspects of life",
+      "video_ids": [
+        "1nd2oAt2rEU",
+        "m_TZ05y8XAs",
+        "EuRcthbcPho"
+      ],
+      "total_view_count": "18699",
+      "total_like_count": "683",
+      "total_comment_count": "49"
+    },
+    "Rise of Autonomous Agents": {
+      "Description": "Autonomous agents are becoming more prevalent, with the ability to plan, decide, and execute tasks across multiple steps",
+      "video_ids": [
+        "EuRcthbcPho",
+        "t09WttAGaag"
+      ],
+      "total_view_count": 20377,
+      "total_like_count": 517,
+      "total_comment_count": 33
+    },
+    "Concerns about AI Safety and Ethics": {
+      "Description": "There are growing concerns about AI safety and ethics, particularly in regards to the potential risks and consequences of advanced AI systems",
+      "video_ids": [
+        "zth0v4KVgr0",
+        "SvhY0PuxoTk"
+      ],
+      "total_view_count": "65779",
+      "total_like_count": "167",
+      "total_comment_count": "9"
+    },
+    "Importance of Human-AI Collaboration": {
+      "Description": "Human-AI collaboration is being emphasized as a key aspect of AI development, with a focus on augmenting human capabilities rather than replacing them",
+      "video_ids": [
+        "XvnJq0nttCs",
+        "Dm3DHPUFNwU"
+      ],
+      "total_view_count": "115576",
+      "total_like_count": "370",
+      "total_comment_count": "0"
+    },
+    "AI for Social Good": {
+      "Description": "AI is being explored for its potential to drive social good, particularly in areas such as education, healthcare, and environmental sustainability",
+      "video_ids": [
+        "AIJ 2025",
+        "UXeXcFTtGIk"
+      ],
+      "total_view_count": "310562",
+      "total_like_count": "617",
+      "total_comment_count": "0"
+    },
+    "AI Adoption and Transformation": {
+      "Description": "AI is being adopted in various industries, transforming the way companies operate and interact with users",
+      "video_ids": [
+        "UXeXcFTtGIk",
+        "v_8Ke2DwtyY",
+        "biwwQw0248w"
+      ],
+      "total_view_count": 368113,
+      "total_like_count": 984,
+      "total_comment_count": 0
+    },
+    "Growing Importance of AI Safety and Sovereignty": {
+      "Description": "AI safety and sovereignty are becoming growing concerns, with experts discussing the need for safe and responsible AI development",
+      "video_ids": [
+        "Dm3DHPUFNwU",
+        "KVos1kBh234"
+      ],
+      "total_view_count": 158911,
+      "total_like_count": 49,
+      "total_comment_count": 6
+    },
+    "Emergence of New AI Technologies": {
+      "Description": "New AI technologies such as embodied intelligence, service robotics, and visual language models are emerging, with potential applications in various industries",
+      "video_ids": [
+        "cIWi62Wt4wk",
+        "Genie 3 Team"
+      ],
+      "total_view_count": 8014,
+      "total_like_count": 8,
+      "total_comment_count": 2
+    },
+    "AI and Human Collaboration": {
+      "Description": "AI is being designed to collaborate with humans, with a focus on augmenting human capabilities rather than replacing them",
+      "video_ids": [
+        "biwwQw0248w",
+        "JfE1Wun9xkk"
+      ],
+      "total_view_count": 179440,
+      "total_like_count": 1647,
+      "total_comment_count": 668
+    },
+    "Geopolitical Implications of AI": {
+      "Description": "AI is becoming a geopolitical priority, with countries investing heavily in AI research and development to gain a competitive edge",
+      "video_ids": [
+        "v_8Ke2DwtyY",
+        "KVos1kBh234"
+      ],
+      "total_view_count": 120686,
+      "total_like_count": 29,
+      "total_comment_count": 6
+    },
+    "AI for Development and Social Impact": {
+      "Description": "AI can be leveraged for development and social impact, particularly in the Global South, to address specific cultural, linguistic, and security needs",
+      "video_ids": [
+        "UXeXcFTtGIk",
+        "v_8Ke2DwtyY"
+      ],
+      "total_view_count": 286705,
+      "total_like_count": 647,
+      "total_comment_count": 0
+    },
+    "Trusted AI and Decision Support": {
+      "Description": "Trusted AI and decision support systems are being developed to help with deterministic and non-deterministic decision-making",
+      "video_ids": [
+        "4CuxR9Eh6wg",
+        "Dm3DHPUFNwU"
+      ],
+      "total_view_count": 5189,
+      "total_like_count": 72,
+      "total_comment_count": 0
+    }
+  }

@@ -5,6 +5,8 @@ import subprocess
 from typing import Optional
 from contextlib import asynccontextmanager
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
+
 from apscheduler.schedulers.background import BackgroundScheduler
 
 from pymongo import MongoClient
@@ -57,7 +59,7 @@ def scheduled_job_sequence():
         # then run the vector.py and rag.py (run_scheduled_queries())
         run_script('llm.vector')
 
-        run_scheduled_queries()
+        run_scheduled_queries(k_c = 40, k_t = 5, k_n = 5)
     except Exception as e:
         print(f"Transcript retrieval scripts failed to run: {e}")
 
@@ -81,7 +83,30 @@ async def weeklylifespan(app: FastAPI):
     yield
     scheduler.shutdown()
 
+# -------------------------
+#  Instantiate FastAPI App
+# -------------------------
+
 app = FastAPI(lifespan=weeklylifespan)
+
+# ----------------------------------------------
+#  Enable CORS between Frontend and Backend API
+# ----------------------------------------------
+
+# list of the origins that are allowed to access the Backend API
+origins = [
+    "https://wonderful-dune-0050c5f0f.1.azurestaticapps.net", # the front end app (Azure Static Web App)
+    "http://localhost",
+    "http://localhost:8080",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins = origins,
+    allow_credentials = True,
+    allow_methods = ["*"],
+    allow_headers = ["*"]
+)
 
 # ----------------------
 #  API routes
