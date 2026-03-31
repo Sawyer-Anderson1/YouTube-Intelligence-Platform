@@ -1,0 +1,12 @@
+All 3 are the same trancript, but different videos:
+(data/transcripts/UCHcATder42GhyQRpbu1dr4Q_transcript_12.json)
+(data/transcripts/UCHcATder42GhyQRpbu1dr4Q_transcript_13.json)
+(data/transcripts/UCHcATder42GhyQRpbu1dr4Q_transcript_14.json)
+
+Just a garbled transcript:
+(data/transcripts/UCJIfeSCssxSC_Dhc5s7woww_transcript_4.json)
+
+
+UCnTyk7oiuERX7TEbgGIgQ_g - channel that makes AI music videos.
+UCt7HAj_mzoGIFKuTH4Ff97w - channel that makes fake AI military videos.
+UClJTxwatJ0MSt6Q2wvpKMOA 

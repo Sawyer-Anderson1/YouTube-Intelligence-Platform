@@ -1,0 +1,15 @@
+[flake8]
+max-line-length = 140          # allow longer lines
+ignore = 
+    E203,  # whitespace before ':' (black-compatible)
+    E302,  # expected 2 blank lines
+    E305,  # expected 2 blank lines after function/class
+    E501,  # line too long
+    E231,  # missing whitespace after ','
+    E241,  # multiple spaces after ','
+    E225,  # missing whitespace around operator
+    E251,  # unexpected spaces around keyword/parameter equals
+    W291,  # trailing whitespace
+    W293,  # blank line contains whitespace
+    E711,  # comparison to None
+    E712   # comparison to True

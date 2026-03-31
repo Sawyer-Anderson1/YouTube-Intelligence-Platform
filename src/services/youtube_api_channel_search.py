@@ -8,8 +8,14 @@ import os
 import json
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
-from datetime import datetime, timezone
-from dateutil.relativedelta import relativedelta
+
+# import external function to get time six months ago
+from .get_time import get_time_months_ago_rfc3339
+
+# --------------------------------------
+#  Get YouTubeAPI API, Build, and
+#  Collections
+# --------------------------------------
 
 # Get the api key and build the service object for YouTube API
 youtube_api_key = os.getenv('YOUTUBE_API_KEY')
@@ -20,21 +26,10 @@ youtube = build('youtube', 'v3', developerKey=youtube_api_key)
 search = youtube.search()
 channels = youtube.channels()
 
-# function to get teh rfc 3339 time a certaim amount of months ago
-def get_time_months_ago_rfc3339(months_ago: int) -> str:
-    '''
-    Docstring for get_time_months_ago_rfc3339
-    
-    :param months_ago: the amount of months that we are going back to get the time for
-    :type months_ago: int
-    :return: the time a certain amount of months ago
-    :rtype: str of RFC 3339 datetime
-    '''
-    
-    current_utc = datetime.now(timezone.utc)
-    past_time = current_utc - relativedelta(months=months_ago)
-    rfc3339_utc_str = past_time.isoformat().replace('+00:00', 'Z')
-    return rfc3339_utc_str
+# ---------------------------------------------------
+#  Perform Search with Query of Future of AI,
+#  to get Channel Ids of Channels with Relevant Vids
+# ---------------------------------------------------
 
 # On the topic of AI
 # Call the request for search
@@ -45,9 +40,9 @@ ai_search = search.list(
     publishedAfter=time_6_months_ago,
     regionCode='US',
     type='video',
-    topicId = '/m/098wr',
+    videoCategoryId = '28',
     relevanceLanguage = 'en',
-    q='AI',
+    q='Future of AI',
 ) 
 
 # will get a lot of videos, add them to a list, then find the most prevelant channels from there
@@ -59,7 +54,7 @@ try:
     nextPageToken = search_response.get('nextPageToken')
     vids.extend(search_response.get('items', []))
 
-    LIMIT = 20
+    LIMIT = 25
     curr_page = 1
     while True:
         # add limit to pagination
@@ -74,9 +69,9 @@ try:
                 publishedAfter=time_6_months_ago,
                 regionCode='US',
                 type='video',
-                topicId = '/m/098wr',
+                videoCategoryId = '28',
                 relevanceLanguage = 'en',
-                q='AI',
+                q='Future of AI',
             )
         else:
             break
@@ -84,10 +79,14 @@ try:
         search_response = ai_search.execute()
         nextPageToken = search_response.get('nextPageToken')   
         vids.extend(search_response.get('items', []))
-        
+
         curr_page += 1
 except HttpError as e:
     print(f'Error response status code : {e.status_code}, reason : {e.error_details}')
+
+# ------------------------------------------------------
+#  Get Channel Ids of Publisher of Vids Found in Search
+# ------------------------------------------------------
 
 # Remove duplicate channels (get unique channels)
 # from there will find the prolific channels
@@ -97,36 +96,17 @@ for vid in vids:
     if channelId not in channel:
         channel.append(channelId)
 
-# get detailed information on the channels found
-# choose the channels with most video count and view count
-prolific_channels = {}
-for channel_id in channel:
-    channel_search = channels.list(
-            part='statistics, topicDetails',
-            id=channel_id
-    )
-    
-    # execute the request
-    try:
-        channel_response = channel_search.execute()
-        channel_items = channel_response.get('items', [])
-        
-        if int(channel_items[0]['statistics']['videoCount']) > 100:
-            # then add to the dictionary
-            prolific_channels[channel_id] = channel_items[0]['statistics']['videoCount']
-    except HttpError as e:
-        print(f'Error response status code : {e.status_code}, reason : {e.error_details}')
+# ------------------------------------------
+#  Save to JSON (channels.json)
+# ------------------------------------------
 
-# put the top 20 channels into json dict
-prolific_channels = [*prolific_channels]
-prolific_channels = prolific_channels[:20]
+# put then put channels into json dict ordered by video count (will narrow down to 10-20 channels after getting the video ids after filtering)
 filename = 'data/channels.json'
 try:
     with open(filename, 'w') as json_file:
-        json.dump(prolific_channels, json_file, indent=4)
+        json.dump(channel, json_file, indent=4)
 except IOError as e:
     print(f"Error with writing to json file: {e}")
-
 
 # close the service object for YouTube API
 youtube.close()

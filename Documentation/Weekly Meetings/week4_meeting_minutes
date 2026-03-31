@@ -1,0 +1,22 @@
+YouTube Intelligence Platform
+
+Week 4 Meeting Minutes:
+Team: 4
+Attendees: Selim Sarac, Paul Lee, Sawyer Anderson, Makism Zlatkin, Brice T Cooper, Lucah Lucero, Dang Nam Pham
+Sponsor: Selim Sarac
+TA/Advisor: Pranav Rasikbhai Devani
+Note Taker: Sawyer Anderson
+
+Meeting Agenda:
+	Discussion of what has been done. Each member went through and told the TA what they had completed the prior week and what they have worked on up to the day of the meeting. Paul showed his current experimentation with few-shot. I (Sawyer Anderson) showed my work with the RAG response formatting, my work on vector.py and rag.py, and talked about the additional metadata I've retrieved and comments. Lucah Lucero showed the UI he's been working on, and Dang Nam Pham showed his work with the Figma UI cards with dummy data. Cooper Brice talked about his testing with the transcripts. Maksim Zlatkin showed his work with MongoDB.
+
+	- Date & Time of next meeting:
+	3/4/2026 @7:20-7:50pm
+
+Deadlines:
+	- Meeting Minutes,and Weekly Report due monday
+	- Polish work on comment retrieval and integrate comments into RAG
+	- Add metadata into RAG LLM prompts
+	- Continue to work on the app's API for the frontend
+	- Continue to work using MongoDB
+	- Refine UI design and integrate with backend data

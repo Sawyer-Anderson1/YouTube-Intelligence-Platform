@@ -1,0 +1,24 @@
+YouTube Intelligence Platform
+
+Week 5 Meeting Minutes:
+Team: 4
+Attendees: Selim Sarac, Paul Lee, Sawyer Anderson, Makism Zlatkin, Brice T Cooper, Lucah Lucero, Dang Nam Pham
+Sponsor: Selim Sarac
+TA/Advisor: Pranav Rasikbhai Devani
+Note Taker: Sawyer Anderson
+
+Meeting Agenda:
+	Discussion of what has been done. Each member went through and told the professor what they had completed the prior week and what they have worked on up to the day of the meeting. I (Sawyer Anderson) showed my work with the RAG pipeline, so the changes with the formatting of responses, increase diversity of retrieved chunks (with lambda mult and temperature), and integration of additional metadata. Me and Sarac discussed in detail the pipeline, specifically how the transcript chunk retrieval can be modified and changes to how narratives and trends are developed (off claims (for trends and narratives) and trends (for narrative)). Lucah Lucero showed the UI he's been working on, and Dang Nam Pham showed his work with the Figma UI cards with dummy data. Cooper Brice talked about his testing with the transcripts, discussed how he would implement the testing after transcript retrieval and how he'll test the llm responses.
+
+	- Date & Time of next meeting:
+	3/11/2026 @7:20-7:50pm
+
+Deadlines:
+	- Meeting Minutes,and Weekly Report due monday
+	- Polish work on comment retrieval and integrate comments into RAG
+	- Modify the generation of trends and narratives, to be built from the claims (and trends, for narratives).
+	- Experiment with a cloud API LLM model, to get faster and better responses (then ensure that responses are within the TPM).
+	- Integrate transcript tests into the transcript fetching (additional filters) and begin testing llm responses.
+	- Continue to work on the app's API for the frontend
+	- Continue to work using MongoDB
+	- Refine UI design and integrate with backend data
