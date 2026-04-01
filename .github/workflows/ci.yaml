@@ -102,6 +102,6 @@ jobs:
       #       {"name": "WEBSHARE_PROXY_USER", "value": "${{ secrets.WEBSHARE_PROXY_USER }}", "slotSetting": false },
       #       {"name": "WEBSHARE_PROXY_PASSWORD", "value": "${{ secrets.WEBSHARE_PROXY_PASSWORD }}", "slotSetting": false },
       #       {"name": "GROQ_API_KEY", "value": "${{ secrets.GROQ_API_KEY }}", "slotSetting": false },
-      #       {"name": "HF_API_KEY", "value": "${{ secrets.HF_API_KEY }}", "slotSetting": false },
+      #       {"name": "COHERE_API_KEY", "value": "${{ secrets.COHERE_API_KEY }}", "slotSetting": false },
       #       {"name": "MONGO_URI", "value": "${{ secrets.MONGO_URI }}", "slotSetting": false }
       #     ]
