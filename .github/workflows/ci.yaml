@@ -10,7 +10,10 @@ jobs:
   build:
     - name: Check disk usage
     run: df -h
-    
+
+    - name: List largest directories
+    run: du -sh /* 2>/dev/null | sort -hr | head -n 10
+
     runs-on: ubuntu-latest
     permissions:
       contents: read
