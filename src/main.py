@@ -54,7 +54,7 @@ def scheduled_job_sequence():
         run_script('services.transcripts')
 
         # add the comments retrieval here
-        # ...
+        run_script('services.comments')
 
         # then run the vector.py and rag.py (run_scheduled_queries())
         run_script('llm.vector')
