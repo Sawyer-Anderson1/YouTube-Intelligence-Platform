@@ -22,10 +22,10 @@ jobs:
           python-version: "3.11"
 
       - name: Check disk usage
-      run: df -h
+        run: df -h
 
       - name: List largest directories
-      run: du -sh /* 2>/dev/null | sort -hr | head -n 10
+        run: du -sh /* 2>/dev/null | sort -hr | head -n 10
       
       # 3. Install dependencies
       - name: Install dependencies
@@ -34,7 +34,7 @@ jobs:
           pip install -r requirements.txt
 
       - name: List largest pip packages
-      run: pip list --format=columns | head -n 30
+        run: pip list --format=columns | head -n 30
       
       - name: Upload Artifact for Deployment Jobs
         uses: actions/upload-artifact@v4
@@ -93,7 +93,7 @@ jobs:
       #     [
       #       {
       #         "name": "appCommandLine",
-      #         "value": "uvicorn src.main:app --host 0.0.0.0 --port 8000
+      #         "value": "uvicorn src.main:app --host 0.0.0.0 --port 8000"
       #       }
       #     ]
       #   app-settings-json: |
