@@ -8,16 +8,10 @@ on:
     
 jobs:
   build:
-    - name: Check disk usage
-    run: df -h
-
-    - name: List largest directories
-    run: du -sh /* 2>/dev/null | sort -hr | head -n 10
-
     runs-on: ubuntu-latest
     permissions:
       contents: read
-    
+
     steps:
       # 1. Check out the repo
       - uses: actions/checkout@v3
@@ -27,12 +21,21 @@ jobs:
         with:
           python-version: "3.11"
 
+      - name: Check disk usage
+      run: df -h
+
+      - name: List largest directories
+      run: du -sh /* 2>/dev/null | sort -hr | head -n 10
+      
       # 3. Install dependencies
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
+      - name: List largest pip packages
+      run: pip list --format=columns | head -n 30
+      
       - name: Upload Artifact for Deployment Jobs
         uses: actions/upload-artifact@v4
         with:
