@@ -88,11 +88,11 @@ def comment_retrieve(vid_id):
             # check if the comment is english and if it contains the category related terms (not off topic)
             # call the external function
             is_english_comment = check_english(comment_text)
-            min_length = 75  # Minimum character length for comments
+            #min_length = 75  # Minimum character length for comments
             max_length = 300  # Maximum character length for comments
 
             term_pattern = re.compile(r'\b(?:' + '|'.join(terms) + r')\b', re.IGNORECASE)
-            if term_pattern.search(comment_text) and is_english_comment and len(comment_text) >= min_length and len(comment_text) <= max_length:
+            if term_pattern.search(comment_text) and is_english_comment and len(comment_text) <= max_length:
                 # format data in dictionary
                 comment_data = {
                     'commentId': top_comment_id,
@@ -107,9 +107,11 @@ def comment_retrieve(vid_id):
 
         # then write to comment folder
         try:
-            relevant_comments = relevant_comments[:5]   # Keep only top n comments that pass filters
-            with open(vid_comments_pathlib, 'w') as json_file:
-                json.dump(relevant_comments, json_file, indent=4)
+            if len(relevant_comments) >= 5:
+                relevant_comments = sorted(relevant_comments, key=lambda x: x['likes'], reverse=True)
+                relevant_comments = relevant_comments[:5]   # Keep only top n comments that pass filters
+                with open(vid_comments_pathlib, 'w') as json_file:
+                    json.dump(relevant_comments, json_file, indent=4)
 
         except IOError as e:
             print(f"Error writing json file: {e}")
@@ -118,7 +120,7 @@ def comment_retrieve(vid_id):
        print(f'Error response status code : {e.status_code}, reason : {e.error_details}')
 
 # run the retrieval concurrently
-with ThreadPoolExecutor(max_workers=1) as executor:
+with ThreadPoolExecutor(max_workers=5) as executor:
     futures = []
 
     # for each of the video ids for each channel get comment threads
