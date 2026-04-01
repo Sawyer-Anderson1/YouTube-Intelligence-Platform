@@ -200,6 +200,7 @@ function SignIn() {
                   </Link>
                 </Flex>
                 <Flex
+                  onClick={handleGoogleSignIn}
                   justify="center"
                   align="center"
                   w="75px"
@@ -210,14 +211,7 @@ function SignIn() {
                   transition="all .25s ease"
                   _hover={{ filter: "brightness(120%)", bg: bgIcons }}
                 >
-                  <Link href="#">
-                    <Icon
-                      as={FaGoogle}
-                      w="30px"
-                      h="30px"
-                      _hover={{ filter: "brightness(120%)" }}
-                    />
-                  </Link>
+                  <Icon as={FaGoogle} w="30px" h="30px" />
                 </Flex>
               </HStack>
             </FormControl>

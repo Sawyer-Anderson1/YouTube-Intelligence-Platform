@@ -31,7 +31,7 @@ function RiskCards() {
 
   return (
     <Flex direction="row" flexWrap="wrap" gap="22px" my="60px">
-      {risks.map((risk, index) => (
+      {/* {risks.map((risk, index) => (
         <RiskCard
           key={index}
           title={risk.title}
@@ -39,7 +39,7 @@ function RiskCards() {
           description={risk.description}
           image={<Image alt="[image]" minWidth={{ md: "300px", lg: "auto" }} />}
         />
-      ))}
+      ))} */}
     </Flex>
   );
 }
