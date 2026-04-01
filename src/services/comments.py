@@ -14,7 +14,7 @@ import concurrent.futures
 from concurrent.futures import ThreadPoolExecutor
 
 # import the check for english file
-from check_for_english_text import check_english
+from .check_for_english_text import check_english
 
 # Get the api key and build the service object for YouTube API
 for var in ('HTTP_PROXY', 'HTTPS_PROXY', 'http_proxy', 'https_proxy', 'WEBSHARE_PROXY_USER', 'WEBSHARE_PROXY_PASSWORD'):
