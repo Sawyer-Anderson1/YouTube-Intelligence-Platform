@@ -579,7 +579,12 @@ def run_query(query_type, question, claims: Optional[Dict] = None, trends: Optio
     transcript_chunks = retrieval(enriched_query, k_chunks)
 
     # Build comments dictionary (loads each file once)
-    comments_dict = build_comments_dict(transcript_chunks) if include_comments else {}
+    if previous_chunks != None:
+        # keep previous chunks (to get comments of)
+        total_chunks = previous_chunks + transcript_chunks
+    else:
+        total_chunks = transcript_chunks
+    comments_dict = build_comments_dict(total_chunks) if include_comments else {}
 
     # create of list of the concatenated chunks to later be iterated through to call the llm
     concatenated_chunks = []
@@ -850,6 +855,7 @@ def comment_feedback(question, comment_dict, query_type = 'comments'):
                 'run_date': datetime.now(timezone.utc),
                 'query_type': query_type,
                 'question': question,
+                'video_id': vid,
                 'result_text': parsed_result,
                 'source_chunks': source_chunks,
                 'model': 'llama-3.3-70b-versatile',
