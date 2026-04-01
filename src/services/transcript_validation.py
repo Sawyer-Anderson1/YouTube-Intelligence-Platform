@@ -10,12 +10,8 @@ from typing import Any
 
 import langdetect
 from langdetect.lang_detect_exception import LangDetectException
+from sympy import false
 
-# Path to sample transcripts for testing
-# TRANSCRIPTS_DIR = Path(__file__).parent.parent / "data" / "transcripts"
-
-# Path to transcripts directory
-TRANSCRIPTS_DIR = Path(__file__).parent.parent / "tests" / "test_transcripts"
 
 # Thresholds
 MIN_WORD_COUNT = 20
@@ -27,21 +23,9 @@ TERMS_TO_CHECK = [' ai ', '.ai', ' ai.', 'artificial intelligence', 'generative 
 # 'ai' removed to prevent false positives (e.g. "ai" in "said", "wait", etc.)
 
 
-def load_transcript(filepath: Path) -> list[dict[str, Any]]:
-    """Load a transcript JSON file."""
-    with open(filepath, "r", encoding="utf-8") as f:
-        return json.load(f)
-
-
 def get_transcript_text(transcript: list[dict[str, Any]]) -> str:
     """Extract all text from transcript segments."""
     return " ".join(seg.get("text", "") for seg in transcript if "text" in seg)
-
-
-def get_transcript_hash(transcript: list[dict[str, Any]]) -> str:
-    """Generate hash for transcript content."""
-    text = get_transcript_text(transcript)
-    return hashlib.md5(text.encode("utf-8")).hexdigest()
 
 
 def detect_language(text: str) -> tuple[str, float]:
@@ -69,16 +53,7 @@ def count_words(text: str) -> int:
 
 # ========== Test Functions ==========
 
-def test_transcript_uniqueness(transcript: list[dict[str, Any]], all_hashes: set[str]) -> tuple[bool, str]:
-    """Check if transcript is unique (not a duplicate)."""
-    transcript_hash = get_transcript_hash(transcript)
-    if transcript_hash in all_hashes:
-        return False, f"Duplicate transcript found (hash: {transcript_hash})"
-    all_hashes.add(transcript_hash)
-    return True, "Unique"
-
-
-def test_is_english(transcript: list[dict[str, Any]]) -> tuple[bool, str]:
+def test_is_english(transcript: list) -> tuple[bool, str]:
     """Check if transcript is in English."""
     text = get_transcript_text(transcript)
     lang, confidence = detect_language(text)
@@ -92,7 +67,7 @@ def test_is_english(transcript: list[dict[str, Any]]) -> tuple[bool, str]:
     return True, f"English (confidence: {confidence:.2f})"
 
 
-def test_has_terms(transcript: list[dict[str, Any]]) -> tuple[bool, str]:
+def test_has_terms(transcript: list) -> tuple[bool, str]:
     """Check if transcript contains required terms."""
     text = get_transcript_text(transcript)
     found_terms = [term for term in TERMS_TO_CHECK if term.lower() in text.lower()]
@@ -103,7 +78,7 @@ def test_has_terms(transcript: list[dict[str, Any]]) -> tuple[bool, str]:
     return True, f"Found terms: {found_terms}"
 
 
-def test_min_word_count(transcript: list[dict[str, Any]]) -> tuple[bool, str]:
+def test_min_word_count(transcript: list) -> tuple[bool, str]:
     """Check minimum word count."""
     text = get_transcript_text(transcript)
     word_count = count_words(text)
@@ -116,57 +91,36 @@ def test_min_word_count(transcript: list[dict[str, Any]]) -> tuple[bool, str]:
 
 # ========== Test Runner ==========
 
-def run_all_tests(delete_failed: bool = False) -> dict[str, dict[str, tuple[bool, str]]]:
+def validate_transcript(transcript: list) -> bool:
     """
-    Run all tests on all transcripts.
+    Validate single transcript in memory.
     
     Args:
-        delete_failed: If True, delete transcripts that fail any test.
+        transcript: cleaned_transcript_snippets format [{'text': str, 'start': float, 'duration': float}]
+        all_hashes: Optional shared hash set for uniqueness across transcripts
     
     Returns:
-        Dictionary mapping file paths to test results.
+        Dict of test_name: (passed: bool, message: str)
     """
     results = {}
-    all_hashes = set()
-    failed_transcripts = []
     
-    transcript_files = list(TRANSCRIPTS_DIR.glob("*_transcript_*.json"))
-    
-    for filepath in transcript_files:
-        try:
-            transcript = load_transcript(filepath)
-            results[str(filepath)] = {
-                "uniqueness": test_transcript_uniqueness(transcript, all_hashes),
-                "is_english": test_is_english(transcript),
-                "min_word_count": test_min_word_count(transcript),
-                "has_terms": test_has_terms(transcript),
-            }
+    # Run individual tests
+    results["is_english"] = test_is_english(transcript)
+    results["min_word_count"] = test_min_word_count(transcript)
+    results["has_terms"] = test_has_terms(transcript)
             
-            # Check if any test failed
-            file_passed = all(
-                test_result[0] 
-                for test_name, test_result in results[str(filepath)].items() 
-                if isinstance(test_result, tuple)
-            )
+    # Check if any test failed
+    file_passed = all(
+        test_result[0] 
+        for test_name, test_result in results.items() 
+        if isinstance(test_result, tuple)
+    )
             
-            if not file_passed:
-                failed_transcripts.append(filepath)
-                
-        except Exception as e:
-            results[str(filepath)] = {"error": (False, str(e))}
-            failed_transcripts.append(filepath)
+    if file_passed:
+        return True
     
-    # Delete failed transcripts if requested
-    if delete_failed and failed_transcripts:
-        print(f"\n Deleting {len(failed_transcripts)} failed transcripts...")
-        for filepath in failed_transcripts:
-            try:
-                os.remove(filepath)
-                print(f"   Deleted: {filepath.name}")
-            except OSError as e:
-                print(f"   Error deleting {filepath.name}: {e}")
-    
-    return results
+    return False
+
 
 
 def print_summary(results: dict[str, dict[str, tuple[bool, str]]]) -> None:
@@ -213,5 +167,5 @@ def print_summary(results: dict[str, dict[str, tuple[bool, str]]]) -> None:
 
 
 if __name__ == "__main__":
-    results = run_all_tests(True)
+    results = validate_transcript(True)
     print_summary(results)

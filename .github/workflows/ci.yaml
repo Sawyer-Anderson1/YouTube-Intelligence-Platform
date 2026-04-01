@@ -1,4 +1,4 @@
-name: CI
+name: CI/CD
 
 on:
   push:
@@ -9,7 +9,9 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-
+    permissions:
+      contents: read
+    
     steps:
       # 1. Check out the repo
       - uses: actions/checkout@v3
@@ -25,12 +27,72 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
+      - name: Upload Artifact for Deployment Jobs
+        uses: actions/upload-artifact@v4
+        with:
+          name: python-app
+          path: |
+            .
+            !.venv/
+            !.git/
+            !**/__pycache__/
+
       # 4. Optional: install extra packages for testing
       # - pip install pytest
 
-      # 5. Run Python scripts to make sure they execute without errors
-      - name: Run vector embedding script
-        run: python src/llm/vector.py
+      # 5. Run Python scripts to check for syntax
+      # doesn't actually execute, to avoid needing to import the API keys here
+      - name: Check Syntax on Key Files
+        run: | 
+          python -m py_compile src/llm/vector.py
+          python -m py_compile src/llm/rag.py
+          python -m py_compile src/main.py
+          echo "All files passed syntax checking"
 
-      - name: Run main app (check for syntax errors)
-        run: python -m src.__main__ --help || true
+  # Deploy
+  # deploy:
+    # runs-on: ubuntu-latest
+    # needs: build
+    # Only deploy on push to main - not on pull requests or maksim's branch
+    # if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    # permissions:
+    #   id-token: write
+    #   contents: read
+    #
+    # steps:
+      # 8. Download Artifact from Build
+      # - name: Download Artifact from Build
+      # uses: actions/download-artifact@v4
+      # with:
+      #   name: python-app
+      #
+      # 9. Deploy to Azure App Service (or Azure Container Apps)
+      # - name: Deploy to Azure App Service
+      # uses: azure/webapps-deploy@v2
+      # with:
+      #   app-name: youtube-intelligence-platform
+      #   publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+      #   package: .
+      #
+      # 10. Set App Service with Essential Environment Variables
+      # - name: Set App Service Environment Variables
+      # uses: azure/appservice-settings@v1
+      # with:
+      #   app-name: youtube-intelligence-platform
+      #   publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+      #   general-settings-json: |
+      #     [
+      #       {
+      #         "name": "appCommandLine",
+      #         "value": "uvicorn src.main:app --host 0.0.0.0 --port 8000
+      #       }
+      #     ]
+      #   app-settings-json: |
+      #     [
+      #       {"name": "YOUTUBE_API_KEY", "value": "${{ secrets.YOUTUBE_API_KEY }}", "slotSetting": false },
+      #       {"name": "WEBSHARE_PROXY_USER", "value": "${{ secrets.WEBSHARE_PROXY_USER }}", "slotSetting": false },
+      #       {"name": "WEBSHARE_PROXY_PASSWORD", "value": "${{ secrets.WEBSHARE_PROXY_PASSWORD }}", "slotSetting": false },
+      #       {"name": "GROQ_API_KEY", "value": "${{ secrets.GROQ_API_KEY }}", "slotSetting": false },
+      #       {"name": "HF_API_KEY", "value": "${{ secrets.HF_API_KEY }}", "slotSetting": false },
+      #       {"name": "MONGO_URI", "value": "${{ secrets.MONGO_URI }}", "slotSetting": false }
+      #     ]

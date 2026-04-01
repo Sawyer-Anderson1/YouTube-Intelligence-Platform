@@ -30,6 +30,8 @@ from youtube_transcript_api._errors import (
     YouTubeRequestFailed
 )
 
+from .transcript_validation import validate_transcript
+
 # ---------------------
 #  Config
 # ---------------------
@@ -150,6 +152,11 @@ def fetch_transript(channel_id, vidx, vid_id):
             if not cleaned_transcript_snippets:
                 result['status'] = 'warning'
                 result['message'] = f"No valid snippets after cleaning for video {vid_id}"
+                
+            # This is probably the best spot to have transcript validation tests          
+            if not validate_transcript(cleaned_transcript_snippets):
+                result['status'] = 'warning'
+                result['message'] = f"Transcript failed validation tests for video {vid_id}"
 
             try:
                 with open(filename, 'w') as json_file:
