@@ -5,9 +5,12 @@ on:
     branches: [ main, maksim ]
   pull_request:
     branches: [ main, maksim ]
-
+    
 jobs:
   build:
+    - name: Check disk usage
+    run: df -h
+    
     runs-on: ubuntu-latest
     permissions:
       contents: read
