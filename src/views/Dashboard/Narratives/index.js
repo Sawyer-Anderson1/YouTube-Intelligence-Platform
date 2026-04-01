@@ -31,7 +31,7 @@ function NarrativeCards() {
 
   return (
     <Flex direction="row" flexWrap="wrap" gap="22px" my="60px">
-      {narratives.map((narrative, index) => (
+      {/* {narratives.map((narrative, index) => (
         <NarrativeCard
           key={index}
           title={narrative.title}
@@ -39,7 +39,7 @@ function NarrativeCards() {
           description={narrative.description}
           image={<Image alt="[image]" minWidth={{ md: "300px", lg: "auto" }} />}
         />
-      ))}
+      ))} */}
     </Flex>
   );
 }

@@ -45,7 +45,7 @@ function ClaimCards() {
       my="60px"
       gap="22px"
     >
-      {claims.map((claim, index) => (
+      {/* {claims.map((claim, index) => (
         <ClaimCard
           key={index}
           title={claim.title}
@@ -53,7 +53,7 @@ function ClaimCards() {
           description={claim.description}
           image={<Image alt="[image]" minWidth={{ md: "300px", lg: "auto" }} />}
         />
-      ))}
+      ))} */}
     </Grid>
   );
 }

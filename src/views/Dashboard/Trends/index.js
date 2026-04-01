@@ -31,7 +31,7 @@ function TrendCards() {
 
   return (
     <Flex direction="row" flexWrap="wrap" gap="22px" my="60px">
-      {trends.map((trend, index) => (
+      {/* {trends.map((trend, index) => (
         <TrendCard
           key={index}
           title={trend.title}
@@ -39,7 +39,7 @@ function TrendCards() {
           description={trend.description}
           image={<Image alt="[image]" minWidth={{ md: "300px", lg: "auto" }} />}
         />
-      ))}
+      ))} */}
     </Flex>
   );
 }
