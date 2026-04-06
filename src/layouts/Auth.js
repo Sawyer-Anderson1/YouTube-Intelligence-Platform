@@ -92,7 +92,7 @@ export default function Pages(props) {
         <Portal containerRef={navRef}>
           <AuthNavbar
             secondary={getActiveNavbar(routes)}
-            logoText="YOUTUBE INTELLIGENCE UI"
+            logoText="YOUTUBE INTELLIGENCE"
           />
         </Portal>
         <Box w="100%">
