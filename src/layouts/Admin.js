@@ -99,7 +99,7 @@ export default function Dashboard(props) {
     <ChakraProvider theme={theme} resetCss={false}>
       <Sidebar
         routes={routes}
-        logoText={"YOUTUBE INTELLIGENCE UI"}
+        logoText={"YOUTUBE INTELLIGENCE"}
         display="none"
         sidebarVariant={sidebarVariant}
         {...rest}
@@ -113,7 +113,7 @@ export default function Dashboard(props) {
         <Portal>
           <AdminNavbar
             onOpen={onOpen}
-            logoText={"YOUTUBE INTELLIGENCE UI"}
+            logoText={"YOUTUBE INTELLIGENCE"}
             brandText={getActiveRoute(routes)}
             secondary={getActiveNavbar(routes)}
             fixed={fixed}

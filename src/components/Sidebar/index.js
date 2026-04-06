@@ -48,7 +48,7 @@ function Sidebar(props) {
           borderRadius={sidebarRadius}
         >
           <SidebarContent routes={routes}
-        logoText={"YOUTUBE INTELLIGENCE UI"}
+        logoText={"YOUTUBE INTELLIGENCE"}
         display="none"
         sidebarVariant={sidebarVariant}
         />

@@ -1,4 +1,5 @@
 import { createIcon } from "@chakra-ui/icons";
+import { ArrowUpIcon, ArrowDownIcon } from "@chakra-ui/icons";
 
 export const AdobexdLogo = createIcon({
   displayName: "AdobexdLogo",
@@ -531,3 +532,11 @@ export const VisaIcon = createIcon({
     </svg>
   ),
 });
+
+export const GreenArrowUpIcon = (props) => (
+  <ArrowUpIcon color="teal.300" {...props} />
+);
+
+export const RedArrowDownIcon = (props) => (
+  <ArrowDownIcon color="red.300" {...props} />
+);
