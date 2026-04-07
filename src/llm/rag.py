@@ -35,7 +35,7 @@ GROQ_API_KEY = os.getenv('GROQ_API_KEY')
 model = ChatGroq(
     model = "llama-3.3-70b-versatile",
     temperature = 0.7,
-    max_tokens=2048
+    max_tokens=1024
 )
 
 # ----------------------------------
@@ -512,37 +512,57 @@ def format_comment_with_metadata(comment_data):
 
 # Approximate token budgets per query type
 # Groq llama-3.3-70b TPM limit: 12,000
-# Reserve tokens for: system prompt (~500), examples (~500), question (~100), response (~2000)
-# That leaves ~9,000 tokens for context
+# reserve 400 tokens for prompt, 1024 for responses, 100 for few-shot examples
 
-TOKEN_BUDGETS = {
-    'claims':       9000,  # transcripts only + examples
-    'trends':       6000,  # transcripts + claims result
-    'narratives':   4000,  # transcripts + claims + trends results
-    'risk_factors': 9000,  # transcripts only + examples
-    'comments':     8000,  # comments only
+BASE_TOKEN_BUDGETS = {
+    'claims': 9500,
+    'prompt': 400,
+    'response_limit': 1024,
+    'few-shot': 100,
+    'trends': 8000,
+    'narratives': 6000
 }
 
-# Rough token estimate: 1 token ≈ 4 characters
-CHARS_PER_TOKEN = 4
+TOKENS_PER_CHUNK = 500
 
-def get_max_chunks(query_type: str, claims=None, trends=None) -> int:
-    budget = TOKEN_BUDGETS.get(query_type, 6000)
+def get_max_chunks(query_type: str) -> int:
+    # adujust the chunks per call based on how much claims or trends may fill the TPM (will not split the claims or trends response in their following queries)
+    if query_type == 'claims':
+        # for claims: 400 token prompt + 100 token few-shot + 1024 token max response => leaves about 10,476 tokens for chunks (use the 9500 in base_token_budgets)
+        max_transcript_call_budget = BASE_TOKEN_BUDGETS.get('claims', 0) // TOKENS_PER_CHUNK
 
-    # Subtract tokens used by prior results
-    if claims:
-        claims_chars = len(json.dumps(claims))
-        budget -= claims_chars // CHARS_PER_TOKEN
+    elif query_type == 'trends':
+        # for trends: 1024 (max) claims response + 400 token prompt + 100 token few-shot + 1024 (max) token response => leaves max of 9,452 tokens for chunks
 
-    if trends:
-        trends_chars = len(json.dumps(trends))
-        budget -= trends_chars // CHARS_PER_TOKEN
+        # return the maximum of 9000 for trends
+        max_transcript_call_budget = BASE_TOKEN_BUDGETS.get('trends', 0) // TOKENS_PER_CHUNK
 
-    # Each chunk is roughly 500 tokens = 2000 chars
-    CHARS_PER_CHUNK = 2000
-    max_chunks = max(1, budget * CHARS_PER_TOKEN // CHARS_PER_CHUNK)
+    elif query_type == 'narratives':
+        # for narratives: 1024 (max) claims response + 1024 (max) trends response + 400 token prompt + 100 token few-shot + 1024 (max) token resposne => leaves max of 8,428 tokens for chunks
 
-    return max_chunks
+        # return the maximum of 8000 for narratives
+        max_transcript_call_budget = BASE_TOKEN_BUDGETS.get('narratives', 0) // TOKENS_PER_CHUNK
+
+    else:
+        max_transcript_call_budget = BASE_TOKEN_BUDGETS.get('claims', 0)
+
+    return max_transcript_call_budget
+
+# -------------------------------------------------
+#  Function to get Token Count (of Claims, Trends)
+# -------------------------------------------------
+
+def count_nested(d):
+    count = 0
+    for value in d.values():
+        if isinstance(value, dict):
+            count += count_nested(value)
+        elif isinstance(value, list):
+            count += count_nested(value)
+        else:
+            count += len(value.split())
+
+    return count + len(d.split())
 
 # -----------------------------------
 #  Core Query Function
@@ -572,8 +592,8 @@ def run_query(query_type, question, claims: Optional[Dict] = None, trends: Optio
     # -----------------------------------
     enriched_query = f"{question} {QUERY_ENRICHMENT.get(query_type, '')}"
 
-    # calculate the token budget
-    token_chunk_budget = get_max_chunks(query_type, claims, trends)
+    # calculate the token/chunk budget per call
+    token_chunk_budget = get_max_chunks(query_type)
 
     # get relevant transcript chunks from ChromaDB
     transcript_chunks = retrieval(enriched_query, k_chunks)
