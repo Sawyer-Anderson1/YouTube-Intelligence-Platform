@@ -56,12 +56,14 @@ try:
     narratives_file = json.load(open(Path(__file__).parent.parent.parent / "data" / "example_output" / "narratives.json", "r"))
     trends_file = json.load(open(Path(__file__).parent.parent.parent / "data" / "example_output" / "trends.json", "r"))
     risk_factors_file = json.load(open(Path(__file__).parent.parent.parent / "data" / "example_output" / "risk_factors.json", "r"))
+    comments_feedback_file = json.load(open(Path(__file__).parent.parent.parent / "data" / "example_output" / "comment_feedback.json", "r"))
 except Exception as e:
     print(f"Error loading example output files: {e}")
     claims_file = "Error loading claims examples"
     narratives_file = "Error loading narratives examples"
     trends_file = "Error loading trends examples"
     risk_factors_file = "Error loading risk factors examples"
+    comments_feedback_file = "Error loading comment feedback examples"
 
 # --------------------------------
 #  Templates for each Query type
@@ -251,7 +253,7 @@ Here are some comments to a video with id: {video_id}:
 Question: {question}
 
 Use the examples below as a reference as to what the analysis should look like. But do not use these examples as part of your answer - they are only for reference to understand how to word the claims.
-### Examples of Comments:
+### Examples of Comment feedback:
 {comments_examples}
 
 ### RULES:
@@ -820,7 +822,19 @@ def run_query(query_type, question, claims: Optional[Dict] = None, trends: Optio
 #  Retrieve Feedback from Comments
 # ----------------------------------
 
-def comment_feedback(question, comment_dict, query_type = 'comments'):
+# args:
+#   - Takes the question/query from the SCHEDULED_QUERIES
+#   - Takes the accumulated comment_dict from the previous calls (claims, trends, narratives)
+#   - Has query_type comments
+#   - Default value 10 for max_videos that we get feedback for (to manage the TPD and RPD
+def comment_feedback(question, comment_dict, query_type = 'comments', max_videos = 10):
+    # sort videos by total comment likes, and only process up to max_videos
+    sorted_vids = sorted(
+        [vid for vid in comment_dict if comment_dict[vid]], # filters out the empty comment lists!
+        key = lambda vid: sum(c.get('likes', 0) for c in comment_dict[vid]),
+        reverse = True
+    )[:max_videos]
+
     # get the template from the TEMPLATES dictionary and then create the prompt model chain
     template = TEMPLATES['comments']
     prompt = ChatPromptTemplate.from_template(template)
@@ -836,7 +850,7 @@ def comment_feedback(question, comment_dict, query_type = 'comments'):
     # --------------------------------------------------------
 
     inserted_results = []
-    for vid in comment_dict:
+    for vid in sorted_vids:
         concatenated_comments = ""
         source_chunks = []
 
@@ -864,7 +878,12 @@ def comment_feedback(question, comment_dict, query_type = 'comments'):
         #  since there is a TPM (Tokens per Minute) limit/rate in Groq for this model
         # -----------------------------------------------------------------------------
 
-        result = chain.invoke({"video_id": vid, "comments": concatenated_comments, "question": question, 'comments_examples': ""})
+        result = chain.invoke({
+            "video_id": vid,
+            "comments": concatenated_comments,
+            "question": question,
+            'comments_examples': comments_feedback_file
+        })
 
         # put the result through a parser to extract the json from the resonse
         parsed_result = extract_json_from_response(result.text, query_type)
