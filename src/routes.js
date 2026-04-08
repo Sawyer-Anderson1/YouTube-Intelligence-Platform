@@ -3,7 +3,7 @@ import Dashboard from "views/Dashboard/Dashboard";
 import Claims from "views/Dashboard/Claims";
 import Trends from "views/Dashboard/Trends";
 import Narratives from "views/Dashboard/Narratives";
-import Risk from "views/Dashboard/Risk";
+import Discussions from "views/Dashboard/Discussions";
 import Tables from "views/Dashboard/Tables";
 import Billing from "views/Dashboard/Billing";
 import RTLPage from "views/Dashboard/RTL";
@@ -20,7 +20,12 @@ import {
   RocketIcon,
   SupportIcon,
 } from "components/Icons/Icons";
-import { AddIcon, StarIcon, WarningIcon, WarningTwoIcon } from "@chakra-ui/icons";
+import {
+  AddIcon,
+  StarIcon,
+  WarningIcon,
+  WarningTwoIcon,
+} from "@chakra-ui/icons";
 
 var dashRoutes = [
   {
@@ -56,11 +61,11 @@ var dashRoutes = [
     layout: "/admin",
   },
   {
-    path: "/risk",
-    name: "Risk",
+    path: "/discussions",
+    name: "Discussions",
     rtlName: "لوحة القيادة",
     icon: <WarningIcon color="inherit" />,
-    component: Risk,
+    component: Discussions,
     layout: "/admin",
   },
   /*

@@ -22,24 +22,24 @@ import { Box } from "@chakra-ui/react";
 
 const Claims = ({ title, amount, captions, data }) => {
   const textColor = useColorModeValue("gray.700", "white");
-  
+
   return (
-    <Card p='16px' overflowX={{ sm: "scroll", xl: "hidden" }}>
-      <CardHeader p='12px 0px 28px 0px'>
-        <Flex direction='column'>
-          <Text fontSize='lg' color={textColor} fontWeight='bold' pb='.5rem'>
+    <Card p="16px" overflowX={{ sm: "scroll", xl: "hidden" }}>
+      <CardHeader p="12px 0px 28px 0px">
+        <Flex direction="column">
+          <Text fontSize="lg" color={textColor} fontWeight="bold" pb=".5rem">
             {title}
           </Text>
-          <Flex align='center'>
+          <Flex align="center">
             <Icon
               as={IoCheckmarkDoneCircleSharp}
-              color='teal.300'
+              color="teal.300"
               w={4}
               h={4}
-              pe='3px'
+              pe="3px"
             />
-            <Text fontSize='sm' color='gray.400' fontWeight='normal'>
-              <Text fontWeight='bold' as='span'>
+            <Text fontSize="sm" color="gray.400" fontWeight="normal">
+              <Text fontWeight="bold" as="span">
                 {amount} claims
               </Text>{" "}
               available.
@@ -47,12 +47,12 @@ const Claims = ({ title, amount, captions, data }) => {
           </Flex>
         </Flex>
       </CardHeader>
-      <Table variant='simple' color={textColor}>
+      <Table variant="simple" color={textColor}>
         <Thead>
-          <Tr my='.8rem' ps='0px'>
+          <Tr my=".8rem" ps="0px">
             {captions.map((caption, idx) => {
               return (
-                <Th color='gray.400' key={idx} ps={idx === 0 ? "0px" : null}>
+                <Th color="gray.400" key={idx} ps={idx === 0 ? "0px" : null}>
                   <Flex align="center" gap="6px">
                     {caption}
 
@@ -63,11 +63,15 @@ const Claims = ({ title, amount, captions, data }) => {
                         placement="top"
                         label={
                           <>
-                            <Text fontWeight="bold">How Interaction Score is Measured</Text>
+                            <Text fontWeight="bold">
+                              How Interaction Score is Measured
+                            </Text>
                             <Text fontSize="sm" fontStyle="italic">
                               <br></br>
-                              Likes are measured with a value of 1x and comments are measured with a value of 10x. 
-                              These combined values are compared against view count for interaction percentage.<br></br>
+                              Likes are measured with a value of 1x and comments
+                              are measured with a value of 10x. These combined
+                              values are compared against view count for
+                              interaction percentage.<br></br>
                               <br></br>
                               Percentages are measured from 0%-8%<br></br>
                               Formula is ((Likes+(Comments*10))/Views)*100
@@ -102,6 +106,7 @@ const Claims = ({ title, amount, captions, data }) => {
                 likes={row.likes}
                 comments={row.comments}
                 interaction={row.interaction}
+                videoLink={row.videoLink}
               />
             ))
           ) : (
