@@ -8,6 +8,7 @@ import os
 import re
 from pathlib import Path
 import json
+import httplib2
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 import concurrent.futures
@@ -17,11 +18,10 @@ from concurrent.futures import ThreadPoolExecutor
 from .check_for_english_text import check_english
 
 # Get the api key and build the service object for YouTube API
-for var in ('HTTP_PROXY', 'HTTPS_PROXY', 'http_proxy', 'https_proxy', 'WEBSHARE_PROXY_USER', 'WEBSHARE_PROXY_PASSWORD'):
-    os.environ.pop(var, None)
+http = httplib2.Http()
 
 youtube_api_key = os.getenv('YOUTUBE_API_KEY')
-youtube = build('youtube', 'v3', developerKey=youtube_api_key)
+youtube = build('youtube', 'v3', developerKey=youtube_api_key, http = http)
 
 # Create the collections that I may need
 # Collections: search, channels, captions, videos, videocategories, comments, etc.
@@ -119,18 +119,10 @@ def comment_retrieve(vid_id):
     except HttpError as e:
        print(f'Error response status code : {e.status_code}, reason : {e.error_details}')
 
-# run the retrieval concurrently
-with ThreadPoolExecutor(max_workers=5) as executor:
-    futures = []
+# run the retrieval    
+# for each of the video ids for each channel get comment threads
+for channel_id, vids_list in vid_data.items():
+    for vidx, vid_id in enumerate(vids_list):
+        result = comment_retrieve(vid_id)
 
-    # for each of the video ids for each channel get comment threads
-    for channel_id, vids_list in vid_data.items():
-        for vidx, vid_id in enumerate(vids_list):
-            future = executor.submit(comment_retrieve, vid_id)
-            futures.append(future)
-
-    for future in concurrent.futures.as_completed(futures):
-        try:
-            future.result()
-        except Exception as e:
-            print(f"Exception in concurrency thread retrieving comments: {e}")
+youtube.close()
