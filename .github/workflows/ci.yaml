@@ -58,50 +58,20 @@ jobs:
           python -m py_compile src/main.py
           echo "All files passed syntax checking"
 
-  # Deploy
-  # deploy:
-    # runs-on: ubuntu-latest
-    # needs: build
-    # Only deploy on push to main - not on pull requests or maksim's branch
-    # if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-    # permissions:
-    #   id-token: write
-    #   contents: read
-    #
-    # steps:
-      # 8. Download Artifact from Build
-      # - name: Download Artifact from Build
-      # uses: actions/download-artifact@v4
-      # with:
-      #   name: python-app
-      #
-      # 9. Deploy to Azure App Service (or Azure Container Apps)
-      # - name: Deploy to Azure App Service
-      # uses: azure/webapps-deploy@v2
-      # with:
-      #   app-name: youtube-intelligence-platform
-      #   publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
-      #   package: .
-      #
-      # 10. Set App Service with Essential Environment Variables
-      # - name: Set App Service Environment Variables
-      # uses: azure/appservice-settings@v1
-      # with:
-      #   app-name: youtube-intelligence-platform
-      #   publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
-      #   general-settings-json: |
-      #     [
-      #       {
-      #         "name": "appCommandLine",
-      #         "value": "uvicorn src.main:app --host 0.0.0.0 --port 8000"
-      #       }
-      #     ]
-      #   app-settings-json: |
-      #     [
-      #       {"name": "YOUTUBE_API_KEY", "value": "${{ secrets.YOUTUBE_API_KEY }}", "slotSetting": false },
-      #       {"name": "WEBSHARE_PROXY_USER", "value": "${{ secrets.WEBSHARE_PROXY_USER }}", "slotSetting": false },
-      #       {"name": "WEBSHARE_PROXY_PASSWORD", "value": "${{ secrets.WEBSHARE_PROXY_PASSWORD }}", "slotSetting": false },
-      #       {"name": "GROQ_API_KEY", "value": "${{ secrets.GROQ_API_KEY }}", "slotSetting": false },
-      #       {"name": "COHERE_API_KEY", "value": "${{ secrets.COHERE_API_KEY }}", "slotSetting": false },
-      #       {"name": "MONGO_URI", "value": "${{ secrets.MONGO_URI }}", "slotSetting": false }
-      #     ]
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    if: github.event_name == 'push'
+
+    steps:
+      - name: Download artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: python-app
+
+      - name: Deploy to Azure App Service
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: youtube-intelligence-api
+          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+          package: .
