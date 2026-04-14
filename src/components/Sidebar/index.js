@@ -1,8 +1,6 @@
 /*eslint-disable*/
 // chakra imports
-import {
-  Box, useColorModeValue
-} from "@chakra-ui/react";
+import { Box, useColorModeValue } from "@chakra-ui/react";
 import React from "react";
 import SidebarContent from "./SidebarContent";
 
@@ -47,18 +45,16 @@ function Sidebar(props) {
           m={sidebarMargins}
           borderRadius={sidebarRadius}
         >
-          <SidebarContent routes={routes}
-        logoText={"YOUTUBE INTELLIGENCE"}
-        display="none"
-        sidebarVariant={sidebarVariant}
-        />
+          <SidebarContent
+            routes={routes}
+            logoText={"YOUTUBE INTELLIGENCE"}
+            display="none"
+            sidebarVariant={sidebarVariant}
+          />
         </Box>
       </Box>
     </Box>
   );
 }
-
-
-
 
 export default Sidebar;

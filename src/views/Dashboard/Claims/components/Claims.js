@@ -24,7 +24,7 @@ const Claims = ({ title, amount, captions, data }) => {
   const textColor = useColorModeValue("gray.700", "white");
 
   return (
-    <Card p="16px" overflowX={{ sm: "scroll", xl: "hidden" }}>
+    <Card p="16px" overflowX="auto">
       <CardHeader p="12px 0px 28px 0px">
         <Flex direction="column">
           <Text fontSize="lg" color={textColor} fontWeight="bold" pb=".5rem">
@@ -47,7 +47,7 @@ const Claims = ({ title, amount, captions, data }) => {
           </Flex>
         </Flex>
       </CardHeader>
-      <Table variant="simple" color={textColor}>
+      <Table variant="simple" color={textColor} minWidth={"900px"}>
         <Thead>
           <Tr my=".8rem" ps="0px">
             {captions.map((caption, idx) => {
@@ -107,6 +107,7 @@ const Claims = ({ title, amount, captions, data }) => {
                 comments={row.comments}
                 interaction={row.interaction}
                 videoLink={row.videoLink}
+                credibilityScore={row.credibilityScore}
               />
             ))
           ) : (
