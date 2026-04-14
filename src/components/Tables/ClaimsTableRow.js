@@ -10,6 +10,7 @@ import {
   useColorModeValue,
   Link,
 } from "@chakra-ui/react";
+import { WarningIcon } from "@chakra-ui/icons";
 import React from "react";
 
 function ClaimsTableRow(props) {
@@ -22,6 +23,7 @@ function ClaimsTableRow(props) {
     comments,
     interaction,
     videoLink,
+    credibilityScore,
   } = props;
   const textColor = useColorModeValue("gray.700", "white");
   const getColor = (value) => {
@@ -32,25 +34,37 @@ function ClaimsTableRow(props) {
 
   return (
     <Tr>
-      <Td minWidth={{ sm: "250px" }} pl="0px">
-        <Flex align="center" py=".8rem" maxWidth="90%" flexWrap="nowrap">
-          <Icon
-            as={logo}
-            h={"24px"}
-            w={"24px"}
-            pe="5px"
-            color={interaction >= 3 ? "teal.300" : "red"}
-          />
-          <Link href={videoLink} isExternal>
-            <Text
-              fontSize="md"
-              color={textColor}
-              fontWeight="bold"
-              minWidth="100%"
+      <Td p="0px" minW="160px" maxW="420px">
+        <Flex align="flex-start" gap="12px" py=".8rem">
+          {/* Icon column */}
+          <Flex mt="2px" align="flex-start">
+            <Icon
+              as={logo}
+              h="24px"
+              w="24px"
+              color={interaction >= 3 ? "teal.300" : "red.400"}
+            />
+          </Flex>
+
+          {/* Text column */}
+          <Flex direction="column" flex="1" minW="0">
+            <Link
+              href={videoLink}
+              isExternal
+              _hover={{ textDecoration: "none" }}
             >
-              {name}
-            </Text>
-          </Link>
+              <Text
+                fontSize="md"
+                fontWeight="bold"
+                color={textColor}
+                whiteSpace="normal"
+                wordBreak="break-word"
+                lineHeight="1.4"
+              >
+                {name}
+              </Text>
+            </Link>
+          </Flex>
         </Flex>
       </Td>
       <Flex align="center" py=".8rem" minWidth="100%" flexWrap="nowrap">
@@ -100,6 +114,50 @@ function ClaimsTableRow(props) {
               },
             }}
           />
+        </Flex>
+      </Td>
+      <Td>
+        <Flex direction="column" minW="120px">
+          {/* Score */}
+          <Text
+            fontSize="sm"
+            fontWeight="bold"
+            color={
+              props.credibilityScore > 70
+                ? "green.400"
+                : props.credibilityScore > 40
+                ? "yellow.400"
+                : "red.400"
+            }
+          >
+            {Math.round(props.credibilityScore)} / 100
+          </Text>
+
+          {/* Bar */}
+          <Progress
+            value={props.credibilityScore}
+            size="xs"
+            borderRadius="10px"
+            sx={{
+              "& > div": {
+                backgroundColor:
+                  props.credibilityScore > 70
+                    ? "#38A169"
+                    : props.credibilityScore > 40
+                    ? "#D69E2E"
+                    : "#E53E3E",
+              },
+            }}
+          />
+
+          {/* Label */}
+          <Text fontSize="xs" color="gray.400" mt="1">
+            {props.credibilityScore > 70
+              ? "Strong"
+              : props.credibilityScore > 40
+              ? "Mixed"
+              : "Weak"}
+          </Text>
         </Flex>
       </Td>
     </Tr>
