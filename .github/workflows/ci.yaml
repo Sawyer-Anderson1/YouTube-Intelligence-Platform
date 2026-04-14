@@ -47,7 +47,7 @@ jobs:
             !**/__pycache__/
 
       # 4. Optional: install extra packages for testing
-      # - pip install pytest
+      # - pip install pytest 
 
       # 5. Run Python scripts to check for syntax
       # doesn't actually execute, to avoid needing to import the API keys here
@@ -75,4 +75,3 @@ jobs:
           app-name: youtube-intelligence-api
           publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
           package: .
-          
