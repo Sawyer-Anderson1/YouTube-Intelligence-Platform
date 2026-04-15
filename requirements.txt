@@ -1,6 +1,7 @@
 # API
 fastapi
 uvicorn
+gunicorn
 python-multipart
 
 # Scheduler
