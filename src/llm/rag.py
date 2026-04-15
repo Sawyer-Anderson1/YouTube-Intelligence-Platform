@@ -22,11 +22,25 @@ from langchain_core.prompts import ChatPromptTemplate
 # import groq
 from langchain_groq import ChatGroq
 
+# import Exa for fact-checking
+from exa_py import Exa
+
+# import requests and BeautifulSoup for webpage fetching
+import requests
+from bs4 import BeautifulSoup
+
 # -------------------------
 #  Import the Groq Api Key
 # -------------------------
 
 GROQ_API_KEY = os.getenv('GROQ_API_KEY')
+
+# -------------------------
+#  Initialize Exa for Fact Checking
+# -------------------------
+
+EXA_API_KEY = os.getenv('EXA_API_KEY')
+exa_client = Exa(api_key=EXA_API_KEY) if EXA_API_KEY else None
 
 # ---------------------------------
 #  ChatGroq with Lamma Setup
@@ -476,7 +490,7 @@ def format_comments(comments: List[Dict], max_comments: int = 5) -> str:
     return formatted
 
 # -----------------------------------
-#  Function to Format the Trnascript
+#  Function to Format the Transcript
 #  Chunks with Metadata
 # -----------------------------------
 
@@ -491,7 +505,7 @@ def format_chunk_with_metadata(doc):
     return (
         f"[Title: {m.get('title', 'unknown')}]\n"
         f"[Video Id: {video_id}]\n"
-        f"[Published At: {m.get('published_at', 'unkown')}]\n"
+        f"[Published At: {m.get('published_at', 'unknown')}]\n"
         f"[View Count: {m.get('view_count', 0):,}]\n"
         f"[Like Count: {m.get('like_count', 0):,}]\n"
         f"[Duration: {m.get('total_duration', 'unknown')}]\n"
@@ -526,6 +540,201 @@ BASE_TOKEN_BUDGETS = {
 }
 
 TOKENS_PER_CHUNK = 500
+
+# -----------------------------------
+#  Take url and get text from the webpage
+# -----------------------------------
+
+def fetch_webpage_content(url: str, max_chars: int = 2000) -> str:
+    try:
+        response = requests.get(url, timeout=10)
+        response.raise_for_status()
+        
+        soup = BeautifulSoup(response.content, 'html.parser')
+        
+        # Remove script and style elements
+        for script in soup(["script", "style"]):
+            script.decompose()
+        
+        # Get text
+        text = soup.get_text()
+        
+        # Clean up whitespace
+        lines = (line.strip() for line in text.splitlines())
+        chunks = (phrase.strip() for line in lines for phrase in line.split("  "))
+        text = ' '.join(chunk for chunk in chunks if chunk)
+        
+        return text[:max_chars]
+    
+    except Exception as e:
+        print(f"Error fetching webpage {url}: {e}")
+        return ""
+
+# -----------------------------------
+#  Using LLM to fact check a claim against webpage content
+# -----------------------------------
+
+# Provides a verdict and confidence score on how much webpage content supports/refutes the claim
+# LLM provides reasoning on why verdict is given
+
+def llm_fact_check_verdict(claim: str, webpage_content: str) -> Dict:
+    try:
+        fact_check_prompt = ChatPromptTemplate.from_template("""
+You are a fact-checking expert. Analyze the following claim against the provided webpage content.
+
+CLAIM: {claim}
+
+WEBPAGE CONTENT: {content}
+
+Based on the webpage content, determine:
+1. VERDICT: Does the content SUPPORT, REFUTE, PARTIALLY SUPPORT, or provide NO EVIDENCE for the claim? (pick one)
+2. CONFIDENCE: Your confidence score from 0.0 (no confidence) to 1.0 (very confident)
+3. REASONING: Brief explanation (1-2 sentences)
+
+Respond in JSON format only:
+{{"verdict": "SUPPORT|REFUTE|PARTIALLY_SUPPORT|NO_EVIDENCE", "confidence": 0.0-1.0, "reasoning": "explanation"}}
+
+Do not include any text outside the JSON object.
+""")
+        
+        chain = fact_check_prompt | model
+        result = chain.invoke({
+            "claim": claim,
+            "content": webpage_content[:1500]  # Limit content to avoid token overflow
+        })
+        
+        # Parse the JSON response
+        try:
+            parsed = json.loads(result.text)
+            return {
+                "verdict": parsed.get("verdict", "NO_EVIDENCE"),
+                "confidence": float(parsed.get("confidence", 0.0)),
+                "reasoning": parsed.get("reasoning", "")
+            }
+        except json.JSONDecodeError:
+            # Try to extract JSON from the response
+            json_match = re.search(r'\{.*\}', result.text, re.DOTALL)
+            if json_match:
+                parsed = json.loads(json_match.group())
+                return {
+                    "verdict": parsed.get("verdict", "NO_EVIDENCE"),
+                    "confidence": float(parsed.get("confidence", 0.0)),
+                    "reasoning": parsed.get("reasoning", "")
+                }
+            return {
+                "verdict": "NO_EVIDENCE",
+                "confidence": 0.0,
+                "reasoning": "Could not parse LLM response"
+            }
+    
+    except Exception as e:
+        print(f"Error in LLM fact-checking: {e}")
+        return {
+            "verdict": "NO_EVIDENCE",
+            "confidence": 0.0,
+            "reasoning": f"Error analyzing content: {str(e)}"
+        }
+
+# -----------------------------------
+#  Perform the fact checking process using functions above
+# -----------------------------------
+
+# Searches for sources surrounding the claim
+# For each source, fetches webpage content and uses LLM to analyze whether it supports/refutes the claim
+
+def fact_check_claims(claims_dict: Dict, query_type: str = 'claims') -> Dict:
+    if not exa_client:
+        print("Warning: Exa API key not configured, skipping fact-checking")
+        return {}
+    
+    fact_check_results = {}
+    
+    try:
+        for claim_title, claim_content in claims_dict.items():
+            # Search for evidence supporting or refuting the claim
+            try:
+                search_query = claim_title
+                search_results = exa_client.search(search_query, num_results=3, type='keyword')
+                
+                sources_list = []
+                
+                # Analyze each source
+                for result in search_results.results:
+                    # Skip YouTube links
+                    if 'youtube.com' in result.url.lower() or 'youtu.be' in result.url.lower():
+                        continue
+                    
+                    source_data = {
+                        "title": result.title,
+                        "url": result.url,
+                        "snippet": result.text[:300] if hasattr(result, 'text') else result.summary[:300] if hasattr(result, 'summary') else "No snippet available",
+                        "published_date": getattr(result, 'published_date', 'Unknown')
+                    }
+                    
+                    # Fetch and analyze webpage content
+                    webpage_content = fetch_webpage_content(result.url)
+                    
+                    if webpage_content:
+                        verdict_data = llm_fact_check_verdict(claim_title, webpage_content)
+                        source_data["verdict"] = verdict_data["verdict"]
+                        source_data["confidence"] = verdict_data["confidence"]
+                        source_data["reasoning"] = verdict_data["reasoning"]
+                    else:
+                        source_data["verdict"] = "NO_EVIDENCE"
+                        source_data["confidence"] = 0.0
+                        source_data["reasoning"] = "Could not fetch webpage content"
+                    
+                    sources_list.append(source_data)
+                    time.sleep(0.5)  # Rate limiting
+                
+                # Calculate aggregate verdict and confidence
+                verdicts = [s.get("verdict") for s in sources_list]
+                confidences = [s.get("confidence", 0.0) for s in sources_list]
+                
+                # Aggregate verdict: if majority support, overall is SUPPORT, etc.
+                support_count = verdicts.count("SUPPORT")
+                refute_count = verdicts.count("REFUTE")
+                partial_count = verdicts.count("PARTIAL")
+                
+                if support_count >= len(verdicts) / 2:
+                    aggregate_verdict = "SUPPORT"
+                elif refute_count >= len(verdicts) / 2:
+                    aggregate_verdict = "REFUTE"
+                elif partial_count > 0:
+                    aggregate_verdict = "PARTIAL"
+                else:
+                    aggregate_verdict = "NO_EVIDENCE"
+                
+                # Average confidence
+                avg_confidence = sum(confidences) / len(confidences) if confidences else 0.0
+                
+                fact_check_results[claim_title] = {
+                    "original_claim": claim_title,
+                    "search_query": search_query,
+                    "evidence_found": len(sources_list) > 0,
+                    "num_sources": len(sources_list),
+                    "sources": sources_list,
+                    "aggregate_verdict": aggregate_verdict,
+                    "aggregate_confidence": round(avg_confidence, 2)
+                }
+                
+                # Small delay to avoid rate limiting
+                time.sleep(0.5)
+                
+            except Exception as e:
+                print(f"Error fact-checking claim '{claim_title}': {e}")
+                fact_check_results[claim_title] = {
+                    "error": str(e),
+                    "original_claim": claim_title,
+                }
+    
+    except Exception as e:
+        print(f"Error in fact-checking process: {e}")
+        return {"error": str(e)}
+    
+    return fact_check_results
+
+
 
 def get_max_chunks(query_type: str) -> int:
     # adujust the chunks per call based on how much claims or trends may fill the TPM (will not split the claims or trends response in their following queries)
@@ -787,13 +996,36 @@ def run_query(query_type, question, claims: Optional[Dict] = None, trends: Optio
             "chunk_content": chunk.page_content
         })
 
+    # Fact-check the results before storing
+    fact_check_data = fact_check_claims(results, query_type)
+    
+    # Add fact_check to each individual claim/result
+    results_with_factcheck = {}
+    for claim_title, claim_content in results.items():
+        if isinstance(claim_content, dict) and 'fact_check' not in claim_content:
+            # If it's a dict without fact_check yet, add it
+            results_with_factcheck[claim_title] = {
+                **claim_content,
+                'fact_check': fact_check_data.get(claim_title, {})
+            }
+        elif isinstance(claim_content, dict):
+            # If it already has fact_check (from previous query), keep as is
+            results_with_factcheck[claim_title] = claim_content
+        else:
+            # If it's a string or other type, wrap it
+            results_with_factcheck[claim_title] = {
+                'content': claim_content,
+                'fact_check': fact_check_data.get(claim_title, {})
+            }
+
     #  Insert the result into MongoDB
     # format schema to MongoDB
+
     document = {
             'run_date': datetime.now(timezone.utc),
             'query_type': query_type,
             'question': question,
-            'result_text': results,
+            'result_text': results_with_factcheck,
             'source_chunks': source_chunks,
             'model': 'llama-3.3-70b-versatile',
             'retrieval_k': len(previous_chunks)
@@ -807,14 +1039,14 @@ def run_query(query_type, question, claims: Optional[Dict] = None, trends: Optio
         return {
             'id': str(insert_result.inserted_id),
             'query_type': query_type,
-            'result_text': results,
+            'result_text': results_with_factcheck,
             'source_chunks': previous_chunks
         }, comments_dict
 
     return {
         'id': str(insert_result.inserted_id),
         'query_type': query_type,
-        'result_text': results,
+        'result_text': results_with_factcheck,
         'source_chunks': previous_chunks
     }
 
