@@ -1,0 +1,19 @@
+YouTube Intelligence Platform
+
+Week 7 Meeting Minutes:
+Team: 4
+Attendees: Selim Sarac, Paul Lee, Sawyer Anderson, Makism Zlatkin, Brice T Cooper, Lucah Lucero, Dang Nam Pham
+Sponsor: Selim Sarac
+TA/Advisor: Pranav Rasikbhai Devani
+Note Taker: Sawyer Anderson
+
+Meeting Agenda:
+	Discussion of what has been done. Each member went through and told the professor what they had completed the prior week and what they have worked on up to the day of the meeting. I (Sawyer Anderson) discussed my work with frontend deployment and backend CI/CD. Paul Lee showed is work with the comments, the improved retrieval. Lucah Lucero showed his recent UI work, and Dang Nam Pham showed UI work. Cooper Brice talked about his testing with the llm responses. Maksim discussed his current implementation of the ci/cd pipeline and deployment.
+
+	- Date & Time of next meeting:
+	4/1/2026 @7:20-7:50pm
+
+Deadlines:
+	- work on CI/CD and backend deployment
+	- work on Firebase troubleshooting
+	- work on use of comments in seperate queries

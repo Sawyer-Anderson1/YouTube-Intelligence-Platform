@@ -541,6 +541,64 @@ BASE_TOKEN_BUDGETS = {
 
 TOKENS_PER_CHUNK = 500
 
+def get_max_chunks(query_type: str) -> int:
+    # adujust the chunks per call based on how much claims or trends may fill the TPM (will not split the claims or trends response in their following queries)
+    if query_type == 'claims':
+        # for claims: 400 token prompt + 100 token few-shot + 1024 token max response => leaves about 10,476 tokens for chunks (use the 9500 in base_token_budgets)
+        max_transcript_call_budget = BASE_TOKEN_BUDGETS.get('claims', 0) // TOKENS_PER_CHUNK
+
+    elif query_type == 'trends':
+        # for trends: 1024 (max) claims response + 400 token prompt + 100 token few-shot + 1024 (max) token response => leaves max of 9,452 tokens for chunks
+
+        # return the maximum of 9000 for trends
+        max_transcript_call_budget = BASE_TOKEN_BUDGETS.get('trends', 0) // TOKENS_PER_CHUNK
+
+    elif query_type == 'narratives':
+        # for narratives: 1024 (max) claims response + 1024 (max) trends response + 400 token prompt + 100 token few-shot + 1024 (max) token resposne => leaves max of 8,428 tokens for chunks
+
+        # return the maximum of 8000 for narratives
+        max_transcript_call_budget = BASE_TOKEN_BUDGETS.get('narratives', 0) // TOKENS_PER_CHUNK
+
+    else:
+        max_transcript_call_budget = BASE_TOKEN_BUDGETS.get('claims', 0)
+
+    return max_transcript_call_budget
+
+# -------------------------------------------------
+#  Function to get Token Count (of Claims, Trends)
+# -------------------------------------------------
+
+def count_nested(d):
+    count = 0
+    for value in d.values():
+        if isinstance(value, dict):
+            count += count_nested(value)
+        elif isinstance(value, list):
+            count += count_nested(value)
+        else:
+            count += len(value.split())
+
+    return count + len(d.split())
+
+# -----------------------------------
+#  Calculate Chunk Budget
+# -----------------------------------
+
+# Approximate token budgets per query type
+# Groq llama-3.3-70b TPM limit: 12,000
+# reserve 400 tokens for prompt, 1024 for responses, 100 for few-shot examples
+
+BASE_TOKEN_BUDGETS = {
+    'claims': 9500,
+    'prompt': 400,
+    'response_limit': 1024,
+    'few-shot': 100,
+    'trends': 8000,
+    'narratives': 6000
+}
+
+TOKENS_PER_CHUNK = 500
+
 # -----------------------------------
 #  Take url and get text from the webpage
 # -----------------------------------
