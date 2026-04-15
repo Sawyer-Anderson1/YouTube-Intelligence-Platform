@@ -22,21 +22,11 @@ from langchain_core.prompts import ChatPromptTemplate
 # import groq
 from langchain_groq import ChatGroq
 
-# import Exa for fact-checking
-from exa_py import Exa
-
 # -------------------------
 #  Import the Groq Api Key
 # -------------------------
 
 GROQ_API_KEY = os.getenv('GROQ_API_KEY')
-
-# -------------------------
-#  Initialize Exa for Fact Checking
-# -------------------------
-
-EXA_API_KEY = os.getenv('EXA_API_KEY')
-exa_client = Exa(api_key=EXA_API_KEY) if EXA_API_KEY else None
 
 # ---------------------------------
 #  ChatGroq with Lamma Setup
@@ -65,13 +55,15 @@ try:
     claims_file = json.load(open(Path(__file__).parent.parent.parent / "data" / "example_output" / "claims.json", "r"))
     narratives_file = json.load(open(Path(__file__).parent.parent.parent / "data" / "example_output" / "narratives.json", "r"))
     trends_file = json.load(open(Path(__file__).parent.parent.parent / "data" / "example_output" / "trends.json", "r"))
-    risk_factors_file = json.load(open(Path(__file__).parent.parent.parent / "data" / "example_output" / "risk_factors.json", "r"))
+    # risk_factors_file = json.load(open(Path(__file__).parent.parent.parent / "data" / "example_output" / "risk_factors.json", "r"))
+    comments_feedback_file = json.load(open(Path(__file__).parent.parent.parent / "data" / "example_output" / "comment_feedback.json", "r"))
 except Exception as e:
     print(f"Error loading example output files: {e}")
     claims_file = "Error loading claims examples"
     narratives_file = "Error loading narratives examples"
     trends_file = "Error loading trends examples"
-    risk_factors_file = "Error loading risk factors examples"
+    # risk_factors_file = "Error loading risk factors examples"
+    comments_feedback_file = "Error loading comment feedback examples"
 
 # --------------------------------
 #  Templates for each Query type
@@ -261,7 +253,7 @@ Here are some comments to a video with id: {video_id}:
 Question: {question}
 
 Use the examples below as a reference as to what the analysis should look like. But do not use these examples as part of your answer - they are only for reference to understand how to word the claims.
-### Examples of Comments:
+### Examples of Comment feedback:
 {comments_examples}
 
 ### RULES:
@@ -535,69 +527,6 @@ BASE_TOKEN_BUDGETS = {
 
 TOKENS_PER_CHUNK = 500
 
-# -----------------------------------
-#  Fact Checking with Exa
-# -----------------------------------
-
-def fact_check_claims(claims_dict: Dict, query_type: str = 'claims') -> Dict:
-    """
-    Fact-check claims/results using Exa API.
-    
-    Args:
-        claims_dict: Dictionary of claims/findings to fact-check
-        query_type: Type of query (claims, trends, narratives, risk_factors)
-    
-    Returns:
-        Dictionary with fact-check results for each claim
-    """
-    if not exa_client:
-        print("Warning: Exa API key not configured, skipping fact-checking")
-        return {}
-    
-    fact_check_results = {}
-    
-    try:
-        for claim_title, claim_content in claims_dict.items():
-            # Search for evidence supporting or refuting the claim
-            try:
-                search_query = claim_title
-                search_results = exa_client.search(search_query, num_results=3, type='keyword')
-                
-                sources_list = [
-                    {
-                        "title": result.title,
-                        "url": result.url,
-                        "snippet": result.text[:300] if hasattr(result, 'text') else result.summary[:300] if hasattr(result, 'summary') else "No snippet available",
-                        "published_date": getattr(result, 'published_date', 'Unknown')
-                    }
-                    for result in search_results.results
-                ]
-                
-                fact_check_results[claim_title] = {
-                    "original_claim": claim_title,
-                    "search_query": search_query,
-                    "evidence_found": len(sources_list) > 0,
-                    "num_sources": len(sources_list),
-                    "sources": sources_list
-                }
-                
-                # Small delay to avoid rate limiting
-                time.sleep(0.5)
-                
-            except Exception as e:
-                print(f"Error fact-checking claim '{claim_title}': {e}")
-                fact_check_results[claim_title] = {
-                    "error": str(e),
-                    "original_claim": claim_title,
-                }
-    
-    except Exception as e:
-        print(f"Error in fact-checking process: {e}")
-        return {"error": str(e)}
-    
-    return fact_check_results
-
-
 def get_max_chunks(query_type: str) -> int:
     # adujust the chunks per call based on how much claims or trends may fill the TPM (will not split the claims or trends response in their following queries)
     if query_type == 'claims':
@@ -858,18 +787,13 @@ def run_query(query_type, question, claims: Optional[Dict] = None, trends: Optio
             "chunk_content": chunk.page_content
         })
 
-    # Fact-check the results before storing
-    fact_check_data = fact_check_claims(results, query_type)
-
     #  Insert the result into MongoDB
     # format schema to MongoDB
-
     document = {
             'run_date': datetime.now(timezone.utc),
             'query_type': query_type,
             'question': question,
             'result_text': results,
-            'fact_check': fact_check_data,
             'source_chunks': source_chunks,
             'model': 'llama-3.3-70b-versatile',
             'retrieval_k': len(previous_chunks)
@@ -884,7 +808,6 @@ def run_query(query_type, question, claims: Optional[Dict] = None, trends: Optio
             'id': str(insert_result.inserted_id),
             'query_type': query_type,
             'result_text': results,
-            'fact_check': fact_check_data,
             'source_chunks': previous_chunks
         }, comments_dict
 
@@ -892,7 +815,6 @@ def run_query(query_type, question, claims: Optional[Dict] = None, trends: Optio
         'id': str(insert_result.inserted_id),
         'query_type': query_type,
         'result_text': results,
-        'fact_check': fact_check_data,
         'source_chunks': previous_chunks
     }
 
@@ -900,7 +822,19 @@ def run_query(query_type, question, claims: Optional[Dict] = None, trends: Optio
 #  Retrieve Feedback from Comments
 # ----------------------------------
 
-def comment_feedback(question, comment_dict, query_type = 'comments'):
+# args:
+#   - Takes the question/query from the SCHEDULED_QUERIES
+#   - Takes the accumulated comment_dict from the previous calls (claims, trends, narratives)
+#   - Has query_type comments
+#   - Default value 10 for max_videos that we get feedback for (to manage the TPD and RPD
+def comment_feedback(question, comment_dict, query_type = 'comments', max_videos = 10):
+    # sort videos by total comment likes, and only process up to max_videos
+    sorted_vids = sorted(
+        [vid for vid in comment_dict if comment_dict[vid]], # filters out the empty comment lists!
+        key = lambda vid: sum(c.get('likes', 0) for c in comment_dict[vid]),
+        reverse = True
+    )[:max_videos]
+
     # get the template from the TEMPLATES dictionary and then create the prompt model chain
     template = TEMPLATES['comments']
     prompt = ChatPromptTemplate.from_template(template)
@@ -916,7 +850,7 @@ def comment_feedback(question, comment_dict, query_type = 'comments'):
     # --------------------------------------------------------
 
     inserted_results = []
-    for vid in comment_dict:
+    for vid in sorted_vids:
         concatenated_comments = ""
         source_chunks = []
 
@@ -944,7 +878,12 @@ def comment_feedback(question, comment_dict, query_type = 'comments'):
         #  since there is a TPM (Tokens per Minute) limit/rate in Groq for this model
         # -----------------------------------------------------------------------------
 
-        result = chain.invoke({"video_id": vid, "comments": concatenated_comments, "question": question, 'comments_examples': ""})
+        result = chain.invoke({
+            "video_id": vid,
+            "comments": concatenated_comments,
+            "question": question,
+            'comments_examples': comments_feedback_file
+        })
 
         # put the result through a parser to extract the json from the resonse
         parsed_result = extract_json_from_response(result.text, query_type)
