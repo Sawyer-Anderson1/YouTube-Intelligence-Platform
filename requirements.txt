@@ -24,7 +24,7 @@ langchain-cohere
 langchain-groq
 langchain-community
 langchain-text-splitters
-chromadb
+chromadb==0.4.24
 
 # Embeddings and Generation
 cohere
@@ -38,8 +38,8 @@ python-dotenv
 requests
 tenacity
 python-dateutil
-pandas
-numpy
+pandas==2.2.1
+numpy==1.26.4
 beautifulsoup4
 regex
 tqdm
