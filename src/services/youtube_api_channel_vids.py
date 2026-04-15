@@ -238,7 +238,7 @@ try:
             playlist_item = playlist_response.get('items', [])
 
             # run the items through the check, and return the items we'll keep (the relevant ones to the topic)
-            filtered_vids, MONTH_LIMIT_FLAG = check_vids(playlist_item)
+            filtered_vids, MONTH_LIMIT_FLAG = check_vids(playlist_item, channel)
             channels_vids.extend(filtered_vids)
 
             # then do pagination till the check_vids has elements that went to 6 months ago or there are no more nextPageTokens
@@ -261,7 +261,7 @@ try:
                     playlist_item = playlist_response.get('items', [])
 
                     # then check the vids for the category if within month limit
-                    filtered_vids, MONTH_LIMIT_FLAG = check_vids(playlist_item)
+                    filtered_vids, MONTH_LIMIT_FLAG = check_vids(playlist_item, channel)
                     channels_vids.extend(filtered_vids)
                 except HttpError as e:
                     print(f'Error response status code : {e.status_code}, reason : {e.error_details}')
