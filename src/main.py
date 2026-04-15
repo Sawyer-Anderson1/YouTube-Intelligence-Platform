@@ -2,6 +2,7 @@
 import os
 import datetime
 import subprocess
+import sys
 from typing import Optional
 from contextlib import asynccontextmanager
 from fastapi import FastAPI
@@ -13,6 +14,8 @@ from pymongo import MongoClient
 
 # import scheduled RAG query runner
 from .llm.rag import run_scheduled_queries
+
+PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # ----------------------------------
 #  Setup MongoDB
@@ -34,7 +37,18 @@ def run_script(script_name):
     #  Run the Scripts as Modules
     # ----------------------------
 
-    result = subprocess.run(['python3 -m', script_name], capture_output=True, text=True)
+    result = subprocess.run(
+            [sys.executable, '-m', script_name],
+            capture_output=True,
+            text=True,
+            cwd = PROJECT_ROOT,
+            env = {**os.environ, 'PYTHONPATH': PROJECT_ROOT}
+    )
+
+    if result.returncode != 0:
+        print(f"stderr: {result.stderr}")
+        print(f"stdout: {result.stdout}")
+
     result.check_returncode()
 
 # the function that defines the scripts that will be run once a week
@@ -45,21 +59,27 @@ def scheduled_job_sequence():
         # ------------------------------
 
         # run the script to get the channels that have videos relevant to the category
-        run_script('services.youtube_api_channel_search')
+        print("Start retrieving channel ids")
+        run_script('src.services.youtube_api_channel_search')
 
         # run the script to get the videos from the channels that have to do with the category
-        run_script('services.youtube_api_channel_vids')
+        print("Start retrieving channel vids")
+        run_script('src.services.youtube_api_channel_vids')
 
         # then run the script to get the transcripts from the channels
-        run_script('services.transcripts')
+        print("Start retrieving transcripts from the vids of the choosen channels")
+        run_script('src.services.transcripts')
 
         # add the comments retrieval here
-        # ...
+        print("Start retrieving comments from the vids of the choosen channels")
+        run_script('src.services.comments')
 
         # then run the vector.py and rag.py (run_scheduled_queries())
-        run_script('llm.vector')
+        print("Start vectorizing the transcript data")
+        run_script('src.llm.vector')
 
-        run_scheduled_queries(k_c = 40, k_t = 5, k_n = 5)
+        print("Run the scheduled queries for claims, trends, narratives, and comment feedback")
+        run_scheduled_queries(k_c = 25, k_t = 5, k_n = 5)
     except Exception as e:
         print(f"Transcript retrieval scripts failed to run: {e}")
 
