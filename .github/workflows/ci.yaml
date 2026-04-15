@@ -2,7 +2,7 @@ name: CI/CD
 
 on:
   push:
-    branches: [ main, maksim ]
+    branches: [ main, maksim, sawyeranderson]
   pull_request:
     branches: [ main, maksim ]
     
@@ -26,7 +26,7 @@ jobs:
 
       - name: List largest directories
         run: du -sh /* 2>/dev/null | sort -hr | head -n 10
-      
+
       # 3. Install dependencies
       - name: Install dependencies
         run: |
@@ -35,16 +35,18 @@ jobs:
 
       - name: List largest pip packages
         run: pip list --format=columns | head -n 30
-      
+
       - name: Upload Artifact for Deployment Jobs
         uses: actions/upload-artifact@v4
         with:
           name: python-app
           path: |
             .
+            !.git/
             !.venv/
             !.git/
             !**/__pycache__/
+            !tests/
 
       # 4. Optional: install extra packages for testing
       # - pip install pytest
@@ -75,3 +77,4 @@ jobs:
           app-name: youtube-intelligence-api
           publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
           package: .
+          enable-oryx-build: true
