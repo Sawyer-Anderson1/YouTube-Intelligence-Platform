@@ -36,12 +36,13 @@ jobs:
           pip install -r requirements.txt
 
       - name: List largest pip packages
-        source antenv/bin/activate
-        run: pip list --format=columns | head -n 30
+        run: |
+          source antenv/bin/activate
+          pip list --format=columns | head -n 30
 
       - name: Check Syntax on Key Files
         run: | 
-          antenv/bin/activate
+          source antenv/bin/activate
           python -m py_compile src/llm/vector.py
           python -m py_compile src/llm/rag.py
           python -m py_compile src/main.py
