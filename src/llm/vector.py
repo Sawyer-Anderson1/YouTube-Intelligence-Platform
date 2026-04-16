@@ -3,6 +3,10 @@ import json
 import time
 from pathlib import Path
 
+import pysqlite3
+import sys
+sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
+
 from langchain_cohere import CohereEmbeddings
 from langchain_chroma import Chroma
 from langchain_core.documents import Document
