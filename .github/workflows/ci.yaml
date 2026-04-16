@@ -27,14 +27,25 @@ jobs:
       - name: List largest directories
         run: du -sh /* 2>/dev/null | sort -hr | head -n 10
 
-      # 3. Install dependencies
+      # 3. Install dependencies into venv
       - name: Install dependencies
         run: |
+          python -m venv antenv
+          source antenv/bin/activate
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
       - name: List largest pip packages
+        source antenv/bin/activate
         run: pip list --format=columns | head -n 30
+
+      - name: Check Syntax on Key Files
+        run: | 
+          antenv/bin/activate
+          python -m py_compile src/llm/vector.py
+          python -m py_compile src/llm/rag.py
+          python -m py_compile src/main.py
+          echo "All files passed syntax checking"
 
       - name: Upload Artifact for Deployment Jobs
         uses: actions/upload-artifact@v4
@@ -43,22 +54,8 @@ jobs:
           path: |
             .
             !.git/
-            !.venv/
-            !.git/
             !**/__pycache__/
             !tests/
-
-      # 4. Optional: install extra packages for testing
-      # - pip install pytest
-
-      # 5. Run Python scripts to check for syntax
-      # doesn't actually execute, to avoid needing to import the API keys here
-      - name: Check Syntax on Key Files
-        run: | 
-          python -m py_compile src/llm/vector.py
-          python -m py_compile src/llm/rag.py
-          python -m py_compile src/main.py
-          echo "All files passed syntax checking"
 
   deploy:
     runs-on: ubuntu-latest

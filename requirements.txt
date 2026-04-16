@@ -26,6 +26,7 @@ langchain-groq
 langchain-community
 langchain-text-splitters
 chromadb
+pysqlite3-binary
 
 # Embeddings and Generation
 cohere
