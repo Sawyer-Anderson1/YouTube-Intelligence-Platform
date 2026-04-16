@@ -5,7 +5,13 @@ on:
     branches: [ main, maksim, sawyeranderson]
   pull_request:
     branches: [ main, maksim ]
-    
+  workflow_dispatch:
+    inputs:
+      logLevel:
+        description: 'Log level'
+        required: true
+        default: 'warning'
+
 jobs:
   build:
     runs-on: ubuntu-latest
