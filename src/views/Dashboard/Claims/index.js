@@ -29,7 +29,13 @@ function ClaimCards() {
           getComments(),
         ]);
 
-        const rawClaims = claimsRes?.[0]?.result_text || {};
+        const rawClaims = claimsRes.reduce(
+          (acc, item) => ({
+            ...acc,
+            ...(item.result_text || {}),
+          }),
+          {},
+        );
 
         // Build comment map: video_id → comments
         const commentMap = {};
