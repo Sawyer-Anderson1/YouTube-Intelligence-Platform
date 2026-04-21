@@ -51,9 +51,10 @@ function ClaimCards() {
 
         const formattedClaims = Object.entries(rawClaims).map(
           ([title, claim]) => {
-            const views = Number(claim.view_count);
-            const likes = Number(claim.like_count);
-            const commentsCount = Number(claim.comment_count);
+            const views = Number(claim.view_count) || claim.view_count;
+            const likes = Number(claim.like_count) || claim.like_count;
+            const commentsCount =
+              Number(claim.comment_count) || claim.comment_count;
 
             const interaction =
               views > 0 ? ((likes + commentsCount * 10) / views) * 100 : 0;
