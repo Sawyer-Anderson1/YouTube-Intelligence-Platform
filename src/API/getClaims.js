@@ -5,7 +5,12 @@ const BACKEND_URL =
 
 const getClaims = async () => {
   let res = await axios.get(`${BACKEND_URL}/claims`);
-  return res.data;
+
+  const filteredClaims = res.data.filter(
+    (item) => item.source_chunks && item.source_chunks.length > 0,
+  );
+
+  return filteredClaims;
 };
 
 export default getClaims;
