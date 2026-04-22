@@ -8,9 +8,15 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from apscheduler.schedulers.background import BackgroundScheduler
+# from apscheduler.schedulers.background import BackgroundScheduler
+from apscheduler.schedulers.asyncio import AsyncIOScheduler
 
 from pymongo import MongoClient
+
+# logging imports
+import logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 # import scheduled RAG query runner
 from .llm.rag import run_scheduled_queries
@@ -53,40 +59,43 @@ def run_script(script_name):
 
 # the function that defines the scripts that will be run once a week
 def scheduled_job_sequence():
+    logger.info("scheduled_job_sequence started")
+
     try:
         # ------------------------------
         #  Give Module Path of Scripts
         # ------------------------------
 
         # run the script to get the channels that have videos relevant to the category
-        print("Start retrieving channel ids")
+        logger.info("Start retrieving channel ids")
         run_script('src.services.youtube_api_channel_search')
 
         # run the script to get the videos from the channels that have to do with the category
-        print("Start retrieving channel vids")
+        logger.info("Start retrieving channel vids")
         run_script('src.services.youtube_api_channel_vids')
 
         # then run the script to get the transcripts from the channels
-        print("Start retrieving transcripts from the vids of the choosen channels")
+        logger.info("Start retrieving transcripts from the vids of the choosen channels")
         run_script('src.services.transcripts')
 
         # add the comments retrieval here
-        print("Start retrieving comments from the vids of the choosen channels")
+        logger.info("Start retrieving comments from the vids of the choosen channels")
         run_script('src.services.comments')
 
         # then run the vector.py and rag.py (run_scheduled_queries())
-        print("Start vectorizing the transcript data")
+        logger.info("Start vectorizing the transcript data")
         run_script('src.llm.vector')
 
-        print("Run the scheduled queries for claims, trends, narratives, and comment feedback")
+        logger.info("Run the scheduled queries for claims, trends, narratives, and comment feedback")
         run_scheduled_queries(k_c = 25, k_t = 5, k_n = 5)
     except Exception as e:
-        print(f"Transcript retrieval scripts failed to run: {e}")
+        logger.info(f"Transcript retrieval scripts failed to run: {e}")
 
 # create the scheduler to run in an interval of a week
 @asynccontextmanager
 async def weeklylifespan(app: FastAPI):
-    scheduler = BackgroundScheduler()
+    logger.info("Starting APScheduler...")
+    scheduler = AsyncIOScheduler()
 
     # have the scripts that take the data from the YouTube API to run once every week
     scheduler.add_job(
@@ -99,8 +108,10 @@ async def weeklylifespan(app: FastAPI):
             next_run_time=datetime.datetime.now() # run once on startup, then follow the cron job schedule
     )
     scheduler.start()
+    logger.info(f"Scheduler started. Jobs: {scheduler.get_jobs()}")
 
     yield
+    logger.info("Shutting down scheduler...")
     scheduler.shutdown()
 
 # -------------------------
