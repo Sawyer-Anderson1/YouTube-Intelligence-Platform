@@ -211,3 +211,27 @@ def get_risk_factors(limit: int = 5):
     )
 
     return results
+
+# route to get all comment feedback
+@app.get("/comment_feedback")
+def get_comment_feedback(limit: int = 10):
+    results = list(
+        results_collection
+        .find({'query_type': 'comments'}, {'_id': 0})
+        .sort('run_date', -1)
+        .limit(limit)
+    )
+
+    return results
+
+# route to get comment feedback by video ids
+@app.get("/comment_feedback/{video_id}")
+def get_comment_feedback_by_vid(video_id: int, limit: int = 5):
+    results = list(
+        results_collection
+        .find({'query_type': 'comments', 'video_id': video_id}, {'_id': 0})
+        .sort('run_date', -1)
+        .limit(limit)
+    )
+
+    return results
