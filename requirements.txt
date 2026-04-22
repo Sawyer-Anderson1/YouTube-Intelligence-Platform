@@ -1,6 +1,7 @@
 # API
 fastapi
 uvicorn
+gunicorn
 python-multipart
 
 # Scheduler
@@ -25,6 +26,8 @@ langchain-groq
 langchain-community
 langchain-text-splitters
 chromadb
+pysqlite3-binary
+exa-py
 
 # Embeddings and Generation
 cohere

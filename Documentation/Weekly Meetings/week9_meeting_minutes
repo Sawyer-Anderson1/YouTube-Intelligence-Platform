@@ -1,0 +1,20 @@
+YouTube Intelligence Platform
+
+Week 9 Meeting Minutes:
+Team: 4
+Attendees: Selim Sarac, Paul Lee, Sawyer Anderson, Makism Zlatkin, Brice T Cooper, Lucah Lucero, Dang Nam Pham
+Sponsor: Selim Sarac
+TA/Advisor: Pranav Rasikbhai Devani
+Note Taker: Sawyer Anderson
+
+Meeting Agenda:
+	Discussion of what has been done. Each member went through and told the professor what they had completed the prior week and what they have worked on up to the day of the meeting. I (Sawyer Anderson) showed my work with improving the token usage of our program. Paul Lee showed his work with the response validity testing. Lucah Lucero showed his recent UI work, and Dang Nam Pham showed UI work. Cooper Brice talked about his testing with the responses. Maksim discussed the deployment of the backend and the complete ci/cd pipeline. In general we discussed the deployment and integration of front and backend mostly.
+
+	- Date & Time of next meeting:
+	3/15/2026 @7:20-7:50pm
+
+Deadlines:
+	- Meeting Minutes,and Weekly Report due monday
+	- Continue integration of front and backend
+	- Continue to refine main.py and routes for frontend 
+	- Continue to troubleshoot problems with Azure deployment

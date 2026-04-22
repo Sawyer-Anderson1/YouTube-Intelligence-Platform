@@ -599,8 +599,6 @@ BASE_TOKEN_BUDGETS = {
 
 TOKENS_PER_CHUNK = 500
 
-
-
 # -----------------------------------
 #  Take url and get text from the webpage
 # -----------------------------------

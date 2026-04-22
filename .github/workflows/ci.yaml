@@ -2,10 +2,16 @@ name: CI/CD
 
 on:
   push:
-    branches: [ main, maksim ]
+    branches: [ main, maksim, sawyeranderson]
   pull_request:
     branches: [ main, maksim ]
-    
+  workflow_dispatch:
+    inputs:
+      logLevel:
+        description: 'Log level'
+        required: true
+        default: 'warning'
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -26,37 +32,37 @@ jobs:
 
       - name: List largest directories
         run: du -sh /* 2>/dev/null | sort -hr | head -n 10
-      
-      # 3. Install dependencies
+
+      # 3. Install dependencies into venv
       - name: Install dependencies
         run: |
+          python -m venv antenv
+          source antenv/bin/activate
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
       - name: List largest pip packages
-        run: pip list --format=columns | head -n 30
-      
+        run: |
+          source antenv/bin/activate
+          pip list --format=columns | head -n 30
+
+      - name: Check Syntax on Key Files
+        run: | 
+          source antenv/bin/activate
+          python -m py_compile src/llm/vector.py
+          python -m py_compile src/llm/rag.py
+          python -m py_compile src/main.py
+          echo "All files passed syntax checking"
+
       - name: Upload Artifact for Deployment Jobs
         uses: actions/upload-artifact@v4
         with:
           name: python-app
           path: |
             .
-            !.venv/
             !.git/
             !**/__pycache__/
-
-      # 4. Optional: install extra packages for testing
-      # - pip install pytest
-
-      # 5. Run Python scripts to check for syntax
-      # doesn't actually execute, to avoid needing to import the API keys here
-      - name: Check Syntax on Key Files
-        run: | 
-          python -m py_compile src/llm/vector.py
-          python -m py_compile src/llm/rag.py
-          python -m py_compile src/main.py
-          echo "All files passed syntax checking"
+            !tests/
 
   deploy:
     runs-on: ubuntu-latest
@@ -75,3 +81,4 @@ jobs:
           app-name: youtube-intelligence-api
           publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
           package: .
+          enable-oryx-build: true
