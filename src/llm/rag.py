@@ -34,6 +34,7 @@ from bs4 import BeautifulSoup
 # -------------------------
 
 GROQ_API_KEY = os.getenv('GROQ_API_KEY')
+GROQ_API_KEY_2 = os.getenv('GROQ_API_KEY_2')
 
 # -------------------------
 #  Initialize Exa for Fact Checking
@@ -49,7 +50,15 @@ exa_client = Exa(api_key=EXA_API_KEY) if EXA_API_KEY else None
 model = ChatGroq(
     model = "llama-3.3-70b-versatile",
     temperature = 0.7,
-    max_tokens=1024
+    max_tokens=1024,
+    api_key = GROQ_API_KEY
+)
+
+factchecking_model = ChatGroq(
+    model = "llama-3.3-70b-versatile",
+    temperature = 0.7,
+    max_tokens=1024,
+    api_key = GROQ_API_KEY_2
 )
 
 # ----------------------------------
@@ -607,23 +616,23 @@ def fetch_webpage_content(url: str, max_chars: int = 2000) -> str:
     try:
         response = requests.get(url, timeout=10)
         response.raise_for_status()
-        
+
         soup = BeautifulSoup(response.content, 'html.parser')
-        
+
         # Remove script and style elements
         for script in soup(["script", "style"]):
             script.decompose()
-        
+
         # Get text
         text = soup.get_text()
-        
+
         # Clean up whitespace
         lines = (line.strip() for line in text.splitlines())
         chunks = (phrase.strip() for line in lines for phrase in line.split("  "))
         text = ' '.join(chunk for chunk in chunks if chunk)
-        
+
         return text[:max_chars]
-    
+
     except Exception as e:
         print(f"Error fetching webpage {url}: {e}")
         return ""
@@ -654,13 +663,13 @@ Respond in JSON format only:
 
 Do not include any text outside the JSON object.
 """)
-        
-        chain = fact_check_prompt | model
+
+        chain = fact_check_prompt | factchecking_model
         result = chain.invoke({
             "claim": claim,
             "content": webpage_content[:1500]  # Limit content to avoid token overflow
         })
-        
+
         # Parse the JSON response
         try:
             parsed = json.loads(result.text)
@@ -684,7 +693,7 @@ Do not include any text outside the JSON object.
                 "confidence": 0.0,
                 "reasoning": "Could not parse LLM response"
             }
-    
+
     except Exception as e:
         print(f"Error in LLM fact-checking: {e}")
         return {
@@ -704,34 +713,34 @@ def fact_check_claims(claims_dict: Dict, query_type: str = 'claims') -> Dict:
     if not exa_client:
         print("Warning: Exa API key not configured, skipping fact-checking")
         return {}
-    
+
     fact_check_results = {}
-    
+
     try:
         for claim_title, claim_content in claims_dict.items():
             # Search for evidence supporting or refuting the claim
             try:
                 search_query = claim_title
                 search_results = exa_client.search(search_query, num_results=3, type='keyword')
-                
+
                 sources_list = []
-                
+
                 # Analyze each source
                 for result in search_results.results:
                     # Skip YouTube links
                     if 'youtube.com' in result.url.lower() or 'youtu.be' in result.url.lower():
                         continue
-                    
+
                     source_data = {
                         "title": result.title,
                         "url": result.url,
                         "snippet": result.text[:300] if hasattr(result, 'text') else result.summary[:300] if hasattr(result, 'summary') else "No snippet available",
                         "published_date": getattr(result, 'published_date', 'Unknown')
                     }
-                    
+
                     # Fetch and analyze webpage content
                     webpage_content = fetch_webpage_content(result.url)
-                    
+
                     if webpage_content:
                         verdict_data = llm_fact_check_verdict(claim_title, webpage_content)
                         source_data["verdict"] = verdict_data["verdict"]
@@ -741,19 +750,19 @@ def fact_check_claims(claims_dict: Dict, query_type: str = 'claims') -> Dict:
                         source_data["verdict"] = "NO_EVIDENCE"
                         source_data["confidence"] = 0.0
                         source_data["reasoning"] = "Could not fetch webpage content"
-                    
+
                     sources_list.append(source_data)
                     time.sleep(0.5)  # Rate limiting
-                
+
                 # Calculate aggregate verdict and confidence
                 verdicts = [s.get("verdict") for s in sources_list]
                 confidences = [s.get("confidence", 0.0) for s in sources_list]
-                
+
                 # Aggregate verdict: if majority support, overall is SUPPORT, etc.
                 support_count = verdicts.count("SUPPORT")
                 refute_count = verdicts.count("REFUTE")
                 partial_count = verdicts.count("PARTIAL")
-                
+
                 if support_count >= len(verdicts) / 2:
                     aggregate_verdict = "SUPPORT"
                 elif refute_count >= len(verdicts) / 2:
@@ -762,10 +771,10 @@ def fact_check_claims(claims_dict: Dict, query_type: str = 'claims') -> Dict:
                     aggregate_verdict = "PARTIAL"
                 else:
                     aggregate_verdict = "NO_EVIDENCE"
-                
+
                 # Average confidence
                 avg_confidence = sum(confidences) / len(confidences) if confidences else 0.0
-                
+
                 fact_check_results[claim_title] = {
                     "original_claim": claim_title,
                     "search_query": search_query,
@@ -775,63 +784,22 @@ def fact_check_claims(claims_dict: Dict, query_type: str = 'claims') -> Dict:
                     "aggregate_verdict": aggregate_verdict,
                     "aggregate_confidence": round(avg_confidence, 2)
                 }
-                
+
                 # Small delay to avoid rate limiting
                 time.sleep(0.5)
-                
+
             except Exception as e:
                 print(f"Error fact-checking claim '{claim_title}': {e}")
                 fact_check_results[claim_title] = {
                     "error": str(e),
                     "original_claim": claim_title,
                 }
-    
+
     except Exception as e:
         print(f"Error in fact-checking process: {e}")
         return {"error": str(e)}
-    
+
     return fact_check_results
-
-
-
-def get_max_chunks(query_type: str) -> int:
-    # adujust the chunks per call based on how much claims or trends may fill the TPM (will not split the claims or trends response in their following queries)
-    if query_type == 'claims':
-        # for claims: 400 token prompt + 100 token few-shot + 1024 token max response => leaves about 10,476 tokens for chunks (use the 9500 in base_token_budgets)
-        max_transcript_call_budget = BASE_TOKEN_BUDGETS.get('claims', 0) // TOKENS_PER_CHUNK
-
-    elif query_type == 'trends':
-        # for trends: 1024 (max) claims response + 400 token prompt + 100 token few-shot + 1024 (max) token response => leaves max of 9,452 tokens for chunks
-
-        # return the maximum of 9000 for trends
-        max_transcript_call_budget = BASE_TOKEN_BUDGETS.get('trends', 0) // TOKENS_PER_CHUNK
-
-    elif query_type == 'narratives':
-        # for narratives: 1024 (max) claims response + 1024 (max) trends response + 400 token prompt + 100 token few-shot + 1024 (max) token resposne => leaves max of 8,428 tokens for chunks
-
-        # return the maximum of 8000 for narratives
-        max_transcript_call_budget = BASE_TOKEN_BUDGETS.get('narratives', 0) // TOKENS_PER_CHUNK
-
-    else:
-        max_transcript_call_budget = BASE_TOKEN_BUDGETS.get('claims', 0)
-
-    return max_transcript_call_budget
-
-# -------------------------------------------------
-#  Function to get Token Count (of Claims, Trends)
-# -------------------------------------------------
-
-def count_nested(d):
-    count = 0
-    for value in d.values():
-        if isinstance(value, dict):
-            count += count_nested(value)
-        elif isinstance(value, list):
-            count += count_nested(value)
-        else:
-            count += len(value.split())
-
-    return count + len(d.split())
 
 # -----------------------------------
 #  Core Query Function
