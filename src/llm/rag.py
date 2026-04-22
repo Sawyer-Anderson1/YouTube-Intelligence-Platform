@@ -654,12 +654,12 @@ CLAIM: {claim}
 WEBPAGE CONTENT: {content}
 
 Based on the webpage content, determine:
-1. VERDICT: Does the content SUPPORT, REFUTE, PARTIALLY SUPPORT, or provide NO EVIDENCE for the claim? (pick one)
+1. VERDICT: Does the content SUPPORT, REFUTE, or provide NO EVIDENCE for the claim? (pick one)
 2. CONFIDENCE: Your confidence score from 0.0 (no confidence) to 1.0 (very confident)
 3. REASONING: Brief explanation (1-2 sentences)
 
 Respond in JSON format only:
-{{"verdict": "SUPPORT|REFUTE|PARTIALLY_SUPPORT|NO_EVIDENCE", "confidence": 0.0-1.0, "reasoning": "explanation"}}
+{{"verdict": "SUPPORT|REFUTE|NO_EVIDENCE", "confidence": 0.0-1.0, "reasoning": "explanation"}}
 
 Do not include any text outside the JSON object.
 """)
@@ -775,14 +775,31 @@ def fact_check_claims(claims_dict: Dict, query_type: str = 'claims') -> Dict:
                 # Average confidence
                 avg_confidence = sum(confidences) / len(confidences) if confidences else 0.0
 
+                
+                # Weighted verdict calculation based on confidence scores
+                support_weight = sum(s.get("confidence", 0.0) for s in sources_list if s.get("verdict") == "SUPPORT")
+                refute_weight = sum(s.get("confidence", 0.0) for s in sources_list if s.get("verdict") == "REFUTE")
+                no_evidence_weight = sum(s.get("confidence", 0.0) for s in sources_list if s.get("verdict") == "NO_EVIDENCE")
+                
+                # Determine aggregate verdict based on weighted scores
+                verdict_weights = {
+                    "SUPPORT": support_weight,
+                    "REFUTE": refute_weight,
+                    "NO_EVIDENCE": no_evidence_weight
+                }
+                
+                # Pick verdict with highest weight, or NO_EVIDENCE if all weights are 0
+                if max(verdict_weights.values()) > 0:
+                    aggregate_verdict = max(verdict_weights, key=verdict_weights.get)
+                else:
+                    aggregate_verdict = "NO_EVIDENCE"
+                
                 fact_check_results[claim_title] = {
                     "original_claim": claim_title,
-                    "search_query": search_query,
                     "evidence_found": len(sources_list) > 0,
                     "num_sources": len(sources_list),
                     "sources": sources_list,
-                    "aggregate_verdict": aggregate_verdict,
-                    "aggregate_confidence": round(avg_confidence, 2)
+                    "aggregate_verdict": aggregate_verdict
                 }
 
                 # Small delay to avoid rate limiting
