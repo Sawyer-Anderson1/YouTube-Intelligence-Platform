@@ -3,6 +3,12 @@ import os
 import json
 import re
 import time
+
+# logging imports
+import logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
 from pathlib import Path
 from datetime import datetime, timezone
 from typing import Optional, Dict, List
@@ -775,25 +781,25 @@ def fact_check_claims(claims_dict: Dict, query_type: str = 'claims') -> Dict:
                 # Average confidence
                 avg_confidence = sum(confidences) / len(confidences) if confidences else 0.0
 
-                
+
                 # Weighted verdict calculation based on confidence scores
                 support_weight = sum(s.get("confidence", 0.0) for s in sources_list if s.get("verdict") == "SUPPORT")
                 refute_weight = sum(s.get("confidence", 0.0) for s in sources_list if s.get("verdict") == "REFUTE")
                 no_evidence_weight = sum(s.get("confidence", 0.0) for s in sources_list if s.get("verdict") == "NO_EVIDENCE")
-                
+
                 # Determine aggregate verdict based on weighted scores
                 verdict_weights = {
                     "SUPPORT": support_weight,
                     "REFUTE": refute_weight,
                     "NO_EVIDENCE": no_evidence_weight
                 }
-                
+
                 # Pick verdict with highest weight, or NO_EVIDENCE if all weights are 0
                 if max(verdict_weights.values()) > 0:
                     aggregate_verdict = max(verdict_weights, key=verdict_weights.get)
                 else:
                     aggregate_verdict = "NO_EVIDENCE"
-                
+
                 fact_check_results[claim_title] = {
                     "original_claim": claim_title,
                     "evidence_found": len(sources_list) > 0,
@@ -1033,10 +1039,15 @@ def run_query(query_type, question, claims: Optional[Dict] = None, trends: Optio
             "view_count": chunk.metadata.get('view_count', 0),
             "like_count": chunk.metadata.get('like_count', 0),
             "comment_count": chunk.metadata.get('comment_count', 0),
-            "comments": comments_section,
+            # "comments": comments_section,
             "total_duration": chunk.metadata.get('total_duration', ''),
-            "source_file": chunk.metadata.get('source_file', 'unknown'),
-            "chunk_content": chunk.page_content
+            "source_file": chunk.metadata.get('source_file', 'unknown')
+
+            # ------------------------------------------------------------------------------------------------------
+            #  Getting rid of Chunk Content and Comments since it may be making the payload into MongoDB too large
+            # ------------------------------------------------------------------------------------------------------
+
+            # "chunk_content": chunk.page_content
         })
 
     # Fact-check the results before storing
@@ -1073,6 +1084,13 @@ def run_query(query_type, question, claims: Optional[Dict] = None, trends: Optio
             'model': 'llama-3.3-70b-versatile',
             'retrieval_k': len(previous_chunks)
     }
+
+    # check document size before inserting
+    doc_size = len(json.dumps(document, default = str))
+    logger.info(f"Document size for {query_type}: {doc_size / 1024 / 1024:.2f} MB")
+
+    if doc_size > 14 * 1024 * 1024: # 14 MB warning threshold before 16MB limit
+        logger.warning(f"Document approaching MongoDB 16MB Limit: {doc_size / 1024 / 1024:.2f} MB")
 
     # then insert new result
     insert_result = results_collection.insert_one(document)
@@ -1207,32 +1225,32 @@ def run_scheduled_queries(k_c = 15, k_t = 15, k_n = 15):
         claims = run_query('claims', SCHEDULED_QUERIES['claims'], k_chunks = k_c)
 
         # print results
-        print(f"claims query stored with id: {claims['id']}")
+        logger.info(f"claims query stored with id: {claims['id']}")
 
         # then run the trend query using the claims, and prior transcripts
         prev_chunks = claims['source_chunks']
         trends = run_query('trends', SCHEDULED_QUERIES['trends'], claims = claims['result_text'], previous_chunks = prev_chunks, k_chunks = k_t)
 
         # print results
-        print(f"trends query stored with id: {trends['id']}")
+        logger.info(f"trends query stored with id: {trends['id']}")
 
         # then run the narratives query using the claims, trends, and prioor transcripts
         prev_chunks = trends['source_chunks']
         narratives, comment_dict = run_query('narratives', SCHEDULED_QUERIES['narratives'], claims = claims['result_text'], trends = trends['result_text'], previous_chunks = prev_chunks, k_chunks = k_n)
 
         # print results
-        print(f"narratives query stored with id: {narratives['id']}")
+        logger.info(f"narratives query stored with id: {narratives['id']}")
 
         # then run the comments query using the comments dictionary
         feedback = comment_feedback(SCHEDULED_QUERIES['comments'], comment_dict)
 
         # print results
-        print(f"Feedback queries: {feedback}")
+        logger.info(f"Feedback queries: {feedback}")
 
     except Exception as e:
-        print(f"Error with running query of types claims/trends/narratives: {e}")
+        logger.info(f"Error with running query of types claims/trends/narratives: {e}")
 
-    print("Scheduled Queries Run")
+    logger.info("Scheduled Queries Run")
 
 # main function for testing
 if __name__ == '__main__':
