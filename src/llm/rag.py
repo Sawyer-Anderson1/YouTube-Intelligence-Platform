@@ -1092,6 +1092,12 @@ def run_query(query_type, question, claims: Optional[Dict] = None, trends: Optio
     if doc_size > 14 * 1024 * 1024: # 14 MB warning threshold before 16MB limit
         logger.warning(f"Document approaching MongoDB 16MB Limit: {doc_size / 1024 / 1024:.2f} MB")
 
+        # truncate the source_chunks
+        source_chunks = source_chunks[:50]
+
+        document['source_chunks'] = source_chunks
+        document['source_chunks_truncated'] = True
+
     # then insert new result
     insert_result = results_collection.insert_one(document)
 
