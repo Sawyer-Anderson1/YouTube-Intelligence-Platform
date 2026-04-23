@@ -2,7 +2,7 @@ name: CI/CD
 
 on:
   push:
-    branches: [ main, maksim]
+    branches: [ main, maksim, sawyeranderson]
   pull_request:
     branches: [ main, maksim ]
   workflow_dispatch:
