@@ -39,7 +39,13 @@ function NarrativeCards() {
       try {
         const res = await getNarratives();
 
-        const rawNarratives = res?.[0]?.result_text || {};
+        const rawNarratives = res.reduce(
+          (acc, item) => ({
+            ...acc,
+            ...(item.result_text || {}),
+          }),
+          {},
+        );
 
         const formattedNarratives = Object.entries(rawNarratives).map(
           ([title, item]) => {
