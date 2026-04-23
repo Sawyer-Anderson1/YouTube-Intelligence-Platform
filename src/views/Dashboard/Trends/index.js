@@ -14,7 +14,13 @@ function Trends() {
       try {
         const res = await getTrends();
 
-        const rawTrends = res?.[0]?.result_text || {};
+        const rawTrends = res.reduce(
+          (acc, item) => ({
+            ...acc,
+            ...(item.result_text || {}),
+          }),
+          {},
+        );
 
         const formattedTrends = Object.entries(rawTrends).map(([title, item]) => {
           const views = Number(item.total_view_count) || 0;
