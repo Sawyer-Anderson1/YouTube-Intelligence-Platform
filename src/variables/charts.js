@@ -162,3 +162,85 @@ export const lineChartOptions = {
   },
   colors: ["#4FD1C5", "#2D3748"],
 };
+
+export const barListOptions = (categories, fullData) => ({
+  chart: {
+    toolbar: { show: false },
+    events: {
+      dataPointSelection: function (event, chartContext, config) {
+        const index = config.dataPointIndex;
+        const item = fullData[index];
+
+        if (item?.videoLink) {
+          window.open(item.videoLink, "_blank");
+        }
+      },
+    },
+  },
+
+  fill: {
+    type: "gradient",
+    gradient: {
+      shade: "dark",
+      type: "horizontal",
+      gradientToColors: ["#00f2c3"],
+      stops: [0, 100],
+    },
+  },
+
+  plotOptions: {
+    bar: {
+      horizontal: true,
+      borderRadius: 6,
+      barHeight: "35%",
+    },
+  },
+
+  dataLabels: {
+    enabled: true,
+    textAnchor: "start",
+    offsetX: 10,
+    style: {
+      colors: ["#fff"],
+      fontSize: "13px",
+      fontWeight: "bold",
+    },
+    formatter: function (val, opts) {
+      const item = fullData[opts.dataPointIndex];
+
+      return `${item.name}     ${item.views.toLocaleString()}`;
+    },
+  },
+
+  xaxis: {
+    labels: {
+      show: false,
+    },
+  },
+
+  yaxis: {
+    show: false,
+  },
+
+  grid: {
+    show: false,
+  },
+
+  tooltip: {
+    theme: "dark",
+    custom: function ({ dataPointIndex }) {
+      const item = fullData[dataPointIndex];
+
+      return `
+        <div style="padding:10px">
+          <b>${item.name}</b><br/>
+          <i>${item.quote}</i><br/><br/>
+          Views: ${item.views.toLocaleString()}<br/>
+          Likes: ${item.likes.toLocaleString()}<br/>
+          Comments: ${item.comments.toLocaleString()}<br/>
+          Interaction: ${item.interaction.toFixed(2)}%
+        </div>
+      `;
+    },
+  },
+});
