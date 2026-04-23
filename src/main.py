@@ -84,7 +84,7 @@ def scheduled_job_sequence():
 
         # then run the vector.py and rag.py (run_scheduled_queries())
         logger.info("Start vectorizing the transcript data")
-        # run_script('src.llm.vector')
+        run_script('src.llm.vector')
 
         logger.info("Run the scheduled queries for claims, trends, narratives, and comment feedback")
         run_scheduled_queries(k_c = 25, k_t = 5, k_n = 5)
