@@ -163,10 +163,10 @@ export default function AuthNavbar(props) {
       filter={navbarFilter}
       backdropFilter={navbarBackdrop}
       borderRadius="15px"
-      px="16px"
+      px="40px"
       py="22px"
       mx="auto"
-      width="1044px"
+      width="1200px"
       maxW="90%"
       alignItems="center"
     >
@@ -185,22 +185,6 @@ export default function AuthNavbar(props) {
           />
         </Box>
         {linksAuth}
-        <Link href="https://creative-tim.com/product/purity-ui-dashboard">
-          <Button
-            bg={bgButton}
-            color={colorButton}
-            fontSize="xs"
-            variant="no-hover"
-            borderRadius="35px"
-            px="30px"
-            display={{
-              sm: "none",
-              lg: "flex",
-            }}
-          >
-            Free Download
-          </Button>
-        </Link>
       </Flex>
     </Flex>
   );

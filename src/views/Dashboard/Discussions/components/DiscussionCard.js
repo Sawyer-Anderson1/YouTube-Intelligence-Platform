@@ -21,6 +21,14 @@ const DiscussionCard = ({ title, videoId, comments }) => {
     return { icon: BsArrowRight, color: "gray.400" }; // neutral → gray arrow
   };
 
+  const [expandedComments, setExpandedComments] = useState({});
+  const toggleComment = (idx) => {
+    setExpandedComments((prev) => ({
+      ...prev,
+      [idx]: !prev[idx],
+    }));
+  };
+
   return (
     <Box
       borderWidth="1px"
@@ -28,11 +36,7 @@ const DiscussionCard = ({ title, videoId, comments }) => {
       overflow="hidden"
       minWidth="300px"
       maxWidth="350px"
-      cursor="pointer"
-      onClick={() => setShowComments(!showComments)}
       p="4"
-      transition="all 0.2s"
-      _hover={{ shadow: "md" }}
     >
       {/* Video Thumbnail */}
       <a href={videoLink} target="_blank" rel="noopener noreferrer">
@@ -44,20 +48,23 @@ const DiscussionCard = ({ title, videoId, comments }) => {
         />
       </a>
 
-      <Text fontWeight="bold" mb="1">
-        {title}
-      </Text>
-
-      <Flex align="center" justify="space-between">
-        <Text fontSize="sm" color="gray.500">
-          {Object.keys(comments).length || 0} comments
+      <Box cursor="pointer" onClick={() => setShowComments((prev) => !prev)}>
+        <Text fontWeight="bold" mb="1">
+          {title}
         </Text>
-        <Icon
-          as={BsArrowRight}
-          transform={showComments ? "rotate(90deg)" : "rotate(0deg)"}
-          transition="transform 0.2s"
-        />
-      </Flex>
+
+        <Flex align="center" justify="space-between">
+          <Text fontSize="sm" color="gray.500">
+            {Object.keys(comments).length || 0} comments
+          </Text>
+
+          <Icon
+            as={BsArrowRight}
+            transform={showComments ? "rotate(90deg)" : "rotate(0deg)"}
+            transition="transform 0.2s"
+          />
+        </Flex>
+      </Box>
 
       {/* Comments */}
       {showComments && Object.keys(comments).length > 0 && (
@@ -66,6 +73,7 @@ const DiscussionCard = ({ title, videoId, comments }) => {
             const { icon: SentimentIcon, color } = getSentimentIcon(
               c.sentiment_class,
             );
+
             return (
               <Box
                 key={idx}
@@ -75,15 +83,32 @@ const DiscussionCard = ({ title, videoId, comments }) => {
                 w="100%"
                 fontSize="sm"
               >
-                <Flex justify="space-between" align="center">
-                  <Text fontWeight="bold" color="white">
-                    {c.author}
-                  </Text>
+                <Flex justify="space-between" align="center" mb="1">
+
                   <Icon as={SentimentIcon} w={5} h={5} color={color} />
                 </Flex>
-                <Text noOfLines={2} color="white">
-                  {capitalizeFirst(c.Quote)}
-                </Text>
+
+                <Box mb="1">
+                  <Text color="white">
+                    {expandedComments[idx]
+                      ? capitalizeFirst(c.Quote)
+                      : capitalizeFirst(c.Quote).length > 120
+                      ? capitalizeFirst(c.Quote).slice(0, 120) + "..."
+                      : capitalizeFirst(c.Quote)}
+                  </Text>
+
+                  {c.Quote.length > 120 && (
+                    <Text
+                      fontSize="xs"
+                      color="blue.300"
+                      cursor="pointer"
+                      onClick={() => toggleComment(idx)}
+                    >
+                      {expandedComments[idx] ? "Collapse" : "Read more"}
+                    </Text>
+                  )}
+                </Box>
+
                 <Text fontSize="xs" color="gray.400">
                   Likes: {c.like_count}
                 </Text>

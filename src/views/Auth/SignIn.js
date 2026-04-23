@@ -160,46 +160,6 @@ function SignIn() {
               </Text>
               <HStack spacing="15px" justify="center" mb="22px">
                 <Flex
-                  justify="center"
-                  align="center"
-                  w="75px"
-                  h="75px"
-                  borderRadius="15px"
-                  border="1px solid lightgray"
-                  cursor="pointer"
-                  transition="all .25s ease"
-                  _hover={{ filter: "brightness(120%)", bg: bgIcons }}
-                >
-                  <Link href="#">
-                    <Icon
-                      as={FaFacebook}
-                      w="30px"
-                      h="30px"
-                      _hover={{ filter: "brightness(120%)" }}
-                    />
-                  </Link>
-                </Flex>
-                <Flex
-                  justify="center"
-                  align="center"
-                  w="75px"
-                  h="75px"
-                  borderRadius="15px"
-                  border="1px solid lightgray"
-                  cursor="pointer"
-                  transition="all .25s ease"
-                  _hover={{ filter: "brightness(120%)", bg: bgIcons }}
-                >
-                  <Link href="#">
-                    <Icon
-                      as={FaApple}
-                      w="30px"
-                      h="30px"
-                      _hover={{ filter: "brightness(120%)" }}
-                    />
-                  </Link>
-                </Flex>
-                <Flex
                   onClick={handleGoogleSignIn}
                   justify="center"
                   align="center"

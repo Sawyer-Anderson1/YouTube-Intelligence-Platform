@@ -88,6 +88,48 @@ const Claims = ({ title, amount, captions, data }) => {
                         </Box>
                       </Tooltip>
                     )}
+
+                    {caption === "Credibility" && (
+                      <Tooltip
+                        hasArrow
+                        placement="top"
+                        label={
+                          <>
+                            <Text fontWeight="bold">
+                              How Credibility Score is Measured
+                            </Text>
+                            <Text fontSize="sm" mt="6px">
+                              Credibility is computed using comment sentiment
+                              analysis:
+                              <br />
+                              <br />
+                              • More negative comments ↓ credibility
+                              <br />
+                              • Higher polarity disagreement ↓ credibility
+                              <br />
+                              <br />
+                              Formula:
+                              <br />
+                              <Text fontStyle="italic">
+                                100 - (negativeRatio × 80) - (|avgPolarity| ×
+                                50)
+                              </Text>
+                              <br />
+                              <br />
+                              Score is normalized between 0–100.
+                            </Text>
+                          </>
+                        }
+                        bg="gray.700"
+                        color="white"
+                        borderRadius="md"
+                        p="10px"
+                      >
+                        <Flex align="center" gap="6px">
+                          <InfoOutlineIcon cursor="pointer" />
+                        </Flex>
+                      </Tooltip>
+                    )}
                   </Flex>
                 </Th>
               );

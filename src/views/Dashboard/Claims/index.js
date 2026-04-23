@@ -11,9 +11,9 @@ import {
 import React from "react";
 import { GreenArrowUpIcon, RedArrowDownIcon } from "components/Icons/Icons.js";
 import Claims from "./components/Claims";
-import getClaims from "../../../API/getClaims";
 import getComments from "../../../API/getComments";
 import { useState, useEffect } from "react";
+import getClaims from './../../../API/getClaims';
 function ClaimCards() {
   const [claims, setClaims] = useState([]);
   const [loading, setLoading] = useState(true);

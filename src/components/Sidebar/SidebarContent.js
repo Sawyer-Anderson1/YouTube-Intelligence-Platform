@@ -10,10 +10,8 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 import IconBox from "components/Icons/IconBox";
-import { CreativeTimLogo } from "components/Icons/Icons";
 import { IntelligenceUILogo } from "components/Icons/Icons";
 import { Separator } from "components/Separator/Separator";
-import { SidebarHelp } from "components/Sidebar/SidebarHelp";
 import React from "react";
 import { NavLink, useLocation } from "react-router-dom";
 
@@ -200,7 +198,6 @@ const SidebarContent = ({ logoText, routes }) => {
       <Stack direction="column" mb="40px">
         <Box>{links}</Box>
       </Stack>
-      <SidebarHelp />
     </>
   );
 };
