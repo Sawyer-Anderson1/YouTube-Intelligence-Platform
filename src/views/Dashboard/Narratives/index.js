@@ -7,7 +7,7 @@ import {
 } from "@chakra-ui/react";
 import React, { useState, useEffect, useMemo } from "react";
 import NarrativeCard from "./components/NarrativeCard";
-import getNarratives from "../../../API/getNarratives";
+import getNarratives from "./../../../API/getNarratives";
 
 // Sorting metric options
 const metricOptions = [

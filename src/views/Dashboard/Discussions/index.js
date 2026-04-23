@@ -13,26 +13,31 @@ function DiscussionPage() {
     const fetchData = async () => {
       try {
         const res = await getComments();
-        console.log("Raw API response:", res);
 
         // Process the API data
         const formattedDiscussions = res
           .map((item) => {
             const results = item.result_text || {};
+
+            // skip if raw_response exists
+            if (results.raw_response) {
+              return null;
+            }
+
             const firstResult = Object.values(results)?.[0] || {};
 
-            // Only include if result_text has at least one entry
-            console.log(results);
+            // Only include if result_text has at least one valid entry
             if (Object.keys(results).length === 0) {
               return null;
             }
+
             return {
-              title: Object.keys(results)?.[0] || "Discussion", // use video title
+              title: Object.keys(results)?.[0] || "Discussion",
               videoId: firstResult.video_id || "",
               comments: results,
             };
           })
-          .filter(Boolean); // remove null entries
+          .filter(Boolean);
 
         if (!cancelled) setDiscussions(formattedDiscussions);
       } catch (error) {
