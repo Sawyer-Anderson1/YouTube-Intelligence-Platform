@@ -87,7 +87,9 @@ def scheduled_job_sequence():
         run_script('src.llm.vector')
 
         logger.info("Run the scheduled queries for claims, trends, narratives, and comment feedback")
-        run_scheduled_queries(k_c = 25, k_t = 5, k_n = 5)
+        run_scheduled_queries(k_c = 15, k_t = 5, k_n = 5)
+
+        logger.info("Pipeline completed successfully")
     except Exception as e:
         logger.info(f"Transcript retrieval scripts failed to run: {e}")
 
@@ -226,7 +228,7 @@ def get_comment_feedback(limit: int = 10):
 
 # route to get comment feedback by video ids
 @app.get("/comment_feedback/{video_id}")
-def get_comment_feedback_by_vid(video_id: int, limit: int = 5):
+def get_comment_feedback_by_vid(video_id: str, limit: int = 5):
     results = list(
         results_collection
         .find({'query_type': 'comments', 'video_id': video_id}, {'_id': 0})

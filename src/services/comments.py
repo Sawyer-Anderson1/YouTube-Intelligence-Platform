@@ -17,6 +17,8 @@ from concurrent.futures import ThreadPoolExecutor
 # import the check for english file
 from .check_for_english_text import check_english
 
+from ..config import COMMENTS_PATH, CHANNEL_VIDS_PATH
+
 # Get the api key and build the service object for YouTube API
 http = httplib2.Http()
 
@@ -28,13 +30,13 @@ youtube = build('youtube', 'v3', developerKey=youtube_api_key, http = http)
 comment_threads = youtube.commentThreads()
 
 # create a folder for the comments
-folder_data_pathlib = Path(__file__).parent.parent.parent / 'data' / 'comments'
+folder_data_pathlib = COMMENTS_PATH
 os.makedirs(folder_data_pathlib, exist_ok = True)
 
 # read in the video ids
 vid_data = {}
 try:
-    file_path_pathlib = Path(__file__).parent.parent.parent / 'data'/ 'channel_vids.json'
+    file_path_pathlib = CHANNEL_VIDS_PATH
 
     with open(file_path_pathlib, 'r') as file:
         vid_data = json.load(file)

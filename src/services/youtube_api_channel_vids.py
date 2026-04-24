@@ -23,6 +23,8 @@ from .get_time import get_time_months_ago_rfc3339
 # import external constants (AI terms)
 from ..constants import AI_TERMS
 
+from ..config import CHANNELS_PATH, CHANNEL_VIDS_PATH, VIDEO_METRICS_PATH
+
 # --------------------------------------
 #  Get YouTubeAPI API, Build, and
 #  Collections
@@ -154,7 +156,7 @@ def check_vids(upload_items, channel_id):
 
 # read in the list of important channels on the topic of AI
 try:
-    file_path_pathlib = Path(__file__).parent.parent.parent / 'data' / 'channels.json'
+    file_path_pathlib = CHANNELS_PATH
 
     with open(file_path_pathlib, 'r') as file:
         channel_ids = json.load(file)
@@ -298,7 +300,7 @@ try:
     # -------------------------------------
 
     # then export to json
-    filename = "data/channel_vids.json"
+    filename = CHANNEL_VIDS_PATH
     try:
         with open(filename, 'w') as json_file:
             json.dump(selected_channels_vids, json_file, indent=4)
@@ -310,7 +312,7 @@ try:
     # --------------------------------------
 
     try:
-        with open('data/video_metrics.json', 'w') as file:
+        with open(VIDEO_METRICS_PATH, 'w') as file:
             json.dump(video_metrics, file, indent=4)
     except IOError as e:
         print(f"Error with writing video metrics to json file: {e}")
