@@ -545,7 +545,11 @@ def format_comment_with_metadata(comment_data):
 
 # Approximate token budgets per query type
 # Groq llama-3.3-70b TPM limit: 12,000
-# reserve 400 tokens for prompt, 1024 for responses, 100 for few-shot examples
+# reserve 400 tokens for prompt, at least 1 1024 for responses , 100 for few-shot examples
+
+# ---------------------------------------------------------------------------------------------------------------------------------
+#  But there are multiple responses that could be inside a single final result_text (since it may be multiple invokes to the LLM)
+# ---------------------------------------------------------------------------------------------------------------------------------
 
 BASE_TOKEN_BUDGETS = {
     'claims': 8500,
@@ -796,6 +800,21 @@ def fact_check_claims(claims_dict: Dict, query_type: str = 'claims') -> Dict:
 
     return fact_check_results
 
+# -----------------------------------------------
+#  Function to Strip Fact Check for the Queries
+# -----------------------------------------------
+
+def strip_fact_check(results_dict: Dict) -> Dict:
+    """Remove fact_check data before passing results to subsequent queries
+    to avoid bloating the token count."""
+    stripped = {}
+    for title, content in results_dict.items():
+        if isinstance(content, dict):
+            stripped[title] = {k: v for k, v in content.items() if k != 'fact_check'}
+        else:
+            stripped[title] = content
+    return stripped
+
 # -----------------------------------
 #  Core Query Function
 # -----------------------------------
@@ -939,6 +958,10 @@ def run_query(query_type, question, claims: Optional[Dict] = None, trends: Optio
                     transcripts = transcripts[:max_chars]
                     logger.warning(f"Truncated transcripts to {max_chars} chars to stay under TPM limit")
 
+                claims_tokens = len(json.dumps(claims)) // 4
+                transcripts_tokens = len(transcripts) // 4
+                logger.info(f"Trends request breakdown — transcripts: {transcripts_tokens} tokens, claims: {claims_tokens} tokens")
+
                 # Check if there are claims (from the prior scheduled queries) to provide context, with the transcripts from the claims query and additional transcripts
                 if claims != None:
                     result = chain.invoke({"transcripts": transcripts, "claims": claims, "question": question, 'trends_examples': trends_file})
@@ -969,6 +992,11 @@ def run_query(query_type, question, claims: Optional[Dict] = None, trends: Optio
                     max_chars = MAX_TOKENS_HARD_CAP * 4
                     transcripts = transcripts[:max_chars]
                     logger.warning(f"Truncated transcripts to {max_chars} chars to stay under TPM limit")
+
+                claims_tokens = len(json.dumps(claims)) // 4
+                trends_tokens = len(json.dumps(trends)) // 4
+                transcripts_tokens = len(transcripts) // 4
+                logger.info(f"Trends request breakdown — transcripts: {transcripts_tokens} tokens, claims: {claims_tokens} tokens, trends: {trends_tokens} tokens")
 
                 # Check if there are claims and trends (from the prior scheduled queries) to provide context, with the transcripts from the claims query, trends query, and additional transcripts
                 if claims != None and trends != None:
@@ -1019,7 +1047,7 @@ def run_query(query_type, question, claims: Optional[Dict] = None, trends: Optio
                     # Truncate the transcripts string to fit
                     max_chars = MAX_TOKENS_HARD_CAP * 4
                     transcripts = transcripts[:max_chars]
-
+ 
                 result = chain.invoke({"transcripts": transcripts, "question": question, 'claims_examples': claims_file})
 
                 parsed_result = extract_json_from_response(result.text, query_type)
@@ -1242,19 +1270,25 @@ def run_scheduled_queries(k_c = 15, k_t = 15, k_n = 15):
         # run claim query through LLM (using RAG) and keep results for the trends and narratives
         claims = run_query('claims', SCHEDULED_QUERIES['claims'], k_chunks = k_c)
 
+        # Strip fact check data before passing to trends - it bloats the token count
+        claims_for_context = strip_fact_check(claims['result_text'])
+
         # print results
         logger.info(f"claims query stored with id: {claims['id']}")
 
         # then run the trend query using the claims, and prior transcripts
         prev_chunks = claims['source_chunks']
-        trends = run_query('trends', SCHEDULED_QUERIES['trends'], claims = claims['result_text'], previous_chunks = prev_chunks, k_chunks = k_t)
+        trends = run_query('trends', SCHEDULED_QUERIES['trends'], claims = claims_for_context, previous_chunks = prev_chunks, k_chunks = k_t)
 
         # print results
         logger.info(f"trends query stored with id: {trends['id']}")
 
+        # Strip fact check data before passing to narratives - it bloats the token count
+        trends_for_context = strip_fact_check(trends['result_text'])
+
         # then run the narratives query using the claims, trends, and prioor transcripts
         prev_chunks = trends['source_chunks']
-        narratives, comment_dict = run_query('narratives', SCHEDULED_QUERIES['narratives'], claims = claims['result_text'], trends = trends['result_text'], previous_chunks = prev_chunks, k_chunks = k_n)
+        narratives, comment_dict = run_query('narratives', SCHEDULED_QUERIES['narratives'], claims = claims_for_context, trends = trends_for_context, previous_chunks = prev_chunks, k_chunks = k_n)
 
         # print results
         logger.info(f"narratives query stored with id: {narratives['id']}")
