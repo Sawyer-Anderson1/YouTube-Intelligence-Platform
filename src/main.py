@@ -68,19 +68,19 @@ def scheduled_job_sequence():
 
         # run the script to get the channels that have videos relevant to the category
         logger.info("Start retrieving channel ids")
-        # run_script('src.services.youtube_api_channel_search')
+        run_script('src.services.youtube_api_channel_search')
 
         # run the script to get the videos from the channels that have to do with the category
         logger.info("Start retrieving channel vids")
-        # run_script('src.services.youtube_api_channel_vids')
+        run_script('src.services.youtube_api_channel_vids')
 
         # then run the script to get the transcripts from the channels
         logger.info("Start retrieving transcripts from the vids of the choosen channels")
-        # run_script('src.services.transcripts')
+        run_script('src.services.transcripts')
 
         # add the comments retrieval here
         logger.info("Start retrieving comments from the vids of the choosen channels")
-        # run_script('src.services.comments')
+        run_script('src.services.comments')
 
         # then run the vector.py and rag.py (run_scheduled_queries())
         logger.info("Start vectorizing the transcript data")
