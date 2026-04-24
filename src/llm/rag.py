@@ -548,38 +548,27 @@ def format_comment_with_metadata(comment_data):
 # reserve 400 tokens for prompt, 1024 for responses, 100 for few-shot examples
 
 BASE_TOKEN_BUDGETS = {
-    'claims': 9500,
+    'claims': 8500,
     'prompt': 400,
     'response_limit': 1024,
     'few-shot': 100,
-    'trends': 8000,
-    'narratives': 6000
+    'trends': 7000,
+    'narratives': 4000
 }
 
-TOKENS_PER_CHUNK = 500
+TOKENS_PER_CHUNK = 600 # 500 content + about 100 metadata
+TOKENS_PER_SEPARATOR = 5
 
 def get_max_chunks(query_type: str) -> int:
     # adujust the chunks per call based on how much claims or trends may fill the TPM (will not split the claims or trends response in their following queries)
-    if query_type == 'claims':
-        # for claims: 400 token prompt + 100 token few-shot + 1024 token max response => leaves about 10,476 tokens for chunks (use the 9500 in base_token_budgets)
-        max_transcript_call_budget = BASE_TOKEN_BUDGETS.get('claims', 0) // TOKENS_PER_CHUNK
+    budget = BASE_TOKEN_BUDGETS.get(query_type, BASE_TOKEN_BUDGETS['claims'])
 
-    elif query_type == 'trends':
-        # for trends: 1024 (max) claims response + 400 token prompt + 100 token few-shot + 1024 (max) token response => leaves max of 9,452 tokens for chunks
+    cost_per_chunk = TOKENS_PER_CHUNK + TOKENS_PER_SEPARATOR
 
-        # return the maximum of 9000 for trends
-        max_transcript_call_budget = BASE_TOKEN_BUDGETS.get('trends', 0) // TOKENS_PER_CHUNK
+    max_chunks = budget // cost_per_chunk
 
-    elif query_type == 'narratives':
-        # for narratives: 1024 (max) claims response + 1024 (max) trends response + 400 token prompt + 100 token few-shot + 1024 (max) token resposne => leaves max of 8,428 tokens for chunks
-
-        # return the maximum of 8000 for narratives
-        max_transcript_call_budget = BASE_TOKEN_BUDGETS.get('narratives', 0) // TOKENS_PER_CHUNK
-
-    else:
-        max_transcript_call_budget = BASE_TOKEN_BUDGETS.get('claims', 0)
-
-    return max_transcript_call_budget
+    logger.info(f"Max chunks for {query_type}: {max_chunks} (budget: {budget} tokens)")
+    return max_chunks
 
 # -------------------------------------------------
 #  Function to get Token Count (of Claims, Trends)
@@ -813,6 +802,7 @@ def fact_check_claims(claims_dict: Dict, query_type: str = 'claims') -> Dict:
 
 # changed the limit from max chars to max chars per chunk, since using max_context_chars would only leave about one transcript chunk in the actual RAG
 # MAX_CONTEXT_CHARS = 3000
+MAX_TOKENS_HARD_CAP = 11500
 
 # args:
 #       - Takes question, which is static for SCHEDULED_QUERIES, but dynamic in testing or if users query themselves
@@ -921,6 +911,14 @@ def run_query(query_type, question, claims: Optional[Dict] = None, trends: Optio
     match query_type:
         case 'claims':
             for transcripts in concatenated_chunks:
+                estimated_tokens = len(transcripts) // 4
+
+                if estimated_tokens > MAX_TOKENS_HARD_CAP:
+                    # Truncate the transcripts string to fit
+                    max_chars = MAX_TOKENS_HARD_CAP * 4
+                    transcripts = transcripts[:max_chars]
+                    logger.warning(f"Truncated transcripts to {max_chars} chars to stay under TPM limit")
+
                 result = chain.invoke({"transcripts": transcripts, "question": question, 'claims_examples': claims_file})
 
                 # put the result through a parser to extract the json from the resonse
@@ -933,6 +931,14 @@ def run_query(query_type, question, claims: Optional[Dict] = None, trends: Optio
 
         case 'trends':
             for transcripts in concatenated_chunks:
+                estimated_tokens = len(transcripts) // 4
+
+                if estimated_tokens > MAX_TOKENS_HARD_CAP:
+                    # Truncate the transcripts string to fit
+                    max_chars = MAX_TOKENS_HARD_CAP * 4
+                    transcripts = transcripts[:max_chars]
+                    logger.warning(f"Truncated transcripts to {max_chars} chars to stay under TPM limit")
+
                 # Check if there are claims (from the prior scheduled queries) to provide context, with the transcripts from the claims query and additional transcripts
                 if claims != None:
                     result = chain.invoke({"transcripts": transcripts, "claims": claims, "question": question, 'trends_examples': trends_file})
@@ -956,6 +962,14 @@ def run_query(query_type, question, claims: Optional[Dict] = None, trends: Optio
 
         case 'narratives':
             for transcripts in concatenated_chunks:
+                estimated_tokens = len(transcripts) // 4
+
+                if estimated_tokens > MAX_TOKENS_HARD_CAP:
+                    # Truncate the transcripts string to fit
+                    max_chars = MAX_TOKENS_HARD_CAP * 4
+                    transcripts = transcripts[:max_chars]
+                    logger.warning(f"Truncated transcripts to {max_chars} chars to stay under TPM limit")
+
                 # Check if there are claims and trends (from the prior scheduled queries) to provide context, with the transcripts from the claims query, trends query, and additional transcripts
                 if claims != None and trends != None:
                     result = chain.invoke({"transcripts": transcripts, "claims": claims, "trends": trends, "question": question, 'narratives_examples': narratives_file})
@@ -979,6 +993,14 @@ def run_query(query_type, question, claims: Optional[Dict] = None, trends: Optio
 
         case 'risk_factors':
             for transcripts in concatenated_chunks:
+                estimated_tokens = len(transcripts) // 4
+
+                if estimated_tokens > MAX_TOKENS_HARD_CAP:
+                    # Truncate the transcripts string to fit
+                    max_chars = MAX_TOKENS_HARD_CAP * 4
+                    transcripts = transcripts[:max_chars]
+                    logger.warning(f"Truncated transcripts to {max_chars} chars to stay under TPM limit")
+
                 result = chain.invoke({"transcripts": transcripts, "question": question, 'risks_examples': risk_factors_file})
 
                 # put the result through a parser to extract the json from the resonse
@@ -991,6 +1013,13 @@ def run_query(query_type, question, claims: Optional[Dict] = None, trends: Optio
 
         case _:
             for transcripts in concatenated_chunks:
+                estimated_tokens = len(transcripts) // 4
+
+                if estimated_tokens > MAX_TOKENS_HARD_CAP:
+                    # Truncate the transcripts string to fit
+                    max_chars = MAX_TOKENS_HARD_CAP * 4
+                    transcripts = transcripts[:max_chars]
+
                 result = chain.invoke({"transcripts": transcripts, "question": question, 'claims_examples': claims_file})
 
                 parsed_result = extract_json_from_response(result.text, query_type)
