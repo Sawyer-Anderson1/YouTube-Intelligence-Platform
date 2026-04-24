@@ -32,6 +32,8 @@ from youtube_transcript_api._errors import (
 
 from .transcript_validation import validate_transcript
 
+from ..config import TRANSCRIPTS_PATH, CHANNEL_VIDS_PATH, EMBEDDED_LOG_PATH, VIDEO_METRICS_PATH
+
 # ---------------------
 #  Config
 # ---------------------
@@ -59,7 +61,7 @@ ytt_api = YouTubeTranscriptApi(
 )
 
 # make directory for transcripts
-folder_path_pathlib = Path(__file__).parent.parent.parent / 'data' / 'transcripts'
+folder_path_pathlib = TRANSCRIPTS_PATH
 os.makedirs(folder_path_pathlib, exist_ok=True)
 
 # regex to clean snippets
@@ -95,7 +97,7 @@ def clean_transcript(text):
 # --------------------------------------------------------
 
 # bring in the embedded log file so we will not fetch transcripts that it already has
-embedded_log_path = Path(__file__).parent.parent.parent / 'data' / "embedded_files.json"
+embedded_log_path = EMBEDDED_LOG_PATH
 already_fetched = set()
 
 # load the already_embedded set with the information from the log file
@@ -252,7 +254,7 @@ def fetch_transript(channel_id, vidx, vid_id):
 
 vid_ids = {}
 try:
-    file_path_pathlib = Path(__file__).parent.parent.parent / 'data' / 'channel_vids.json'
+    file_path_pathlib = CHANNEL_VIDS_PATH
 
     with open(file_path_pathlib, 'r') as file:
         vid_ids = json.load(file)
@@ -266,7 +268,7 @@ except FileNotFoundError:
 
 video_metrics = {}
 try:
-    file_path_pathlib = Path(__file__).parent.parent.parent / 'data' / 'video_metrics.json'
+    file_path_pathlib = VIDEO_METRICS_PATH
 
     with open(file_path_pathlib, 'r') as file:
         video_metrics = json.load(file)

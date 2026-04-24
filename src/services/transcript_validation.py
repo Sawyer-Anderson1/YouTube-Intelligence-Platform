@@ -12,7 +12,6 @@ import langdetect
 from langdetect.lang_detect_exception import LangDetectException
 from sympy import false
 
-
 # Thresholds
 MIN_WORD_COUNT = 20
 LANGUAGE_CONFIDENCE_THRESHOLD = 0.80
@@ -21,7 +20,6 @@ TERMS_TO_CHECK = [' ai ', '.ai', ' ai.', 'artificial intelligence', 'generative 
                   'chatgpt', 'chat gpt', 'agent', 'claude', 'gemini', 'moltbook',
                   'openclaw', 'grok', 'OpenAI', 'Nvidia']
 # 'ai' removed to prevent false positives (e.g. "ai" in "said", "wait", etc.)
-
 
 def get_transcript_text(transcript: list[dict[str, Any]]) -> str:
     """Extract all text from transcript segments."""
@@ -35,7 +33,7 @@ def detect_language(text: str) -> tuple[str, float]:
     """
     if not text or len(text.strip()) < 20:
         return "unknown", 0.0
-    
+
     try:
         # langdetect returns list of (language, probability) sorted by prob
         results = langdetect.detect_langs(text)
@@ -45,11 +43,9 @@ def detect_language(text: str) -> tuple[str, float]:
     except LangDetectException:
         return "unknown", 0.0
 
-
 def count_words(text: str) -> int:
     """Count words in text."""
     return len(text.split())
-
 
 # ========== Test Functions ==========
 

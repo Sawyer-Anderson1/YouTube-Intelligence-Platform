@@ -12,6 +12,8 @@ from googleapiclient.errors import HttpError
 # import external function to get time six months ago
 from .get_time import get_time_months_ago_rfc3339
 
+from ..config import CHANNELS_PATH
+
 # --------------------------------------
 #  Get YouTubeAPI API, Build, and
 #  Collections
@@ -101,7 +103,7 @@ for vid in vids:
 # ------------------------------------------
 
 # put then put channels into json dict ordered by video count (will narrow down to 10-20 channels after getting the video ids after filtering)
-filename = 'data/channels.json'
+filename = CHANNELS_PATH
 try:
     with open(filename, 'w') as json_file:
         json.dump(channel, json_file, indent=4)

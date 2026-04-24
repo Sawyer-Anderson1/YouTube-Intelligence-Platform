@@ -5,8 +5,10 @@ import json
 from pathlib import Path
 from concurrent.futures import ThreadPoolExecutor
 
+from ..config import TRANSCRIPTS_PATH
+
 # define the path to the folder with the transcripts
-folder_path = Path(__file__).parent.parent.parent / 'data' / 'transcripts'
+folder_path = TRANSCRIPTS_PATH
 
 # --------------------------------------------
 #  Function that Reads Content of Transcript

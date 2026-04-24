@@ -35,6 +35,8 @@ from exa_py import Exa
 import requests
 from bs4 import BeautifulSoup
 
+from ..config import EXAMPLE_OUTPUT_PATH, COMMENTS_PATH
+
 # -------------------------
 #  Import the Groq Api Key
 # -------------------------
@@ -81,11 +83,11 @@ results_collection = db['results']
 #----------------------------------
 
 try:
-    claims_file = json.load(open(Path(__file__).parent.parent.parent / "data" / "example_output" / "claims.json", "r"))
-    narratives_file = json.load(open(Path(__file__).parent.parent.parent / "data" / "example_output" / "narratives.json", "r"))
-    trends_file = json.load(open(Path(__file__).parent.parent.parent / "data" / "example_output" / "trends.json", "r"))
-    # risk_factors_file = json.load(open(Path(__file__).parent.parent.parent / "data" / "example_output" / "risk_factors.json", "r"))
-    comments_feedback_file = json.load(open(Path(__file__).parent.parent.parent / "data" / "example_output" / "comment_feedback.json", "r"))
+    claims_file = json.load(open(EXAMPLE_OUTPUT_PATH / "claims.json", "r"))
+    narratives_file = json.load(open(EXAMPLE_OUTPUT_PATH / "narratives.json", "r"))
+    trends_file = json.load(open(EXAMPLE_OUTPUT_PATH / "trends.json", "r"))
+    # risk_factors_file = json.load(open(EXAMPLE_OUTPUT_PATH / "risk_factors.json", "r"))
+    comments_feedback_file = json.load(open(EXAMPLE_OUTPUT_PATH / "comment_feedback.json", "r"))
 except Exception as e:
     print(f"Error loading example output files: {e}")
     claims_file = "Error loading claims examples"
@@ -452,7 +454,7 @@ def load_comments(video_id: str) -> List[Dict]:
     Load comments for a given video ID from the comments directory.
     Returns an empty list if file doesn't exist or can't be read.
     """
-    comments_path = Path(__file__).parent.parent.parent / "data" / "comments" / f"{video_id}_comments.json"
+    comments_path = COMMENTS_PATH / f"{video_id}_comments.json"
 
     if not comments_path.exists():
         return []

@@ -11,6 +11,8 @@ from langchain_cohere import CohereEmbeddings
 from langchain_chroma import Chroma
 from langchain_core.documents import Document
 
+from ..config import CHROMA_DB_PATH, EMBEDDED_LOG_PATH, TRANSCRIPTS_PATH
+
 # ----------------------------------------------
 #  Setup for Embeddings and VectorDB
 # ----------------------------------------------
@@ -24,7 +26,7 @@ embeddings = CohereEmbeddings(
     )
 
 # the instantiation of the vector store and db location
-db_location = Path(__file__).parent.parent.parent / "chroma_langchain_db"
+db_location = str(CHROMA_DB_PATH)
 
 vector_store = Chroma(
     collection_name = "transcripts",
@@ -61,7 +63,7 @@ def embed_transcripts():
     #  Setup for Retrieval of Transcripts
     # ----------------------------------------------
 
-    path_to_transcripts = Path(__file__).parent.parent.parent / 'data' / 'transcripts'
+    path_to_transcripts = TRANSCRIPTS_PATH
 
     transcripts_files = [pos_transcript for pos_transcript in os.listdir(path_to_transcripts) if pos_transcript.endswith('.json')]
 
@@ -70,7 +72,7 @@ def embed_transcripts():
     # ----------------------------------------------
 
     # create a log path to save files that have been embedded already
-    embedded_log_path = Path(__file__).parent.parent.parent / 'data' / "embedded_files.json"
+    embedded_log_path = EMBEDDED_LOG_PATH
     already_embedded = set()
 
     # load the already_embedded set with the information from the log file
