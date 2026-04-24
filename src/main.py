@@ -87,7 +87,7 @@ def scheduled_job_sequence():
         run_script('src.llm.vector')
 
         logger.info("Run the scheduled queries for claims, trends, narratives, and comment feedback")
-        run_scheduled_queries(k_c = 25, k_t = 5, k_n = 5)
+        run_scheduled_queries(k_c = 15, k_t = 5, k_n = 5)
 
         logger.info("Pipeline completed successfully")
     except Exception as e:

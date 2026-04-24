@@ -63,9 +63,9 @@ model = ChatGroq(
 )
 
 factchecking_model = ChatGroq(
-    model = "llama-3.3-70b-versatile",
+    model = "meta-llama/llama-4-scout-17b-16e-instruct",
     temperature = 0.7,
-    max_tokens=1024,
+    max_tokens=256,
     api_key = GROQ_API_KEY_2
 )
 
@@ -596,25 +596,6 @@ def count_nested(d):
             count += len(value.split())
 
     return count + len(d.split())
-
-# -----------------------------------
-#  Calculate Chunk Budget
-# -----------------------------------
-
-# Approximate token budgets per query type
-# Groq llama-3.3-70b TPM limit: 12,000
-# reserve 400 tokens for prompt, 1024 for responses, 100 for few-shot examples
-
-BASE_TOKEN_BUDGETS = {
-    'claims': 9500,
-    'prompt': 400,
-    'response_limit': 1024,
-    'few-shot': 100,
-    'trends': 8000,
-    'narratives': 6000
-}
-
-TOKENS_PER_CHUNK = 500
 
 # -----------------------------------
 #  Take url and get text from the webpage
