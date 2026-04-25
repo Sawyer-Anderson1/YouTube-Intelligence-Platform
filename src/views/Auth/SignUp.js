@@ -88,7 +88,10 @@ function SignUp() {
         mb="30px"
       >
         <Text fontSize="4xl" color="white" fontWeight="bold">
-          Welcome to Yotube Intelligence!
+          Welcome to Youtube Intelligence!
+        </Text>
+        <Text fontSize="2xl" color="white">
+          Create an account to get started.
         </Text>
       </Flex>
       <Flex alignItems="center" justifyContent="center" mb="60px" mt="20px">
@@ -148,7 +151,7 @@ function SignUp() {
             <Button
               onClick={handleSignUp}
               type="submit"
-              bg="teal.300"
+              bg="blue.300"
               fontSize="10px"
               color="white"
               fontWeight="bold"
@@ -156,10 +159,10 @@ function SignUp() {
               h="45"
               mb="24px"
               _hover={{
-                bg: "blue.200",
+                bg: "blue.600",
               }}
               _active={{
-                bg: "blue.400",
+                bg: "blue.700",
               }}
             >
               SIGN UP

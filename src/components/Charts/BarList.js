@@ -6,7 +6,11 @@ import {
   Select,
   Flex,
   Text,
+  Tooltip,
+  Box,
+  Divider,
 } from "@chakra-ui/react";
+import { InfoOutlineIcon } from "@chakra-ui/icons";
 
 const metricOptions = [
   { label: "Views", value: "viewsRaw" },
@@ -17,21 +21,30 @@ const metricOptions = [
 
 const BarList = ({ data }) => {
   const [metric, setMetric] = useState("viewsRaw");
+  const [sortOrder, setSortOrder] = useState("desc");
 
   const axisColor = useColorModeValue("#1A202C", "#FFFFFF");
 
   const processedData = useMemo(() => {
-    return [...data]
-      .map((item) => ({
-        ...item,
-        likesRaw: Number(item.likes.toString().replace(/,/g, "")),
-        commentsRaw: Number(item.comments.toString().replace(/,/g, "")),
-      }))
-      .sort((a, b) => b[metric] - a[metric]);
-  }, [data, metric]);
+    const mapped = data.map((item) => ({
+      ...item,
+      likesRaw: Number(item.likes.toString().replace(/,/g, "")),
+      commentsRaw: Number(item.comments.toString().replace(/,/g, "")),
+    }));
 
-  const values = processedData.map((item) => item[metric]);
-  const labels = processedData.map((_, i) => i + 1);
+    return mapped.sort((a, b) => {
+      const diff = a[metric] - b[metric];
+      return sortOrder === "asc" ? diff : -diff;
+    });
+  }, [data, metric, sortOrder]);
+
+  const rawValues = processedData.map((item) => item[metric]);
+  const maxRawValue = Math.max(...rawValues, 0);
+
+  const minBar = maxRawValue * 0.03;
+
+  const values = rawValues.map((v) => (v === 0 ? 0 : Math.max(v, minBar)));
+  const labels = processedData.map((_, i) => `#${i + 1}`);
   const maxValue = Math.max(...values, 0);
 
   const chartData = [
@@ -54,16 +67,17 @@ const BarList = ({ data }) => {
 
   const chartOptions = {
     chart: {
-      type: "bar",
-      toolbar: { show: false },
-      events: {
-        dataPointSelection: (event, chartContext, config) => {
-          const item = processedData[config.dataPointIndex];
-          if (item?.videoLink) {
-            window.open(item.videoLink, "_blank");
-          }
-        },
-      },
+    type: "bar",
+    toolbar: { show: false },
+
+    events: { 
+      dataPointSelection: (event, chartContext, config) => { 
+        const item = processedData[config.dataPointIndex]; 
+          if (item?.videoLink) { 
+            window.open(item.videoLink, "_blank"); 
+          } 
+        }, 
+      }, 
     },
 
     legend: {
@@ -72,23 +86,30 @@ const BarList = ({ data }) => {
 
     tooltip: {
       theme: "dark",
+      followCursor: true,
+      intersect: false,
+      shared: false,
+      translateY: -10,
+
       custom: function ({ dataPointIndex }) {
         const item = processedData[dataPointIndex];
         if (!item) return "";
 
         return `
-          <div style="
-            padding:10px;
-            max-width:300px;
+          <div class="custom-tooltip" style="
+            padding:12px;
+            max-width:320px;
             white-space:normal;
             word-wrap:break-word;
           ">
-            <b><u>${item.name}</u></b><br/>
+            <b>${item.name}</b><br/>
             <i>${item.quote}</i><br/><br/>
             Total Views: <b>${item.views}</b><br/>
             Total Likes: <b>${item.likes}</b><br/>
             Total Comments: <b>${item.comments}</b><br/>
             Interaction Score: <b>${item.interaction.toFixed(2)}%</b>
+            <br/><br/>
+            <u>▶ Click to watch video</u>
           </div>
         `;
       },
@@ -159,6 +180,53 @@ const BarList = ({ data }) => {
     <Card w="100%" h="550px" p="20px"> {}
       <Flex mb="10px" align="center" gap="10px">
         <Text fontWeight="bold">Sort By:</Text>
+
+        {metric === "interaction" && (
+          <Tooltip
+            hasArrow
+            shouldWrapChildren
+            placement="top"
+            label={
+            <>
+              <Text fontWeight="bold">
+                How Interaction Score is Measured
+              </Text>
+
+              <Text fontSize="sm" fontStyle="italic">
+                <Divider my="4px" borderColor="gray.400" />
+                Likes are measured with a value of 1x and comments
+                are measured with a value of 10x. These combined
+                values are compared against view count for
+                interaction percentage.<br /><br />
+                Formula is ((Likes+(Comments*10))/Views)*100
+              </Text>
+
+              {/* Gradient legend */}
+              <Flex mt="10px" direction="column" align="center">
+                <Flex
+                  h="8px"
+                  w="120px"
+                  borderRadius="md"
+                  bg="linear-gradient(to right, red, yellow, green)"
+                />
+                <Flex justify="space-between" w="120px" mt="2px">
+                  <Text fontSize="xs">Low</Text>
+                  <Text fontSize="xs">High</Text>
+                </Flex>
+              </Flex>
+            </>
+          }
+            bg="gray.700"
+            color="white"
+            borderRadius="md"
+            p="8px"
+          >
+            <Box>
+              <InfoOutlineIcon cursor="pointer" />
+            </Box>
+          </Tooltip>
+        )}
+
         <Select
           w="180px"
           value={metric}
@@ -170,6 +238,33 @@ const BarList = ({ data }) => {
             </option>
           ))}
         </Select>
+
+        {/* Sort direction button */}
+          <Flex gap="6px" ml="10px">
+            {[
+              { label: "High → Low", value: "desc" },
+              { label: "Low → High", value: "asc" },
+            ].map((option) => (
+              <Flex
+                key={option.value}
+                px="10px"
+                py="6px"
+                borderRadius="12px"
+                fontSize="sm"
+                cursor="pointer"
+                fontWeight="600"
+                transition="all 0.2s"
+                bg={sortOrder === option.value ? "purple.400" : "transparent"}
+                color={sortOrder === option.value ? "white" : "gray.500"}
+                _hover={{
+                  bg: sortOrder === option.value ? "purple.500" : "gray.100",
+                }}
+                onClick={() => setSortOrder(option.value)}
+              >
+                {option.label}
+              </Flex>
+            ))}
+          </Flex>
       </Flex>
 
       <Chart
@@ -179,23 +274,6 @@ const BarList = ({ data }) => {
         width="100%"
         height="100%"
       />
-
-      {metric === "interaction" && (
-        <Flex mt="4px" justify="center">
-          <Flex direction="column" align="center" w="20%">
-            <Flex
-              h="8px"
-              w="100%"
-              borderRadius="md"
-              bg="linear-gradient(to right, red, yellow, green)"
-            />
-            <Flex justify="space-between" w="100%" mt="2px">
-              <Text fontSize="xs">Low Interaction</Text>
-              <Text fontSize="xs">High Interaction</Text>
-            </Flex>
-          </Flex>
-        </Flex>
-      )}
     </Card>
   );
 };
