@@ -10,15 +10,21 @@ import {
 import peopleImage from "assets/img/people-image.png";
 import logoChakra from "assets/svg/logo-white.svg";
 import testAI from "assets/svg/thetest.png";
+import placholder1 from "assets/svg/gridai.jpg";
 import BarChart from "components/Charts/BarChart";
 import LineChart from "components/Charts/LineChart";
 // Custom icons
 import {
   CartIcon,
   DocumentIcon,
+  StatsIcon,
+  FilledChatIcon,
   GlobeIcon,
   WalletIcon,
 } from "components/Icons/Icons.js";
+import {
+  StarIcon,
+} from "@chakra-ui/icons";
 import React from "react";
 import { dashboardTableData, timelineData } from "variables/general";
 import ActiveUsers from "./components/ActiveUsers";
@@ -36,22 +42,28 @@ export default function Dashboard() {
     <Flex flexDirection='column' pt={{ base: "120px", md: "75px" }}>
       <SimpleGrid columns={{ sm: 1, md: 2, xl: 4 }} spacing='24px'>
         <MiniStatistics
-          title={"AI Users"}
-          amount={"222,345"}
-          percentage={11}
-          icon={<GlobeIcon h={"24px"} w={"24px"} color={iconBoxInside} />}
-        />
-        <MiniStatistics
-          title={"AI Documents"}
-          amount={"3,020"}
-          percentage={-14}
+          title={"Total Claims"}
+          amount={"67"}
+          //percentage={11}
           icon={<DocumentIcon h={"24px"} w={"24px"} color={iconBoxInside} />}
         />
         <MiniStatistics
-          title={"Money in AI"}
-          amount={"$173,000"}
-          percentage={8}
-          icon={<WalletIcon h={"24px"} w={"24px"} color={iconBoxInside} />}
+          title={"Total Trends"}
+          amount={"31"}
+          //percentage={-14}
+          icon={<StatsIcon h={"24px"} w={"24px"} color={iconBoxInside} />}
+        />
+        <MiniStatistics
+          title={"Total Narratives"}
+          amount={"22"}
+          //percentage={8}
+          icon={<StarIcon h={"24px"} w={"24px"} color={iconBoxInside} />}
+        />
+        <MiniStatistics
+          title={"Total Discussions"}
+          amount={"8"}
+          //percentage={8}
+          icon={<FilledChatIcon h={"24px"} w={"24px"} color={iconBoxInside} />}
         />
       </SimpleGrid>
       <Grid
@@ -67,7 +79,7 @@ export default function Dashboard() {
           }
           image={
             <Image
-              //src={}
+              src={placholder1}
               alt='[image]'
               minWidth={{ md: "300px", lg: "auto" }}
             />

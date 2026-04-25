@@ -134,17 +134,17 @@ function SignIn() {
                 onClick={handleSignIn}
                 fontSize="10px"
                 type="submit"
-                bg="teal.300"
+                bg="blue.300"
                 w="100%"
                 h="45"
                 mb="20px"
                 color="white"
                 mt="20px"
                 _hover={{
-                  bg: "blue.200",
+                  bg: "blue.600",
                 }}
                 _active={{
-                  bg: "blue.400",
+                  bg: "blue.700",
                 }}
               >
                 SIGN IN

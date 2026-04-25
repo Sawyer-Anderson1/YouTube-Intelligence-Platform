@@ -1,6 +1,6 @@
 // Chakra imports
 import { Flex, Grid, useColorModeValue } from "@chakra-ui/react";
-import avatar2 from "assets/img/avatars/avatar2.png";
+import blankAvatar from "assets/img/avatars/blankavatar.png";
 import ProfileBgImage from "assets/img/ProfileBackground.png";
 import React from "react";
 import { FaCube, FaVideo } from "react-icons/fa";
@@ -20,9 +20,9 @@ function Profile() {
       <Header
         backgroundHeader={ProfileBgImage}
         backgroundProfile={bgProfile}
-        avatarImage={avatar2}
-        name={"John Doe"}
-        email={"johndoe@gmail.com"}
+        avatarImage={blankAvatar}
+        name={"Your Profile"}
+        email={"Youtube Intelligence User"}
         tabs={[
           {
             name: "OVERVIEW",
@@ -38,6 +38,10 @@ function Profile() {
           },
         ]}
       />
+
+      <text align='center'>
+        Your Profile is Currently Inaccessible
+      </text>
     </Flex>
   );
 }

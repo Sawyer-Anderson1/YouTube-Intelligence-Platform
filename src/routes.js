@@ -19,6 +19,7 @@ import {
   DocumentIcon,
   RocketIcon,
   SupportIcon,
+  FilledChatIcon,
 } from "components/Icons/Icons";
 import {
   AddIcon,
@@ -64,7 +65,7 @@ var dashRoutes = [
     path: "/discussions",
     name: "Discussions",
     rtlName: "لوحة القيادة",
-    icon: <WarningIcon color="inherit" />,
+    icon: <FilledChatIcon color="inherit" />,
     component: Discussions,
     layout: "/admin",
   },

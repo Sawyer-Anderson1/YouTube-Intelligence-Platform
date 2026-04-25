@@ -1,5 +1,5 @@
 import { createIcon } from "@chakra-ui/icons";
-import { ArrowUpIcon, ArrowDownIcon } from "@chakra-ui/icons";
+import { ArrowUpIcon, ArrowDownIcon, ChatIcon } from "@chakra-ui/icons";
 
 export const AdobexdLogo = createIcon({
   displayName: "AdobexdLogo",
@@ -540,3 +540,14 @@ export const GreenArrowUpIcon = (props) => (
 export const RedArrowDownIcon = (props) => (
   <ArrowDownIcon color="red.300" {...props} />
 );
+
+export const FilledChatIcon = createIcon({
+  displayName: "ChatIcon",
+  viewBox: "0 0 24 24",
+  path: (
+    <path
+      fill="currentColor"
+      d="M4 2.75C2.757 2.75 1.75 3.757 1.75 5v10c0 1.243 1.007 2.25 2.25 2.25h7.5l5 4.25c.45.38 1.05.08 1.05-.5v-3.75H20c1.243 0 2.25-1.007 2.25-2.25V5c0-1.243-1.007-2.25-2.25-2.25H4z"
+    />
+  ),
+});

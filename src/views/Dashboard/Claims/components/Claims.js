@@ -16,9 +16,8 @@ import CardHeader from "components/Card/CardHeader.js";
 import ClaimsTableRow from "components/Tables/ClaimsTableRow";
 import React from "react";
 import { IoCheckmarkDoneCircleSharp } from "react-icons/io5";
-import { Tooltip } from "@chakra-ui/react";
+import { Tooltip, Box, Divider } from "@chakra-ui/react";
 import { InfoOutlineIcon } from "@chakra-ui/icons";
-import { Box } from "@chakra-ui/react";
 
 const Claims = ({ title, amount, captions, data }) => {
   const textColor = useColorModeValue("gray.700", "white");
@@ -56,6 +55,34 @@ const Claims = ({ title, amount, captions, data }) => {
                   <Flex align="center" gap="6px">
                     {caption}
 
+                    {caption === "Claim" && (
+                      <Tooltip
+                        hasArrow
+                        shouldWrapChildren
+                        placement="top"
+                        label={
+                          <>
+                            <Text fontWeight="bold">
+                              Claim YouTube Videos
+                            </Text>
+                            <Text fontSize="sm" fontStyle="italic">
+                              <Divider my="4px" borderColor="gray.400" />
+                              All claims are pulled from associated videos. <br></br>
+                              ▶ Watch video by <u>clicking the claim name</u>.
+                            </Text>
+                          </>
+                        }
+                        bg="gray.700"
+                        color="white"
+                        borderRadius="md"
+                        p="8px"
+                      >
+                        <Box>
+                          <InfoOutlineIcon cursor="pointer" />
+                        </Box>
+                      </Tooltip>
+                    )}
+
                     {caption === "Interaction" && (
                       <Tooltip
                         hasArrow
@@ -67,13 +94,13 @@ const Claims = ({ title, amount, captions, data }) => {
                               How Interaction Score is Measured
                             </Text>
                             <Text fontSize="sm" fontStyle="italic">
-                              <br></br>
+                              <Divider my="4px" borderColor="gray.400" />
                               Likes are measured with a value of 1x and comments
                               are measured with a value of 10x. These combined
                               values are compared against view count for
-                              interaction percentage.<br></br>
-                              <br></br>
-                              Percentages are measured from 0%-8%<br></br>
+                              interaction percentage.<br />
+                              <br />
+                              Percentages are measured from 0%-8%<br />
                               Formula is ((Likes+(Comments*10))/Views)*100
                             </Text>
                           </>
@@ -98,14 +125,13 @@ const Claims = ({ title, amount, captions, data }) => {
                             <Text fontWeight="bold">
                               How Credibility Score is Measured
                             </Text>
-                            <Text fontSize="sm" mt="6px">
+                            <Text fontSize="sm" fontStyle="italic">
+                              <Divider my="4px" borderColor="gray.400" />
                               Credibility is computed using comment sentiment
-                              analysis:
+                              analysis:<br></br>
+                              &emsp;• More negative comments ↓ credibility
                               <br />
-                              <br />
-                              • More negative comments ↓ credibility
-                              <br />
-                              • Higher polarity disagreement ↓ credibility
+                              &emsp;• Higher polarity disagreement ↓ credibility
                               <br />
                               <br />
                               Formula:
@@ -114,7 +140,6 @@ const Claims = ({ title, amount, captions, data }) => {
                                 100 - (negativeRatio × 80) - (|avgPolarity| ×
                                 50)
                               </Text>
-                              <br />
                               <br />
                               Score is normalized between 0–100.
                             </Text>
