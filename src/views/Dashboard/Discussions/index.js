@@ -56,7 +56,7 @@ function DiscussionPage() {
   if (loading) return <Spinner />;
 
   return (
-    <Flex direction="row" flexWrap="wrap" gap="22px" my="60px">
+    <Flex direction="row" flexWrap="wrap" gap="22px" my="60px" pt="6px">
       {discussions.length > 0 ? (
         discussions.map((d, index) => (
           <DiscussionCard

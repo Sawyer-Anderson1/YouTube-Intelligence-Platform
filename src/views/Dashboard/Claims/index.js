@@ -7,6 +7,7 @@ import {
   useColorModeValue,
   Spinner,
   Text,
+  Select,
 } from "@chakra-ui/react";
 import React from "react";
 import { GreenArrowUpIcon, RedArrowDownIcon } from "components/Icons/Icons.js";
@@ -17,7 +18,7 @@ import getClaims from './../../../API/getClaims';
 function ClaimCards() {
   const [claims, setClaims] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [sortBy, setSortBy] = useState("credibility");
+  const [sortBy, setSortBy] = useState("views");
   const [sortOrder, setSortOrder] = useState("desc");
   useEffect(() => {
     let cancelled = false;
@@ -124,9 +125,9 @@ function ClaimCards() {
     let valA, valB;
 
     switch (sortBy) {
-      case "credibility":
-        valA = a.credibilityScore;
-        valB = b.credibilityScore;
+      case "views":
+        valA = Number(a.views.replace(/,/g, ""));
+        valB = Number(b.views.replace(/,/g, ""));
         break;
 
       case "interaction":
@@ -134,9 +135,9 @@ function ClaimCards() {
         valB = b.interaction;
         break;
 
-      case "views":
-        valA = Number(a.views.replace(/,/g, ""));
-        valB = Number(b.views.replace(/,/g, ""));
+      case "credibility":
+        valA = a.credibilityScore;
+        valB = b.credibilityScore;
         break;
 
       case "likes":
@@ -157,48 +158,23 @@ function ClaimCards() {
     return sortOrder === "asc" ? valA - valB : valB - valA;
   });
   return (
-    <Flex flexDirection="column" pt={{ base: "100px", md: "60px" }}>
-      <Flex
-        mb="20px"
-        gap="12px"
-        align="center"
-        p="12px 16px"
-        borderRadius="16px"
-        bg={useColorModeValue("white", "gray.800")}
-        boxShadow="sm"
-        border="1px solid"
-        borderColor={useColorModeValue("gray.100", "gray.700")}
-      >
-        <Flex gap="8px">
-          {[
-            { label: "Credibility", value: "credibility" },
-            { label: "Interaction", value: "interaction" },
-            { label: "Views", value: "views" },
-            { label: "Likes", value: "likes" },
-            { label: "Comments", value: "comments" },
-          ].map((option) => (
-            <Flex
-              key={option.value}
-              px="10px"
-              py="6px"
-              borderRadius="12px"
-              fontSize="sm"
-              cursor="pointer"
-              fontWeight="600"
-              transition="all 0.2s"
-              bg={sortBy === option.value ? "blue.400" : "transparent"}
-              color={sortBy === option.value ? "white" : "gray.500"}
-              _hover={{
-                bg: sortBy === option.value ? "blue.500" : "gray.100",
-              }}
-              onClick={() => setSortBy(option.value)}
-            >
-              {option.label}
-            </Flex>
-          ))}
-        </Flex>
+    <Flex flexDirection="column" pt={{ base: "100px", md: "20px" }}>
+      <Flex mb="20px" align="center" gap="5px" wrap="wrap" pt="65px">
+        <Text fontWeight="bold">Sort By:</Text>
 
-        <Flex ml="auto" gap="8px">
+        <Select
+          w="180px"
+          value={sortBy}
+          onChange={(e) => setSortBy(e.target.value)}
+        >
+          <option value="views">Views</option>
+          <option value="likes">Likes</option>
+          <option value="comments">Comments</option>
+          <option value="interaction">Interaction</option>
+          <option value="credibility">Credibility</option>
+        </Select>
+
+        <Flex gap="6px" ml="10px">
           {[
             { label: "High → Low", value: "desc" },
             { label: "Low → High", value: "asc" },
