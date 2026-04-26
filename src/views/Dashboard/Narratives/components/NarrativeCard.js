@@ -80,7 +80,7 @@ const NarrativeCard = ({
           </Text>
 
           {/* Narrative description */}
-          <Text fontSize="sm" color="gray.400" mt="6px">
+          <Text fontSize="md" color="gray.400" mt="6px">
             {description}
           </Text>
 
@@ -136,6 +136,7 @@ const NarrativeCard = ({
                 <Box
                   key={index}
                   flex="1"
+                  maxW="50%"
                   borderRadius="md"
                   overflow="hidden"
                   cursor="pointer"

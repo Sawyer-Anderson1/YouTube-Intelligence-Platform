@@ -4,10 +4,14 @@ import {
   Flex,
   Text,
   Select,
+  Tooltip,
+  Box,
+  Divider,
 } from "@chakra-ui/react";
+import { InfoOutlineIcon } from "@chakra-ui/icons";
 import React, { useState, useEffect, useMemo } from "react";
 import NarrativeCard from "./components/NarrativeCard";
-import getNarratives from "./../../../API/getNarratives";
+import getNarratives from "../../../API/getNarratives";
 
 // Sorting metric options
 const metricOptions = [
@@ -114,6 +118,52 @@ function NarrativeCards() {
       {/* Sorting options */}
       <Flex mb="20px" align="center" gap="10px" wrap="wrap" pt="65px">
         <Text fontWeight="bold">Sort By:</Text>
+
+        {metric === "interaction" && (
+          <Tooltip
+            hasArrow
+            shouldWrapChildren
+            placement="top"
+            label={
+            <>
+              <Text fontWeight="bold">
+                How Interaction Score is Measured
+              </Text>
+
+              <Text fontSize="sm" fontStyle="italic">
+                <Divider my="4px" borderColor="gray.400" />
+                Likes are measured with a value of 1x and comments
+                are measured with a value of 10x. These combined
+                values are compared against view count for
+                interaction percentage.<br /><br />
+                Formula is ((Likes+(Comments*10))/Views)*100
+              </Text>
+
+              {/* Gradient legend */}
+              <Flex mt="10px" direction="column" align="center">
+                <Flex
+                  h="8px"
+                  w="120px"
+                  borderRadius="md"
+                  bg="linear-gradient(to right, red, yellow, green)"
+                />
+                <Flex justify="space-between" w="120px" mt="2px">
+                  <Text fontSize="xs">Low</Text>
+                  <Text fontSize="xs">High</Text>
+                </Flex>
+              </Flex>
+            </>
+          }
+            bg="gray.700"
+            color="white"
+            borderRadius="md"
+            p="8px"
+          >
+            <Box>
+              <InfoOutlineIcon cursor="pointer" />
+            </Box>
+          </Tooltip>
+        )}
 
         <Select
           w="180px"

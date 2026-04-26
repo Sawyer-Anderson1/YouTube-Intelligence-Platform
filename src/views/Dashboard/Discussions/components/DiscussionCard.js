@@ -45,6 +45,9 @@ const DiscussionCard = ({ title, videoId, comments }) => {
           alt={title}
           borderRadius="md"
           mb="3"
+          objectFit="cover"
+          transition="transform 0.3s ease"
+          _hover={{ transform: "scale(1.03)" }}
         />
       </a>
 

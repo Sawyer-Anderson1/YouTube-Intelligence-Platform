@@ -1,123 +1,321 @@
-// Chakra imports
 import {
-  Flex,
   Grid,
-  Image,
-  SimpleGrid,
-  useColorModeValue,
+  Flex,
+  Text,
+  Spinner,
+  Box,
+  Skeleton,
 } from "@chakra-ui/react";
-// assets
-import peopleImage from "assets/img/people-image.png";
-import logoChakra from "assets/svg/logo-white.svg";
-import testAI from "assets/svg/thetest.png";
-import placholder1 from "assets/svg/gridai.jpg";
-import BarChart from "components/Charts/BarChart";
-import LineChart from "components/Charts/LineChart";
-// Custom icons
-import {
-  CartIcon,
-  DocumentIcon,
-  StatsIcon,
-  FilledChatIcon,
-  GlobeIcon,
-  WalletIcon,
-} from "components/Icons/Icons.js";
-import {
-  StarIcon,
-} from "@chakra-ui/icons";
-import React from "react";
-import { dashboardTableData, timelineData } from "variables/general";
-import ActiveUsers from "./components/ActiveUsers";
-import BuiltByDevelopers from "./components/BuiltByDevelopers";
-import MiniStatistics from "./components/MiniStatistics";
-import OrdersOverview from "./components/OrdersOverview";
-import Projects from "./components/Projects";
-import SalesOverview from "./components/SalesOverview";
-import WorkWithTheRockets from "./components/WorkWithTheRockets";
+import React, { useEffect, useState } from "react";
 
-export default function Dashboard() {
-  const iconBoxInside = useColorModeValue("white", "white");
+import DashboardCard from "./components/DashboardCard";
+
+import getClaims from "../../../API/getClaims";
+import getTrends from "../../../API/getTrends";
+import getNarratives from "../../../API/getNarratives";
+import getComments from "../../../API/getComments";
+
+function Dashboard() {
+  const [data, setData] = useState(null);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    const fetchAll = async () => {
+      try {
+        const [claimsRes, trendsRes, narrativesRes, commentsRes] =
+          await Promise.all([
+            getClaims(),
+            getTrends(),
+            getNarratives(),
+            getComments(),
+          ]);
+
+        const formatData = (raw) => {
+          const items = Object.values(raw || {});
+
+          let views = 0;
+          let likes = 0;
+          let comments = 0;
+          let interaction = 0;
+          let videos = 0;
+
+          items.forEach((item) => {
+            const v = Number(item.total_view_count) || 0;
+            const l = Number(item.total_like_count) || 0;
+            const c = Number(item.total_comment_count) || 0;
+
+            views += v;
+            likes += l;
+            comments += c;
+            interaction += v > 0 ? ((l + c * 10) / v) * 100 : 0;
+            videos += item.video_ids?.length || 0;
+          });
+
+          return {
+            count: items.length,
+            views,
+            likes,
+            comments,
+            interaction,
+            videos,
+          };
+        };
+
+        const formatClaimsData = (claimsRes) => {
+          const rawClaims = claimsRes.reduce(
+            (acc, item) => ({
+              ...acc,
+              ...(item.result_text || {}),
+            }),
+            {}
+          );
+
+          const items = Object.values(rawClaims);
+
+          let views = 0;
+          let likes = 0;
+          let comments = 0;
+          let interaction = 0;
+          let videos = 0;
+
+          items.forEach((claim) => {
+            const v = Number(claim.view_count) || 0;
+            const l = Number(claim.like_count) || 0;
+            const c = Number(claim.comment_count) || 0;
+
+            views += v;
+            likes += l;
+            comments += c;
+            interaction += v > 0 ? ((l + c * 10) / v) * 100 : 0;
+
+            // Each claim has ONE video_id
+            if (claim.video_id) videos += 1;
+          });
+
+          return {
+            count: items.length,
+            views,
+            likes,
+            comments,
+            interaction,
+            videos,
+          };
+        };
+
+        const formatDiscussionData = (commentsRes) => {
+          let totalComments = 0;
+          let totalLikes = 0;
+
+          let positive = 0;
+          let neutral = 0;
+          let negative = 0;
+
+          commentsRes.forEach((item) => {
+            const results = item.result_text || {};
+
+            Object.values(results).forEach((comment) => {
+              totalComments += 1;
+              totalLikes += Number(comment.like_count) || 0;
+
+              switch (comment.sentiment_class) {
+                case "positive":
+                  positive += 1;
+                  break;
+                case "neutral":
+                  neutral += 1;
+                  break;
+                case "negative":
+                  negative += 1;
+                  break;
+                default:
+                  break;
+              }
+            });
+          });
+
+          const totalSentiment = positive + neutral + negative;
+
+          const toPercent = (val) =>
+            totalSentiment > 0 ? (val / totalSentiment) * 100 : 0;
+
+          return {
+            count: totalComments,
+            comments: totalComments,
+            likes: totalLikes,
+            positive: toPercent(positive),
+            neutral: toPercent(neutral),
+            negative: toPercent(negative),
+          };
+        };
+
+        const mergeResults = (res) =>
+          res.reduce(
+            (acc, item) => ({
+              ...acc,
+              ...(item.result_text || {}),
+            }),
+            {}
+          );
+
+        const claims = formatClaimsData(claimsRes);
+        const trends = formatData(mergeResults(trendsRes));
+        const narratives = formatData(mergeResults(narrativesRes));
+        const discussions = formatDiscussionData(commentsRes);
+
+        const maxValues = {
+          views: Math.max(claims.views, trends.views, narratives.views),
+          likes: Math.max(claims.likes, trends.likes, narratives.likes),
+          comments: Math.max(claims.comments, trends.comments, narratives.comments),
+          interaction: Math.max(claims.interaction, trends.interaction, narratives.interaction),
+          videos: Math.max(claims.videos, trends.videos, narratives.videos),
+
+          discussionComments: discussions.comments,
+          discussionLikes: discussions.likes,
+          positive: 100,
+          neutral: 100,
+          negative: 100,
+        };
+
+        if (!cancelled) {
+          setData({
+            claims,
+            trends,
+            narratives,
+            discussions,
+            maxValues,
+          });
+        }
+      } catch (err) {
+        console.error(err);
+      }
+    };
+
+    fetchAll();
+    return () => (cancelled = true);
+  }, []);
+
+  if (!data) return (
+    <Box pt="80px" pr="80px">
+      <Flex
+        direction="column"
+        align="center"
+        textAlign="center"
+        mb="40px"
+      >
+        <Text fontSize="3xl" fontWeight="bold">
+          AI Insights Dashboard
+        </Text>
+
+        <Text
+          mt="10px"
+          maxW="700px"
+          color="gray.500"
+          fontSize="17px"
+        >
+          Analyzes data from the YouTube API, through the use of LLMs,
+          to generate insights about claims, trends, narratives, and
+          discussions on relevant topics about Artificial Intelligence.
+        </Text>
+      </Flex>
+
+      {/* Dashboard cards */}
+      <Grid
+        templateColumns="repeat(auto-fit, minmax(200px, 1fr))"
+        gap="24px"
+      >
+        <Skeleton
+          borderRadius="lg"
+          startColor="gray.700"
+          endColor="gray.600"
+          minH="380px"
+        />
+        <Skeleton
+          borderRadius="lg"
+          startColor="gray.700"
+          endColor="gray.600"
+          minH="380px"
+        />
+        <Skeleton
+          borderRadius="lg"
+          startColor="gray.700"
+          endColor="gray.600"
+          minH="380px"
+        />
+        <Skeleton
+          borderRadius="lg"
+          startColor="gray.700"
+          endColor="gray.600"
+          minH="380px"
+        />
+      </Grid>
+    </Box>
+  );
 
   return (
-    <Flex flexDirection='column' pt={{ base: "120px", md: "75px" }}>
-      <SimpleGrid columns={{ sm: 1, md: 2, xl: 4 }} spacing='24px'>
-        <MiniStatistics
-          title={"Total Claims"}
-          amount={"67"}
-          //percentage={11}
-          icon={<DocumentIcon h={"24px"} w={"24px"} color={iconBoxInside} />}
-        />
-        <MiniStatistics
-          title={"Total Trends"}
-          amount={"31"}
-          //percentage={-14}
-          icon={<StatsIcon h={"24px"} w={"24px"} color={iconBoxInside} />}
-        />
-        <MiniStatistics
-          title={"Total Narratives"}
-          amount={"22"}
-          //percentage={8}
-          icon={<StarIcon h={"24px"} w={"24px"} color={iconBoxInside} />}
-        />
-        <MiniStatistics
-          title={"Total Discussions"}
-          amount={"8"}
-          //percentage={8}
-          icon={<FilledChatIcon h={"24px"} w={"24px"} color={iconBoxInside} />}
-        />
-      </SimpleGrid>
+    <Box pt="80px" pr="80px">
+      <Flex
+        direction="column"
+        align="center"
+        textAlign="center"
+        mb="40px"
+      >
+        <Text fontSize="3xl" fontWeight="bold">
+          AI Insights Dashboard
+        </Text>
+
+        <Text
+          mt="10px"
+          maxW="700px"
+          color="gray.500"
+          fontSize="17px"
+        >
+          Analyzes data from the YouTube API, through the use of LLMs,
+          to generate insights about claims, trends, narratives, and
+          discussions on relevant topics about Artificial Intelligence.
+        </Text>
+      </Flex>
+
+      {/* Dashboard cards */}
       <Grid
-        templateColumns={{ md: "1fr", lg: "1.8fr 1.2fr" }}
-        templateRows={{ md: "1fr auto", lg: "1fr" }}
-        my='26px'
-        gap='24px'>
-        <BuiltByDevelopers
-          title={"New Insight"}
-          name={"GPT-5 Can Generate Production Ready Code"}
-          description={
-            "From \"Testing GPT-5 on Real Backend Projects\" | TechBuilders Hub"
-          }
-          image={
-            <Image
-              src={placholder1}
-              alt='[image]'
-              minWidth={{ md: "300px", lg: "auto" }}
-            />
-          }
+        templateColumns="repeat(auto-fit, minmax(200px, 1fr))"
+        gap="24px"
+      >
+        <DashboardCard
+          title="Claims"
+          description="Key statements and assertions extracted from AI-related content."
+          {...data.claims}
+          maxValues={data.maxValues}
+          route="/admin/claims"
         />
+
+        <DashboardCard
+          title="Trends"
+          description="Emerging patterns and recurring topics gaining traction in the AI."
+          {...data.trends}
+          maxValues={data.maxValues}
+          route="/admin/trends"
+        />
+
+        <DashboardCard
+          title="Narratives"
+          description="Broader storylines shaping the conversation around AI."
+          {...data.narratives}
+          maxValues={data.maxValues}
+          route="/admin/narratives"
+        />
+
+        <DashboardCard
+            title="Discussions"
+            description="Breakdown of audiences within comment sections on AI videos."
+            {...data.discussions}
+            maxValues={data.maxValues}
+            route="/admin/discussions"
+            isDiscussion
+          />
       </Grid>
-      <Grid
-        templateColumns={{ sm: "1fr", lg: "1.3fr 1.7fr" }}
-        templateRows={{ sm: "repeat(2, 1fr)", lg: "1fr" }}
-        gap='24px'
-        mb={{ lg: "26px" }}>
-        <ActiveUsers
-          title={"Active Users"}
-          percentage={23}
-          chart={<BarChart />}
-        />
-        <SalesOverview
-          title={"AI Overview"}
-          percentage={19}
-          chart={<LineChart />}
-        />
-      </Grid>
-      <Grid
-        templateColumns={{ sm: "1fr", md: "1fr 1fr", lg: "2fr 1fr" }}
-        templateRows={{ sm: "1fr auto", md: "1fr", lg: "1fr" }}
-        gap='24px'>
-        <Projects
-          title={"Projects"}
-          amount={30}
-          captions={["Companies", "Members", "Budget", "Completion"]}
-          data={dashboardTableData}
-        />
-        <OrdersOverview
-          title={"Orders Overview"}
-          amount={30}
-          data={timelineData}
-        />
-      </Grid>
-    </Flex>
+    </Box>
   );
 }
+
+export default Dashboard;
