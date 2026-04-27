@@ -5,16 +5,43 @@ Handles grammar variations, 1-2 word changes using normalization + similarity.
 """
 import argparse
 import json
+import os
 import re
-from difflib import SequenceMatcher
 from pathlib import Path
 from typing import Dict, List, Any, Optional, Tuple
+
+from langchain_groq import ChatGroq
+from langchain_core.prompts import ChatPromptTemplate
 
 # Paths
 CLAIMS_PATH = Path(__file__).parent.parent / "data" / "example_output" / "claims.json"
 VIDEO_METRICS_PATH = Path(__file__).parent.parent / "data" / "video_metrics.json"
 CHANNEL_VIDS_PATH = Path(__file__).parent.parent / "data" / "channel_vids.json"
 TRANSCRIPTS_DIR = Path(__file__).parent.parent / "data" / "transcripts"
+
+# LLM Setup - Different model from rag.py for quote verification
+if not os.getenv("GROQ_API_KEY"):
+    raise ValueError("GROQ_API_KEY environment variable required for LLM quote verification")
+model = ChatGroq(
+    model="llama-3.3-70b-versatile",
+    temperature=0.0,
+    max_tokens=2048,
+    api_key=os.getenv("GROQ_API_KEY")
+)
+
+QUOTE_PROMPT = ChatPromptTemplate.from_template("""
+You are verifying if a specific quote appears in a transcript.
+
+Strictly analyze: Does the quote appear VERBATIM, PARAPHRASED, or SEMANTICALLY EQUIVALENT in the transcript?
+
+Answer ONLY one line:
+YES, brief reason (1 sentence)
+or
+NO, brief reason (1 sentence)
+
+Quote: {quote}
+Transcript: {transcript}
+""")
 
 def load_json(path: Path) -> Dict[str, Any]:
     """Load JSON file."""
@@ -24,14 +51,6 @@ def load_json(path: Path) -> Dict[str, Any]:
 def get_transcript_text(transcript: list[dict[str, Any]]) -> str:
     """Extract all text from transcript segments."""
     return " ".join(seg.get("text", "") for seg in transcript if "text" in seg)
-
-def normalize_text(text: str) -> tuple[str, set[str]]:
-    """Normalize: lower, remove punct, tokenize words for similarity checks."""
-    # Lower and remove punct/non-word
-    text = re.sub(r'[^\w\s]', ' ', text.lower())
-    text = ' '.join(text.split())  # normalize spaces
-    words = set(text.split())
-    return text, words
 
 def load_claims() -> Dict[str, Dict[str, str]]:
     """Load claims from JSON."""
@@ -64,53 +83,41 @@ def load_transcript(transcript_path: Path) -> List[Dict[str, Any]]:
     return load_json(transcript_path)
 
 def test_quote_in_transcript(claim_title: str, claim_data: Dict[str, str], video_metrics: Dict, channel_vids: Dict) -> Tuple[bool, str]:
-    """Test quote in transcript with fuzzy matching for variations."""
-    video_id = claim_data["video_id"]
-    quote = claim_data["Quote"].strip()
-    if not quote:
-        return False, "Empty quote"
-    
+    video_id = claim_data.get("video_id")  # Assume quote dict has video_id
+    if not video_id:
+        return False, "No video_id in claim data"
+
     transcript_path = find_transcript_path(video_id, video_metrics, channel_vids)
     if not transcript_path or not transcript_path.exists():
-        return False, f"No transcript for '{video_id}'"
-    
+        return False, f"No transcript found for {video_id}"
+
     try:
-        transcript = load_transcript(transcript_path)
-        full_text = get_transcript_text(transcript)
-        
-        # Normalize
-        full_norm, full_words = normalize_text(full_text)
-        quote_norm, quote_words = normalize_text(quote)
-        # Search in sentences for better precision
-        sentences = re.split(r'[.!?]+', full_text)
-        best_sim = 0
-        best_msg = ""
-        for sent in sentences:
-            sent_norm, sent_words = normalize_text(sent)
-            sim = SequenceMatcher(None, quote_norm, sent_norm).ratio()
-            if sim > best_sim:
-                best_sim = sim
-                overlap = len(quote_words.intersection(sent_words)) / len(quote_words.union(sent_words)) if quote_words else 0
-                best_msg = f"best sent sim {sim:.1%} overlap {overlap:.1%}"
-        similarity = best_sim
-        
-        # Exact match
-        if quote.lower() in full_text.lower():
-            return True, f"Exact match in {transcript_path.name}"
-        
-        # Sentence-level fuzzy
-        if best_sim > 0.7:
-            return True, f"Sent match (sim {best_sim:.1%}) in {transcript_path.name}"
-        
-        # Word overlap
-        if quote_words:
-            overlap = len(quote_words.intersection(full_words)) / len(quote_words.union(full_words))
-            if overlap > 0.5:
-                return True, f"Word match ({overlap:.1%}) in {transcript_path.name}"
-        
-        return False, f"No match (sim {best_sim:.1%}) in {transcript_path.name}\nQuote: '{quote}'"
+        transcript_data = load_transcript(transcript_path)
+        transcript_text = get_transcript_text(transcript_data)
     except Exception as e:
-        return False, f"Error: {str(e)}"
+        return False, f"Failed to load transcript: {str(e)}"
+
+    result = model.invoke(QUOTE_PROMPT.format(quote=claim_data["Quote"], transcript=transcript_text))
+    content = result.content.strip()
+    print("=== RAW LLM ===")
+    print(repr(content))
+    print("=== END RAW ===")
+
+    # Parse YES/NO format
+    content_upper = content.upper()
+    if content_upper.startswith("YES"):
+        reason = content[3:].strip(", ").strip() or "LLM confirmed match"
+        return True, reason
+    elif content_upper.startswith("NO"):
+        reason = content[2:].strip(", ").strip() or "LLM found no match"
+        return False, reason
+    else:
+        # Fallback: simple keyword check
+        quote_lower = claim_data["quote"].lower()
+        text_lower = transcript_text.lower()
+        if quote_lower in text_lower:
+            return True, "Fallback: exact substring match"
+        return False, f"Parse failed, no match: {content[:100]}..."
 
 def run_all_tests(claims_path: Optional[Path] = None) -> Dict[str, Dict[str, Tuple[bool, str]]]:
     """Run all claim verification tests."""
